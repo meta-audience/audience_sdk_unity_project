@@ -331,7 +331,5 @@ ASALocalRun/
 .mfractor/
 /Audience/packages.config
 
-# Unity Auto gen
-AudienceSDK-Assembly.csproj
-Tests.csproj
+Assembly-CSharp.csproj
 audience_unity_sdk_git.sln
