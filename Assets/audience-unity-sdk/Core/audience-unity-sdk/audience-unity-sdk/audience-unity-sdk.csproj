@@ -20,7 +20,7 @@
     <Optimize>false</Optimize>
     <OutputPath>..\..\..\..\..\Output\bin\Debug\</OutputPath>
     <IntermediateOutputPath>..\..\..\..\..\Output\obj\Debug\</IntermediateOutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;DLL_BUILD</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -31,7 +31,7 @@
     <Optimize>true</Optimize>
     <OutputPath>..\..\..\..\..\Output\bin\Release\</OutputPath>
     <IntermediateOutputPath>..\..\..\..\..\Output\obj\Release\</IntermediateOutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;DLL_BUILD</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

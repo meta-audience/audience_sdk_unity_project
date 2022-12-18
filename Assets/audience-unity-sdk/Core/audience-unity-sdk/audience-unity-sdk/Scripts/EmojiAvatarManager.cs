@@ -10,11 +10,12 @@ namespace AudienceSDK {
 
         public float AvatarTotalLifeTime { get; private set; } = 15.0f;
 
-        // private const string avatarAddressableDataPath = "Assets/Audience/Avatar/";
+        private const string avatarResourcesPath = "Audience/Avatar/";
         private const string avatarSingleKey = "single";
-        private const string avatarSingleFileName = "Avatar_Single.prefab";
+        private const string avatarSingleFileName = "Avatar_Single";
         private const string avatarMultipleKey = "multiple";
-        private const string avatarMultipleFileName = "Avatar_Single.prefab";
+        private const string avatarMultipleFileName = "Avatar_Single";
+        private const string prefabExtension = ".prefab";
 
         private Dictionary<string, GameObject> _emojiAvatarPrefabList;
         private LinkedList<EmojiAvatarBehaviourBase> _avatarList;
@@ -215,18 +216,32 @@ namespace AudienceSDK {
         }
 
         private void PreloadEmojiAvatar() {
+            /*
+            * audience-unity-sdk.csproj would define DLL_BUILD
+            * dll will load resources from embeded resources.
+            * AudienceSDK-Assembly won't define DLL_BUILD
+            * it will load resouces from Resources folder.
+            */
+#if DLL_BUILD
             var assembly = Assembly.GetExecutingAssembly();
             Stream stream = assembly.GetManifestResourceStream("AudienceSDK.audience_sdk");
             var audienceSDKBundle = AssetBundle.LoadFromStream(stream);
 
-            var avatarSingle = audienceSDKBundle.LoadAsset<GameObject>(avatarSingleFileName);
+            var avatarSingle = audienceSDKBundle.LoadAsset<GameObject>(avatarSingleFileName + prefabExtension);
             this._emojiAvatarPrefabList.Add(avatarSingleKey, avatarSingle);
 
-            var avatarMultiple = audienceSDKBundle.LoadAsset<GameObject>(avatarMultipleFileName);
+            var avatarMultiple = audienceSDKBundle.LoadAsset<GameObject>(avatarMultipleFileName + prefabExtension);
             this._emojiAvatarPrefabList.Add(avatarMultipleKey, avatarMultiple);
 
             audienceSDKBundle.Unload(false);
             stream.Close();
+#else
+            var avatarSingle = Resources.Load<GameObject>(avatarResourcesPath + avatarSingleFileName);
+            this._emojiAvatarPrefabList.Add(avatarSingleKey, avatarSingle);
+
+            var avatarMultiple = Resources.Load<GameObject>(avatarResourcesPath + avatarMultipleFileName);
+            this._emojiAvatarPrefabList.Add(avatarMultipleKey, avatarMultiple);
+#endif
         }
 
         private void HandleAvatarFinished(EmojiAvatarBehaviourBase avatar) {
