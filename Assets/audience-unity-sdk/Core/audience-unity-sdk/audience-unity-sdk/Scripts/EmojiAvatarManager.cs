@@ -10,7 +10,7 @@ namespace AudienceSDK {
 
         public float AvatarTotalLifeTime { get; private set; } = 15.0f;
 
-        private const string avatarAddressableDataPath = "Assets/Audience/Avatar/";
+        // private const string avatarAddressableDataPath = "Assets/Audience/Avatar/";
         private const string avatarSingleKey = "single";
         private const string avatarSingleFileName = "Avatar_Single.prefab";
         private const string avatarMultipleKey = "multiple";
@@ -216,13 +216,13 @@ namespace AudienceSDK {
 
         private void PreloadEmojiAvatar() {
             var assembly = Assembly.GetExecutingAssembly();
-            Stream stream = assembly.GetManifestResourceStream("AudienceSDK.audience_sdk.bundle");
+            Stream stream = assembly.GetManifestResourceStream("AudienceSDK.audience_sdk");
             var audienceSDKBundle = AssetBundle.LoadFromStream(stream);
 
-            var avatarSingle = audienceSDKBundle.LoadAsset<GameObject>(avatarAddressableDataPath + avatarSingleFileName);
+            var avatarSingle = audienceSDKBundle.LoadAsset<GameObject>(avatarSingleFileName);
             this._emojiAvatarPrefabList.Add(avatarSingleKey, avatarSingle);
 
-            var avatarMultiple = audienceSDKBundle.LoadAsset<GameObject>(avatarAddressableDataPath + avatarMultipleFileName);
+            var avatarMultiple = audienceSDKBundle.LoadAsset<GameObject>(avatarMultipleFileName);
             this._emojiAvatarPrefabList.Add(avatarMultipleKey, avatarMultiple);
 
             audienceSDKBundle.Unload(false);

@@ -44,7 +44,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EmbeddedResource Include="audience_sdk.bundle" />
+    <EmbeddedResource Include="audience_sdk" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Audience.cs" />

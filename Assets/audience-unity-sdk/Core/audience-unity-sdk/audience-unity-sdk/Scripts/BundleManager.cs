@@ -39,22 +39,22 @@ namespace AudienceSDK {
 
         private void PreloadEmojiModel() {
             var assembly = Assembly.GetExecutingAssembly();
-            Stream stream = assembly.GetManifestResourceStream("AudienceSDK.audience_sdk.bundle");
+            Stream stream = assembly.GetManifestResourceStream("AudienceSDK.audience_sdk");
             var audienceSDKBundle = AssetBundle.LoadFromStream(stream);
 
-            var heartPrefab = audienceSDKBundle.LoadAsset<GameObject>("Assets/Audience/Emoji/EMOJI_01.prefab");
+            var heartPrefab = audienceSDKBundle.LoadAsset<GameObject>("EMOJI_01.prefab");
             this._emojiList.Add(EmojiType.Heart, heartPrefab);
 
-            var ballonPrefab = audienceSDKBundle.LoadAsset<GameObject>("Assets/Audience/Emoji/EMOJI_02.prefab");
+            var ballonPrefab = audienceSDKBundle.LoadAsset<GameObject>("EMOJI_02.prefab");
             this._emojiList.Add(EmojiType.Balloon, ballonPrefab);
 
-            var starPrefab = audienceSDKBundle.LoadAsset<GameObject>("Assets/Audience/Emoji/EMOJI_03.prefab");
+            var starPrefab = audienceSDKBundle.LoadAsset<GameObject>("EMOJI_03.prefab");
             this._emojiList.Add(EmojiType.Star, starPrefab);
 
-            var candyPrefab = audienceSDKBundle.LoadAsset<GameObject>("Assets/Audience/Emoji/EMOJI_04.prefab");
+            var candyPrefab = audienceSDKBundle.LoadAsset<GameObject>("EMOJI_04.prefab");
             this._emojiList.Add(EmojiType.Candy, candyPrefab);
 
-            var smilePrefab = audienceSDKBundle.LoadAsset<GameObject>("Assets/Audience/Emoji/EMOJI_05.prefab");
+            var smilePrefab = audienceSDKBundle.LoadAsset<GameObject>("EMOJI_05.prefab");
             this._emojiList.Add(EmojiType.Smile, smilePrefab);
 
             audienceSDKBundle.Unload(false);

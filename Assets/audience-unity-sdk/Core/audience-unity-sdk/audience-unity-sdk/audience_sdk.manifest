@@ -1,0 +1,61 @@
+ManifestFileVersion: 0
+CRC: 789291917
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f8b43b11aa123bb14c8c80794d6854f3
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: ee94fa674b32415c315a6f5018bb434e
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 102
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/audience-unity-sdk/Resources/Audience/Avatar/viewer_cat.fbx
+- Assets/audience-unity-sdk/Resources/Audience/Emoji/EMOJI_04.prefab
+- Assets/audience-unity-sdk/Resources/Audience/Emoji/AU_emoji_05.fbx
+- Assets/audience-unity-sdk/Resources/Audience/Avatar/au_purple.mat
+- Assets/audience-unity-sdk/Resources/Audience/Emoji/emoji_green.mat
+- Assets/audience-unity-sdk/Resources/Audience/Emoji/emoji_red.mat
+- Assets/audience-unity-sdk/Resources/Audience/Emoji/emoji_tellow.mat
+- Assets/audience-unity-sdk/Resources/Audience/Emoji/emoji_05.png
+- Assets/audience-unity-sdk/Resources/Audience/Emoji/emoji_05.mat
+- Assets/audience-unity-sdk/Resources/Audience/Avatar/au_black.mat
+- Assets/audience-unity-sdk/Resources/Audience/Avatar/Avatar_Multiple.prefab
+- Assets/audience-unity-sdk/Resources/Audience/Avatar/twitch_logo.fbx
+- Assets/audience-unity-sdk/Resources/Audience/Emoji/AU_emoji_03.fbx
+- Assets/audience-unity-sdk/Resources/Audience/Avatar/youtube_logo.fbx
+- Assets/audience-unity-sdk/Resources/Audience/Emoji/emoj_01.fbx
+- Assets/audience-unity-sdk/Resources/Audience/Emoji/AU_emoji_04.fbx
+- Assets/audience-unity-sdk/Resources/Audience/Emoji/EMOJI_01.prefab
+- Assets/audience-unity-sdk/Resources/Audience/Avatar/Avatar_Single.prefab
+- Assets/audience-unity-sdk/Resources/Audience/Emoji/EMOJI_03.prefab
+- Assets/audience-unity-sdk/Resources/Audience/Emoji/EMOJI_02.prefab
+- Assets/audience-unity-sdk/Resources/Audience/Avatar/au_white.mat
+- Assets/audience-unity-sdk/Resources/Audience/Emoji/AU_emoji_06.fbx
+- Assets/audience-unity-sdk/Resources/Audience/Avatar/au_blue.mat
+- Assets/audience-unity-sdk/Resources/Audience/Emoji/EMOJI_05.prefab
+- Assets/audience-unity-sdk/Resources/Audience/Avatar/au_red.mat
+- Assets/audience-unity-sdk/Resources/Audience/Avatar/bs_Uber.shader
+- Assets/audience-unity-sdk/Resources/Audience/Emoji/emoji_04.mat
+Dependencies: []
