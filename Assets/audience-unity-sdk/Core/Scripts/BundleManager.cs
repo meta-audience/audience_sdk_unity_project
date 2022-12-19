@@ -47,7 +47,7 @@ namespace AudienceSDK {
              */
 #if DLL_BUILD
             var assembly = Assembly.GetExecutingAssembly();
-            Stream stream = assembly.GetManifestResourceStream("AudienceSDK.audience_sdk");
+            Stream stream = assembly.GetManifestResourceStream("AudienceSDK.Resources.Art.audience_sdk");
             var audienceSDKBundle = AssetBundle.LoadFromStream(stream);
 
             var heartPrefab = audienceSDKBundle.LoadAsset<GameObject>("EMOJI_01.prefab");
