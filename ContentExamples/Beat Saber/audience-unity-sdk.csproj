@@ -43,10 +43,11 @@
     <CodeAnalysisRuleSet>StyleCop.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Messages\Messages.resx" />
+    <EmbeddedResource Include="Resources\Messages\zh-cn.resx" />
+    <EmbeddedResource Include="Resources\Messages\zh-tw.resx" />
     <None Include="App.config" />
-    <EmbeddedResource Include="..\..\Assets\audience-unity-sdk\Core\Resources\Art\audience_sdk">
-      <Link>Resources\Art\audience_sdk</Link>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Art\audience_sdk" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -196,17 +197,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\..\Assets\audience-unity-sdk\Core\Resources\Messages\Messages.resx">
-      <Link>Resources\Messages\Messages.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\..\Assets\audience-unity-sdk\Core\Resources\Messages\zh-cn.resx">
-      <Link>Resources\Messages\zh-cn.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\..\Assets\audience-unity-sdk\Core\Resources\Messages\zh-tw.resx">
-      <Link>Resources\Messages\zh-tw.resx</Link>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\3rd-party\Newtonsoft.Json.dll</HintPath>
@@ -266,5 +256,6 @@
     <Analyzer Include="References\3rd-party\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="References\3rd-party\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
