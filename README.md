@@ -19,6 +19,7 @@ Or you can copy the scripts in XXX to your own project.
 # Usage
 
 Follow the document to setup your audience configuration
-https://github.com/meta-audience/BeatSaber_audience/blob/main/docs/TUTORIAL_LIVESTREAM.md
-https://github.com/meta-audience/BeatSaber_audience/blob/main/docs/TUTORIAL_EMOJI.md
+* [How to develop your first live stream project](Docs/TUTORIAL_LIVESTREAM.md)
+* [How to send your first VR emoji](Docs/TUTORIAL_EMOJI.md)
+
 
