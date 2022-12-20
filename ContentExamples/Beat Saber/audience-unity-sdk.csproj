@@ -44,165 +44,165 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EmbeddedResource Include="..\Assets\audience-unity-sdk\Core\Resources\Art\audience_sdk">
+    <EmbeddedResource Include="..\..\Assets\audience-unity-sdk\Core\Resources\Art\audience_sdk">
       <Link>Resources\Art\audience_sdk</Link>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\AssetLoaderUnityWebRequest.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\AssetLoaderUnityWebRequest.cs">
       <Link>Scripts\AssetLoaderUnityWebRequest.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\AssetLoader.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\AssetLoader.cs">
       <Link>Scripts\AssetLoader.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\Audience.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\Audience.cs">
       <Link>Scripts\Audience.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\AudienceCameraBehaviourBase.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\AudienceCameraBehaviourBase.cs">
       <Link>Scripts\AudienceCameraBehaviourBase.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\AudienceCameraInstance.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\AudienceCameraInstance.cs">
       <Link>Scripts\AudienceCameraInstance.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\AudienceGlobalData.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\AudienceGlobalData.cs">
       <Link>Scripts\AudienceGlobalData.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\CameraUtilities.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\CameraUtilities.cs">
       <Link>Scripts\CameraUtilities.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\AudioManager.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\AudioManager.cs">
       <Link>Scripts\AudioManager.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\BaseCameraCapture.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\BaseCameraCapture.cs">
       <Link>Scripts\BaseCameraCapture.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\BundleManager.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\BundleManager.cs">
       <Link>Scripts\BundleManager.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\CameraAvatar.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\CameraAvatar.cs">
       <Link>Scripts\CameraAvatar.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\Cipher.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\Cipher.cs">
       <Link>Scripts\Cipher.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\ChatMessageManager.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\ChatMessageManager.cs">
       <Link>Scripts\ChatMessageManager.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\Context.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\Context.cs">
       <Link>Scripts\Context.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\DefaultEmojiBehaviour.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\DefaultEmojiBehaviour.cs">
       <Link>Scripts\DefaultEmojiBehaviour.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\Emoji2DBehaviour.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\Emoji2DBehaviour.cs">
       <Link>Scripts\Emoji2DBehaviour.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\Emoji3DBehaviour.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\Emoji3DBehaviour.cs">
       <Link>Scripts\Emoji3DBehaviour.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\EmojiAuthorManager.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\EmojiAuthorManager.cs">
       <Link>Scripts\EmojiAuthorManager.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\EmojiAvatarBehaviourBase.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\EmojiAvatarBehaviourBase.cs">
       <Link>Scripts\EmojiAvatarBehaviourBase.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\EmojiAvatarManager.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\EmojiAvatarManager.cs">
       <Link>Scripts\EmojiAvatarManager.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\EmojiAvatarSingleAuthorBehaviour.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\EmojiAvatarSingleAuthorBehaviour.cs">
       <Link>Scripts\EmojiAvatarSingleAuthorBehaviour.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\EmojiBehaviourBase.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\EmojiBehaviourBase.cs">
       <Link>Scripts\EmojiBehaviourBase.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\EmojiEffectManager.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\EmojiEffectManager.cs">
       <Link>Scripts\EmojiEffectManager.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\EmojiSentencesInAuthor.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\EmojiSentencesInAuthor.cs">
       <Link>Scripts\EmojiSentencesInAuthor.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\EnumExtensions.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\EnumExtensions.cs">
       <Link>Scripts\EnumExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\IEmojiAuthorManager.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\IEmojiAuthorManager.cs">
       <Link>Scripts\IEmojiAuthorManager.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\IEmojiSentencesInAuthor.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\IEmojiSentencesInAuthor.cs">
       <Link>Scripts\IEmojiSentencesInAuthor.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\IEmojiSentencesInAuthorFactory.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\IEmojiSentencesInAuthorFactory.cs">
       <Link>Scripts\IEmojiSentencesInAuthorFactory.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\MessageDispatcher.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\MessageDispatcher.cs">
       <Link>Scripts\MessageDispatcher.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\mgGif\GifDataHolder.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\mgGif\GifDataHolder.cs">
       <Link>Scripts\mgGif\GifDataHolder.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\mgGif\mgGif.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\mgGif\mgGif.cs">
       <Link>Scripts\mgGif\mgGif.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\Mono180CameraCapture.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\Mono180CameraCapture.cs">
       <Link>Scripts\Mono180CameraCapture.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\Mono360CameraCapture.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\Mono360CameraCapture.cs">
       <Link>Scripts\Mono360CameraCapture.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\MonoCameraCapture.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\MonoCameraCapture.cs">
       <Link>Scripts\MonoCameraCapture.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\MonoCullbackCameraCapture.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\MonoCullbackCameraCapture.cs">
       <Link>Scripts\MonoCullbackCameraCapture.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\MonoHalfCameraCapture.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\MonoHalfCameraCapture.cs">
       <Link>Scripts\MonoHalfCameraCapture.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\NativeMethods.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\NativeMethods.cs">
       <Link>Scripts\NativeMethods.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\PanoramicCameraCapture.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\PanoramicCameraCapture.cs">
       <Link>Scripts\PanoramicCameraCapture.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\SceneManager.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\SceneManager.cs">
       <Link>Scripts\SceneManager.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\SimpleSBSCameraCapture.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\SimpleSBSCameraCapture.cs">
       <Link>Scripts\SimpleSBSCameraCapture.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\SteamVRCompatibility.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\SteamVRCompatibility.cs">
       <Link>Scripts\SteamVRCompatibility.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\Stereo180CameraCapture.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\Stereo180CameraCapture.cs">
       <Link>Scripts\Stereo180CameraCapture.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\Stereo360CameraCapture.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\Stereo360CameraCapture.cs">
       <Link>Scripts\Stereo360CameraCapture.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\StereoHalfCameraCapture.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\StereoHalfCameraCapture.cs">
       <Link>Scripts\StereoHalfCameraCapture.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\StereoCullbackCameraCapture.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\StereoCullbackCameraCapture.cs">
       <Link>Scripts\StereoCullbackCameraCapture.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\UserConfig.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\UserConfig.cs">
       <Link>Scripts\UserConfig.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\WeakReferenceExtension.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\WeakReferenceExtension.cs">
       <Link>Scripts\WeakReferenceExtension.cs</Link>
     </Compile>
-    <Compile Include="..\Assets\audience-unity-sdk\Core\Scripts\WeakReferenceTable.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\WeakReferenceTable.cs">
       <Link>Scripts\WeakReferenceTable.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\Assets\audience-unity-sdk\Core\Resources\Messages\Messages.resx">
+    <EmbeddedResource Include="..\..\Assets\audience-unity-sdk\Core\Resources\Messages\Messages.resx">
       <Link>Resources\Messages\Messages.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\Assets\audience-unity-sdk\Core\Resources\Messages\zh-cn.resx">
+    <EmbeddedResource Include="..\..\Assets\audience-unity-sdk\Core\Resources\Messages\zh-cn.resx">
       <Link>Resources\Messages\zh-cn.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\Assets\audience-unity-sdk\Core\Resources\Messages\zh-tw.resx">
+    <EmbeddedResource Include="..\..\Assets\audience-unity-sdk\Core\Resources\Messages\zh-tw.resx">
       <Link>Resources\Messages\zh-tw.resx</Link>
     </EmbeddedResource>
   </ItemGroup>
@@ -244,7 +244,7 @@
       <HintPath>References\Managed\UnityEngine.UIElementsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\..\References\Managed\UnityEngine.UIModule.dll</HintPath>
+      <HintPath>References\Managed\UnityEngine.UIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
       <HintPath>References\Managed\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
