@@ -121,6 +121,8 @@ namespace AudienceSDK {
             } else {
                 NativeMethods.SetUserBehaviorInfo(UserBehaviorInfoType.HeadsetDevice, "Play without headset.");
             }
+
+            UserConfig.LoadUserConfig();
         }
 
         public static void Dispose() {
