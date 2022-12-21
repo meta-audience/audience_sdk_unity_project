@@ -27,7 +27,7 @@ namespace AudienceSDK {
 
         public static int EmojiMaxSceneEmojis { get; set; } = 1000;
         private static string _userConfigFileName = "audience_user_config.json";
-        private static string _userConfigFilePath = "/Plugins/";
+        private static string _userConfigFilePath = "/audience-unity-sdk/Plugins/";
         public static void LoadUserConfig()
         {
             var configPath = Application.dataPath + _userConfigFilePath + _userConfigFileName;
