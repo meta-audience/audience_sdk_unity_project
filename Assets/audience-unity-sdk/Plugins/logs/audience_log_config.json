@@ -1,0 +1,58 @@
+{
+  "SINKS": {
+    "stdout_color_sink": {
+      "type": "stdout_color_sink_mt",
+      "level": "critical",
+      "pattern": "console_pattern"
+    },
+    "basic_file_sink": {
+      "type": "basic_file_sink_mt",
+      "filename": "./logs/logfile.log",
+      "truncate": true,
+      "level": "info",
+      "pattern": "general_pattern"
+    },
+    "webrtc_file_sink": {
+      "type": "basic_file_sink_mt",      
+      "filename": "./logs/audience_webrtc_logfile.log",
+      "truncate": true,
+      "level": "info",
+      "pattern": "general_pattern"
+     }, 
+    "stats_file_sink": {
+      "type": "basic_file_sink_mt",      
+      "filename": "./logs/audience_stats_logfile.log",
+      "truncate": true,
+      "level": "info",
+      "pattern": "general_pattern"
+     }    
+  },
+  "PATTERNS": {
+    "console_pattern": "[%C-%m-%d %H:%M:%S.%e]%^[%L]%$ %v",
+    "general_pattern": "[%C-%m-%d %H:%M:%S.%e]%^[%L][%n]%$ %v"
+  },
+  "LOGGERS": {
+    "default": {
+      "sinks": [ "stdout_color_sink", "basic_file_sink" ],
+      "level": "info",
+      "type": "sync"
+    },
+    "webrtc": {
+      "sinks": [ "stdout_color_sink", "webrtc_file_sink" ],
+      "level": "info",
+      "type": "sync"
+    },
+    "stats": {
+      "sinks": [ "stdout_color_sink", "stats_file_sink" ],
+      "level": "info",
+      "type": "sync"
+    }   
+  },
+  "THREAD_POOL": {
+    "thread_count": 2,
+    "queue_size": 8192
+  },
+  "FLUSH_TIMER": {
+    "duration": 5
+  }
+}

@@ -320,6 +320,7 @@ namespace AudienceSDK {
         }
 
         public void SetCurrentCultureName(string cultureName) {
+#if DLL_BUILD
             this._currentCultureName = cultureName.ToLower();
             try {
                 CultureInfo ci = new CultureInfo(cultureName);
@@ -337,16 +338,20 @@ namespace AudienceSDK {
 
             Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);
             if (stream == null) {
-
-                Debug.Log("stream == null");
+                Debug.Log("stream == null, load default resources.");
                 stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("AudienceSDK.Resources.Messages.Messages.resources");
                 if (stream == null) {
-
-                    Debug.Log("stream == null");
+                    Debug.Log("default resources is also null");
+                    this._currentCultureResourceSet = null;
+                } else {
+                    this._currentCultureResourceSet = new ResourceSet(stream);
                 }
+            } else {
+                this._currentCultureResourceSet = new ResourceSet(stream);
             }
-
-            this._currentCultureResourceSet = new ResourceSet(stream);
+#else
+            this._currentCultureResourceSet = null;
+#endif
         }
 
         public string GetCurrentCultureName() {
@@ -354,10 +359,10 @@ namespace AudienceSDK {
         }
 
         public string GetLanguageDisplayString(string name, params object[] p) {
+
             string returnValue = string.Empty;
-
+#if DLL_BUILD
             if (this._currentCultureResourceSet != null) {
-
                 returnValue = this._currentCultureResourceSet.GetString(name);
                 if (returnValue == null) {
                     // if can't found name, just return key.
@@ -368,6 +373,10 @@ namespace AudienceSDK {
             }
 
             return string.Format(returnValue, p);
+#else
+            returnValue = name;
+            return string.Format(returnValue, p);
+#endif
         }
 
         public SceneState GetCurrentSceneState() {
