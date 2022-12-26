@@ -19,6 +19,12 @@ public class AudiencePanelView : MonoBehaviour
     private GameObject logOnBlock = null;
 
     [SerializeField]
+    private InputField usernameInputField = null;
+
+    [SerializeField]
+    private InputField passwordInputField = null;
+
+    [SerializeField]
     private Button logInButton = null;
 
     [SerializeField]
@@ -66,7 +72,7 @@ public class AudiencePanelView : MonoBehaviour
     // API function
     public void Login()
     {
-        Audience.Context.Login("jonny_tsai@trendmicro.com", "1qaz@WSX3edc");
+        Audience.Context.Login(this.usernameInputField.text, this.passwordInputField.text);
     }
 
     public void Logout()
