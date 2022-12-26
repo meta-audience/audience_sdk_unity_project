@@ -1,0 +1,258 @@
+string NOTIFY_PARTY = "alloftwenggroup4vrteamjenkinsusers@dl.trendmicro.com"
+string PROJECT_NAME = "audience_unity_sdk"
+string BUILD_VERSION = ""
+string MASTER_BRANCH_NAME = "master"
+string NODE_LABEL = "tmxrlab"
+
+pipeline {
+    agent { label "${NODE_LABEL}" }
+    parameters {
+        string(name: 'pBuildToolRepo', defaultValue: 'git@adc.github.trendmicro.com:Consumer-TMXRLAB/BuildTools.git', description: 'tools for publishing, signing archives') 
+        string(name: 'pTeamsWebHook', defaultValue: 'https://trendmicro.webhook.office.com/webhookb2/8a19e8b7-f9c8-4a01-8314-1dc2721aba93@3e04753a-ae5b-42d4-a86d-d6f05460f9e4/IncomingWebhook/e29272c697ee49179630b5b233700c8c/2e179d67-2040-4d94-847d-53a4174b1fda', description: 'use webhook from teams channel, in order to send build status to teams')
+        string(name: 'pDeployJobName', defaultValue: 'tmxrlab/TMXRLAB_deploy-audience-package', description: 'job for package and depolyment')
+        string(name: 'pDailyBuild', defaultValue: '0', description: 'Check if this pipeline dailybuild')
+    }
+    options {
+        timestamps()
+        timeout(time: 1, unit: 'HOURS')
+        disableConcurrentBuilds()
+    }
+
+    stages {
+         stage('CI Preparation') {
+            parallel {
+                stage('Find Notify Party') {
+                    when {
+                       not {
+                          branch "${MASTER_BRANCH_NAME}"
+                       }
+                    }
+                    steps {
+                        bat 'git show -s --pretty=%%al > author.txt'
+                        script {
+                            NOTIFY_PARTY = readFile('author.txt').trim()                 
+                        }
+                        echo "Commit from Branch: ${env.BRANCH_NAME}, This build will noitify: ${NOTIFY_PARTY}"
+                    }
+                }
+                stage('Clean Archives'){
+                    steps {
+                      bat 'if exist StyleCopReport.xml ( del StyleCopReport.xml /s /q )' 
+                      bat 'if exist audience-unity-sdk\\audience-unity-sdk\\bin ( rmdir audience-unity-sdk\\audience-unity-sdk\\bin /s /q )' 
+                      bat "if exist install ( rmdir install /s /q )"
+                    }
+                }
+                stage('Configure Build Version') {
+                    steps {
+                        script {
+                            def version_file = readFile('version.txt')
+                            def lines = version_file.readLines()
+                            lines.each{line->
+                                        if (line.contains('AUDIENCE_UNITY_SDK_MAJOR')) { Major = line.split(' ')[-1] }  
+                                        if (line.contains('AUDIENCE_UNITY_SDK_SPRINT')){ Sprint = line.split(' ')[-1] }
+                            }
+                        
+                            def commit_count_command_result = bat(
+                                returnStdout: true,
+                                script: "git rev-list HEAD --count"
+                            )
+                            def commit_count = commit_count_command_result.tokenize().last()
+                                BUILD_VERSION = "${Major}" + "." + "${Sprint}" + "." + commit_count
+                                echo "Audience Unity SDK Version : ${BUILD_VERSION}"
+                                echo "Audience Unity SDK Branch : ${env.BRANCH_NAME}"
+                                def commit_id_command_result = bat(
+                                returnStdout: true,
+                                script: "git rev-parse --short HEAD"
+                            )
+                            def commit_id = commit_id_command_result.tokenize().last()
+                            echo "Audience Unity SDK Commit id : ${commit_id}"
+                            bat '''call version.bat'''
+                        }
+                    }
+                }
+            }
+        }
+        stage('Build') {
+            stages {
+                stage('Configure Version Number') {
+                    steps {
+                        script {
+                            
+                            def assembly_file = readFile('audience-unity-sdk\\audience-unity-sdk\\Properties\\AssemblyInfo.cs')
+                            def assembly_lines = assembly_file.readLines()
+                            def assembly_write_data = ""
+                            assembly_lines.each{line->
+                                if (line.contains('AssemblyFileVersion')) {
+                                    assembly_write_data = assembly_write_data + "[assembly: AssemblyFileVersion(\"" + BUILD_VERSION + "\")]" + "\n"
+                                } else if (line.contains('AssemblyVersion') && !line.contains('//')){
+                                    assembly_write_data = assembly_write_data + "[assembly: AssemblyVersion(\"" + BUILD_VERSION + "\")]" + "\n"
+                                } else {
+                                    assembly_write_data = assembly_write_data + line + "\n"
+                                }                   
+                            }
+                            writeFile(file: 'audience-unity-sdk\\audience-unity-sdk\\Properties\\AssemblyInfo.cs', text: assembly_write_data.substring(1))
+                        }
+                    }
+                }
+                stage('MSBuild') {
+                    parallel {
+                        stage('Build Debug') {
+                            steps {
+                                bat '''MSBuild.exe  /property:BeatSaberDir=C:\\ audience-unity-sdk\\audience-unity-sdk.sln /property:Configuration=DebugNoTest'''
+                            }
+                        }
+                        stage('Build Release') {
+                            steps {
+                                bat '''MSBuild.exe  /property:BeatSaberDir=C:\\ audience-unity-sdk\\audience-unity-sdk.sln /property:Configuration=ReleaseNoTest'''
+                            }
+                        }
+                    }
+                }
+                stage("Make Document") {
+                    when {
+                        branch "${MASTER_BRANCH_NAME}"
+                    }
+                    steps {
+                        bat '''doxygen audience_unity_sdk_doxygen.config'''
+                    }
+                }
+                stage('Install') {
+                    parallel {
+                        stage('Install Build Archives') {
+                            steps {
+                                script {
+                                    bat "mkdir install"
+                                    bat "xcopy audience-unity-sdk\\audience-unity-sdk\\bin install /O /X /E /H /K"
+                                    bat "xcopy AudiencePlugin\\Readme.txt install /O /X /E /H /K"
+                                    bat "xcopy version.txt install"
+                                }
+                            }
+                        }
+                        stage('Install Documentation') {
+                            when {
+                                branch "${MASTER_BRANCH_NAME}"
+                            }
+                            steps {
+                                bat '''xcopy html\\* install\\Document /I /O /X /E /H /K /Y'''
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        stage('CD Preparation') {
+            steps {
+                echo "cloning Build Tools from ETS"
+                bat "rmdir /s /q BuildTools & git clone ${params.pBuildToolRepo}"            
+            }
+        }
+        stage('Deploying') {
+            stages {
+                stage('Sign') {
+                    steps {
+                        echo "signing ${PROJECT_NAME}-${BUILD_NUMBER} archives"
+                        withCredentials([usernamePassword(credentialsId: '0b468ad6-a63d-4903-bb5a-d346e04f572a', passwordVariable: 'jenkins_credentials_PSW', usernameVariable: 'jenkins_credentials_USR'), string(credentialsId: '63903ed1-9e59-4066-a239-4502e8958dc9', variable: 'refresh_token')])
+                        {
+                            bat """
+                                echo off
+                                set jenkins_folder=tmxrlab
+                                set refresh_id=63903ed1-9e59-4066-a239-4502e8958dc9
+                                set region=aws
+                                set signtype=lsha2
+                                set sign_language=en
+                                set debug_filename=install\\Debug\\audience_unity.dll
+                                set release_filename=install\\Release\\audience_unity.dll
+                                FOR /F "tokens=*" %%a in ('python BuildTools\\CodeSign2.0\\jenkins\\scripts\\get_access_token.py %JENKINS_URL% %jenkins_folder% %refresh_id%') do SET LARES_ACCESS_TOKEN=%%a
+                                python BuildTools\\CodeSign2.0\\jenkins\\scripts\\multisign.py ${PROJECT_NAME} ${BUILD_NUMBER} %region% %signtype% %sign_language% %debug_filename% %release_filename%  --proxy="http://ETS-AWSUS-proxy.tw.trendnet.org:8080"
+                            """
+                        }
+                    }
+                }
+                stage("Deploy Build Archives") {
+                    parallel {
+                        stage("Publish to Branch Folder") {
+                            steps {
+                                withCredentials([string(credentialsId: 's3_secret_text_tw', variable: 's3_sync_passwd_tw')]) 
+                                {
+                                    bat "@echo on \
+                                    set s3_sync_passwd_tw=s3_sync_passwd_tw && python BuildTools\\PublishToS3\\PublishToS3.py \
+                                    -s TW \
+                                    -j ${PROJECT_NAME} \
+                                    -v ${BUILD_VERSION} \
+                                    -p win64 -b ${env.BUILD_NUMBER} \
+                                    -f install \
+                                    -t s3://selfci-tmxrlab/${PROJECT_NAME}/${env.BRANCH_NAME}/${BUILD_VERSION} \
+                                    -l /tmxrlab/${PROJECT_NAME}/${env.BRANCH_NAME}/${BUILD_VERSION} \
+                                    -n ${NOTIFY_PARTY}@trendmicro.com"
+                                }
+                            }
+                        }
+                        stage("Publish to Latest Folder") {
+                            when {
+                                branch "${MASTER_BRANCH_NAME}"
+                            }
+                            steps {
+                                withCredentials([string(credentialsId: 's3_secret_text_tw', variable: 's3_sync_passwd_tw')]) 
+                                {
+                                    bat "@echo on \
+                                    set s3_sync_passwd_tw=s3_sync_passwd_tw && python BuildTools\\PublishToS3\\PublishToS3.py \
+                                    -s TW \
+                                    -j ${PROJECT_NAME} \
+                                    -v ${BUILD_VERSION} \
+                                    -p win64 -b ${env.BUILD_NUMBER} \
+                                    -f install \
+                                    -t s3://selfci-tmxrlab/${PROJECT_NAME}/latest \
+                                    -l /tmxrlab/${PROJECT_NAME}/latest \
+                                    -n ${NOTIFY_PARTY}@trendmicro.com"
+                                }
+                            }
+                        }
+                    }
+                }
+                stage("Start Packaging") {
+                    when {
+                        branch "${MASTER_BRANCH_NAME}"
+                    }
+                    steps{
+                        build job: "${params.pDeployJobName}", parameters: []
+                    }
+                }
+            }
+        }
+    }
+    post {
+        success { 
+            echo "Sending notifications for success result"
+            emailext(
+                from: 'VRBuildNotifier <vr_build_notifier@trend.com.tw>',
+                to: "$NOTIFY_PARTY",
+                subject: '[SUCCESS] $JOB_NAME #$BUILD_NUMBER', 
+                replyTo: '$DEFAULT_REPLYTO', 
+                body: '${JELLY_SCRIPT,template="html"}'
+            )
+             office365ConnectorSend message: "$JOB_NAME #$BUILD_NUMBER", status:"${currentBuild.currentResult}", webhookUrl:"${params.pTeamsWebHook}"
+        }
+        aborted {
+            echo "Sending notifications for aborted result"
+            emailext(
+                from: 'VRBuildNotifier <vr_build_notifier@trend.com.tw>',
+                to: "$NOTIFY_PARTY",
+                subject: '!ABORTED! $JOB_NAME #$BUILD_NUMBER', 
+                replyTo: '$DEFAULT_REPLYTO', 
+                body: '${JELLY_SCRIPT,template="html"}'
+            )
+             office365ConnectorSend message: "$JOB_NAME #$BUILD_NUMBER", status:"${currentBuild.currentResult}", webhookUrl:"${params.pTeamsWebHook}"
+        }
+        failure {
+            echo "Sending notifications for failure result"
+            emailext(
+                from: 'VRBuildNotifier <vr_build_notifier@trend.com.tw>',
+                to: "$NOTIFY_PARTY",
+                subject: '*FAILURE* $JOB_NAME #$BUILD_NUMBER', 
+                replyTo: '$DEFAULT_REPLYTO', 
+                body: '${JELLY_SCRIPT,template="html"}'
+            )
+             office365ConnectorSend message: "$JOB_NAME #$BUILD_NUMBER", status:"${currentBuild.currentResult}", webhookUrl:"${params.pTeamsWebHook}"
+        }
+    }
+}
