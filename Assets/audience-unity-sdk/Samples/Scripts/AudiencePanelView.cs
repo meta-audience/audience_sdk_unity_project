@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using AudienceSDK;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,6 +48,8 @@ public class AudiencePanelView : MonoBehaviour
     [SerializeField]
     private Button stopStreamButton = null;
 
+    private List<NativeSceneSummaryData> CachedSceneList { get; set; }
+
     // UI function
     public void MaxmizePanel() {
         this.audienceBlocks.SetActive(true);
@@ -63,42 +66,162 @@ public class AudiencePanelView : MonoBehaviour
     // API function
     public void Login()
     {
-
+        Audience.Context.Login("jonny_tsai@trendmicro.com", "1qaz@WSX3edc");
     }
 
     public void Logout()
     {
+        Audience.Context.Logout();
     }
 
     public void RefreshScene()
     {
+        Audience.Context.RefreshSceneList();
     }
 
     public void LoadScene()
     {
+        if (this.CachedSceneList != null && this.sceneListDropdown.options.Count > 0) {
+            if (this.sceneListDropdown.value < this.CachedSceneList.Count)
+            {
+                Audience.Context.LoadScene(this.CachedSceneList[this.sceneListDropdown.value].SceneId);
+            }
+            else 
+            {
+                Debug.LogError("Invalid Call:Dropdown index out of range.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Invalid Call:scene list is empty.");
+        }
     }
 
     public void UnloadScene()
     {
+        Audience.Context.UnloadScene();
     }
 
     public void StartStream()
     {
+        AudienceSDK.Audience.Context.StartSendCameraFrame();
+        Audience.Context.Start();
     }
 
     public void StopStream()
     {
-    }
-
-    public void UpdateSceneList() {
-
+        Audience.Context.Stop();
+        AudienceSDK.Audience.Context.StopSendCameraFrame();
     }
 
     // UI Control
-    public void ShowLoginCompletedView() {
-        this.sceneBlock.SetActive(true);
+    public void InitPanelView() {
+        this.logInButton.interactable = true;
+        this.logOutButton.interactable = false;
+
+        this.sceneBlock.SetActive(false);
+        this.sceneListDropdown.ClearOptions();
+        this.refreshButton.interactable = false;
+        this.loadButton.interactable = false;
+        this.unloadButton.interactable = false;
+
+        this.streamBlock.SetActive(false);
+        this.startStreamButton.interactable = false;
+        this.stopStreamButton.interactable = false;
+    }
+
+    public void DisplayLoginCompletedView() {
         this.logInButton.interactable = false;
         this.logOutButton.interactable = true;
+
+        this.sceneBlock.SetActive(true);
+        this.sceneListDropdown.ClearOptions();
+        this.refreshButton.interactable = true;
+        this.loadButton.interactable = false;
+        this.unloadButton.interactable = false;
+
+        this.streamBlock.SetActive(false);
+        this.startStreamButton.interactable = false;
+        this.stopStreamButton.interactable = false;
+    }
+
+    public void DisplayLogoutCompletedView()
+    {
+        this.logInButton.interactable = true;
+        this.logOutButton.interactable = false;
+
+        this.sceneBlock.SetActive(false);
+        this.sceneListDropdown.ClearOptions();
+        this.refreshButton.interactable = false;
+        this.loadButton.interactable = false;
+        this.unloadButton.interactable = false;
+
+        this.streamBlock.SetActive(false);
+        this.startStreamButton.interactable = false;
+        this.stopStreamButton.interactable = false;
+    }
+
+    public void UpdateSceneList(List<NativeSceneSummaryData> sceneList) {
+        this.CachedSceneList = sceneList;
+        this.sceneListDropdown.ClearOptions();
+
+        var sceneNameList = new List<string>();
+        foreach (var sceneData in sceneList) {
+            sceneNameList.Add(sceneData.SceneName);
+        }
+
+        this.sceneListDropdown.AddOptions(sceneNameList);
+
+        this.loadButton.interactable = (this.sceneListDropdown.options.Count > 0);
+    }
+
+    public void DisplayUnloadCompletedView()
+    {
+        this.logInButton.interactable = false;
+        this.logOutButton.interactable = true;
+
+        this.sceneBlock.SetActive(true);
+        this.refreshButton.interactable = true;
+        this.loadButton.interactable = (this.sceneListDropdown.options.Count > 0);
+        this.unloadButton.interactable = false;
+
+        this.streamBlock.SetActive(false);
+        this.startStreamButton.interactable = false;
+        this.stopStreamButton.interactable = false;
+    }
+
+    public void DisplayLoadCompletedView()
+    {
+        this.logInButton.interactable = false;
+        this.logOutButton.interactable = false;
+
+        this.sceneBlock.SetActive(true);
+        this.refreshButton.interactable = false;
+        this.loadButton.interactable = false;
+        this.unloadButton.interactable = true;
+
+        this.streamBlock.SetActive(true);
+        this.startStreamButton.interactable = true;
+        this.stopStreamButton.interactable = false;
+    }
+
+    public void DisplayStartStreamCompletedView()
+    {
+        this.logInButton.interactable = false;
+        this.logOutButton.interactable = false;
+
+        this.sceneBlock.SetActive(true);
+        this.refreshButton.interactable = false;
+        this.loadButton.interactable = false;
+        this.unloadButton.interactable = false;
+
+        this.streamBlock.SetActive(true);
+        this.startStreamButton.interactable = false;
+        this.stopStreamButton.interactable = true;
+    }
+
+    public void OnSceneListValueChanged() {
+        Debug.Log("OnSceneListValueChanged:" + this.sceneListDropdown.value.ToString());
     }
 
     // Start is called before the first frame update
@@ -110,5 +233,14 @@ public class AudiencePanelView : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.S)) {
+            this.sceneListDropdown.AddOptions(new List<string> {"QQ", "PP", "RR"});
+        }
+
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            this.sceneListDropdown.ClearOptions();
+        }
+
     }
 }
