@@ -35,26 +35,17 @@
 - Click `Save` to save your scene settings
 - Your scene settings will appear in the Beast Saber audience mod after you save
 ****
-#### <a name="step5"> Step 5: Sign into audience in Beat Saber
-- Verify your Beat Saber audience mod is intalled correctly
-    - If installed correctly, "audience" will appear in the mods panel
-    - Click `Sign in` and enter the email and password of your audience account
+#### <a name="step5"> Step 5: SDK development
+1. call Initialize() to initialize audience SDK
+2. call Login() to login audience service
+3. call RefreshSceneList() to get the latest scene list from audience webserver
+4. call LoadScene() when you've select one of the scene you want to load
+5. call Start() to start your selected scene
+6. call GetUserChannelsPageURL() to get your live stream share page
+7. After streaming, call Stop() to stop your live steram
+8. call Logout() to logout audience service
+9. call Dispose() to uninitialize audience SDK
 ****
 
-#### <a name="step6"> Step 6: Start streaming
-- Make sure you have set at least one scene setting (see `Steps 4 and 5`)
-- Verify your streaming platform is streaming successfully
-- Click `VR 360 Live Stream` in Beat Saber
-- Your panel and scene settings appear
-- Select a scene
-- Click `LOAD`
-- Click `START`
-    - If you see an error message, try closing other applications and check your network configuration. For details see <br>[`Limitations - GPU Limitations`](https://github.com/meta-audience/BeatSaber_audience/blob/main/docs/LIMITATION.md#gpu-session-problem)
-- Click `SHARE`
-    - The audience share URL webpage will automatically open in your browser
-****    
-#### <a name="step7"> Step 7: Share a URL
-- Click [`here`](https://www.meta-audience.com/en-us/accounts/userChannels/) to get your sharing URL (viewer names were setup in `Step 4`)
-- Viewers can use the URL to access the livestream in a desktop browser or mobile browser
-****
+
 
