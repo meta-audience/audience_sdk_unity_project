@@ -14,7 +14,7 @@ Allows VR content creators to stream high-quality, immersive video experiences t
 # Installation
 
 Our unity project is a template for you to try our features, so just clone it into your local and have fun!
-Or you can copy the scripts in XXX to your own project.
+Or you can copy the scripts in your own project.
 
 # Usage
 
