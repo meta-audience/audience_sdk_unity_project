@@ -13,7 +13,11 @@ Allows VR content creators to stream high-quality, immersive video experiences t
 
 # Compatibility
 
-Our unity project is tested with Unity 2019.4.28f1 and 2021.3.15f1. The minimum supported version is set to 2019.4.28
+Our unity project is tested with Unity 2019.4.28f1 and 2021.3.15f1. The minimum supported version is set to 2019.4.28  
+**Warning:** 如果你使用較新的版本開啟該專案, 將會遇到:
+* compiler error:Multiple precompiled assemblies with the same name Newtonsoft.Json.dll included on the current platform.  
+
+請直接移除 `Assets\Packages\Newtonsoft.Json.13.0.2` folder
 
 # Installation
 
