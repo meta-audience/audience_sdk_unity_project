@@ -236,17 +236,4 @@ public class AudiencePanelView : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.S)) {
-            this.sceneListDropdown.AddOptions(new List<string> {"QQ", "PP", "RR"});
-        }
-
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            this.sceneListDropdown.ClearOptions();
-        }
-
-    }
 }
