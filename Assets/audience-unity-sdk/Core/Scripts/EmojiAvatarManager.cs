@@ -224,7 +224,7 @@ namespace AudienceSDK {
             */
 #if DLL_BUILD
             var assembly = Assembly.GetExecutingAssembly();
-            Stream stream = assembly.GetManifestResourceStream("AudienceSDK.Resources.Art.audience_sdk");
+            Stream stream = assembly.GetManifestResourceStream("AudienceSDK.Resources.Art.audience_sdk_art_resource");
             var audienceSDKBundle = AssetBundle.LoadFromStream(stream);
 
             var avatarSingle = audienceSDKBundle.LoadAsset<GameObject>(avatarSingleFileName + prefabExtension);
