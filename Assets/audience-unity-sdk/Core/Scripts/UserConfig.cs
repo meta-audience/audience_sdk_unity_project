@@ -26,23 +26,40 @@ namespace AudienceSDK {
         public static int EmojiMaxSentencesInOneAuthor { get; set; } = 2;
 
         public static int EmojiMaxSceneEmojis { get; set; } = 1000;
+
+#if DLL_BUILD
         private static string _userConfigFileName = "audience_user_config.json";
-        private static string _userConfigFilePath = "/audience-unity-sdk/Plugins/";
+        private static string _userConfigEmbededResourcePath = "AudienceSDK.Resources.Config.audience_sdk_config_resource";
+
+#else
+        private static string _userConfigResourcePath = "Audience/Config/audience_user_config";
+#endif
         public static void LoadUserConfig()
         {
-            var configPath = Application.dataPath + _userConfigFilePath + _userConfigFileName;
-            StreamReader reader = new StreamReader(configPath);
+            /*
+            * audience-unity-sdk.csproj would define DLL_BUILD
+            * dll will load resources from embeded resources.
+            * AudienceSDK-Assembly won't define DLL_BUILD
+            * it will load resouces from Resources folder.
+            */
+#if DLL_BUILD
+            var assembly = Assembly.GetExecutingAssembly();
+            Stream stream = assembly.GetManifestResourceStream(_userConfigEmbededResourcePath);
+            var audienceConfigResource = AssetBundle.LoadFromStream(stream);
+            var userConfigText = audienceConfigResource.LoadAsset<TextAsset>(_userConfigFileName);
 
-            if (reader != null)
+            audienceConfigResource.Unload(false);
+            stream.Close();
+#else
+            var userConfigText = Resources.Load<TextAsset>(_userConfigResourcePath);
+#endif
+            if (userConfigText != null)
             {
-                var content = reader.ReadToEnd();
-                DeserializeStaticClass(content, typeof(AudienceSDK.UserConfig));
-
-                reader.Close();
+                DeserializeStaticClass(userConfigText.text, typeof(AudienceSDK.UserConfig));
             }
             else
             {
-                Debug.LogError("Can't find " + _userConfigFileName);
+                Debug.LogError("Can't find config resource");
             }
         }
 
