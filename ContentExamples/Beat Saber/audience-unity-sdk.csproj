@@ -47,7 +47,8 @@
     <EmbeddedResource Include="Resources\Messages\zh-cn.resx" />
     <EmbeddedResource Include="Resources\Messages\zh-tw.resx" />
     <None Include="App.config" />
-    <EmbeddedResource Include="Resources\Art\audience_sdk" />
+    <EmbeddedResource Include="Resources\Art\audience_sdk_art_resource" />
+    <EmbeddedResource Include="Resources\Config\audience_sdk_config_resource" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

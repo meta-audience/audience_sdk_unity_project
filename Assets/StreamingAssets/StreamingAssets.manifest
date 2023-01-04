@@ -1,7 +1,10 @@
 ManifestFileVersion: 0
-CRC: 1404921885
+CRC: 3189032583
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: audience_sdk
+      Name: audience_sdk_art_resource
+      Dependencies: {}
+    Info_1:
+      Name: audience_sdk_config_resource
       Dependencies: {}

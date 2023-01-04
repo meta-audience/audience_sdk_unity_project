@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 2200145371
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 93fad835baa25c238802930143caf6f5
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/audience-unity-sdk/Resources/Audience/Config/audience_user_config.json
+Dependencies: []
