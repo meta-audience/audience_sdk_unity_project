@@ -69,6 +69,12 @@ namespace AudienceSDK {
                 var fittedObj = message.asset_list.Find(x => x.engine == "Unity" && x.render_type == XRSettings.stereoRenderingMode.ToString());
                 if (fittedObj != null) {
                     emojiAsset = fittedObj.asset;
+                } else {
+                    // if can't find correct render_type, just find correct engine.
+                    fittedObj = message.asset_list.Find(x => x.engine == "Unity");
+                    if (fittedObj != null) {
+                        emojiAsset = fittedObj.asset;
+                    }
                 }
             } else {
                 emojiAsset = message.url;
@@ -83,6 +89,12 @@ namespace AudienceSDK {
                     message.animation.asset_list.Find(x => x.engine == "Unity" && x.render_type == XRSettings.stereoRenderingMode.ToString());
             if (fittedAnimaObj != null) {
                 emojiAnimationAsset = fittedAnimaObj.asset;
+            } else {
+                // if can't find correct render_type, just find correct engine.
+                fittedAnimaObj = message.animation.asset_list.Find(x => x.engine == "Unity");
+                if (fittedAnimaObj != null) {
+                    emojiAnimationAsset = fittedAnimaObj.asset;
+                }
             }
 
             if (emojiAnimationAsset == null) {
