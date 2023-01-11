@@ -50,7 +50,6 @@ namespace AudienceSDK {
         }
 
         private void Awake() {
-            UnityEngine.Object.DontDestroyOnLoad(this.gameObject);
             this._authors = new List<ChatAuthor>();
         }
 

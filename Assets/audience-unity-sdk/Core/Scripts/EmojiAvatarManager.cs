@@ -21,20 +21,32 @@ namespace AudienceSDK {
         private LinkedList<EmojiAvatarBehaviourBase> _avatarList;
 
         private GameObject emojiAvatarsRoot = null;
+        private Transform emojiLookAtTarget = null;
         private EmojiAvatarPositionGenerateAlgorithmBase emojiAvatarPositionGenerateAlgorithm;
 
         private float _avatarColliderRadius = 0.3f;
         private int _avatarColliderRetryTimes = 10;
 
         public AudienceReturnCode SetEmojiAvatarFollowTarget(Transform target) {
-            if (this.emojiAvatarsRoot == null) {
-                Debug.LogError("emojiAvatarsRoot is null, create a new one while last one had been destroyed.");
-                return AudienceReturnCode.AudienceSDKNotInited;
+            if (this.emojiAvatarsRoot == this.gameObject) {
+                this.CreateAvatarsRoot();
+                this.MoveAvatarsToNewAvatarsRoot();
             }
 
             this.emojiAvatarsRoot.transform.SetParent(target);
             this.emojiAvatarsRoot.transform.localEulerAngles = Vector3.zero;
             this.emojiAvatarsRoot.transform.localPosition = Vector3.zero;
+            return AudienceReturnCode.AudienceSDKOk;
+        }
+
+        public AudienceReturnCode SetEmojiAvatarLookAtTarget(Transform target)
+        {
+            this.emojiLookAtTarget = target;
+            foreach (EmojiAvatarBehaviourBase avatar in this._avatarList)
+            {
+                avatar.transform.LookAt(this.emojiLookAtTarget);
+            }
+
             return AudienceReturnCode.AudienceSDKOk;
         }
 
@@ -91,7 +103,8 @@ namespace AudienceSDK {
         }
 
         private void Start() {
-            this.CreateAvatarsRoot();
+            this.emojiAvatarsRoot = this.gameObject;
+            this.emojiLookAtTarget = this.gameObject.transform;
             this.emojiAvatarPositionGenerateAlgorithm = new DefaultEmojiAvatarPositionGenerateAlgorithm();
         }
 
@@ -139,12 +152,6 @@ namespace AudienceSDK {
         private AudienceReturnCode CreateAvatar(List<ChatAuthor> avatarAuthors, ref EmojiAvatarBehaviourBase avatar) {
             var rc = AudienceReturnCode.AudienceSDKOk;
 
-            var mainCamera = UnityEngine.Camera.main;
-            if (mainCamera == null) {
-                Debug.LogError("CreateAvatar fail, Camera.main not exist");
-                return AudienceReturnCode.AudienceSDKInternalError;
-            }
-
             if (this._emojiAvatarPrefabList == null || this._emojiAvatarPrefabList.Count <= 0) {
                 Debug.LogError("CreateAvatar fail, emojiAvatarPrefabList is empty");
                 return AudienceReturnCode.AudienceSDKNotInited;
@@ -176,7 +183,7 @@ namespace AudienceSDK {
                     var avatarObject = Instantiate(this._emojiAvatarPrefabList[avatarSingleKey]);
                     avatarObject.transform.SetParent(this.emojiAvatarsRoot.transform);
                     avatarObject.transform.position = avatarPositon;
-                    avatarObject.transform.LookAt(mainCamera.transform);
+                    avatarObject.transform.LookAt(this.emojiLookAtTarget);
                     var avatarCollider = avatarObject.AddComponent<SphereCollider>();
                     avatarCollider.radius = this._avatarColliderRadius;
                     var avatarBehavior = avatarObject.AddComponent<EmojiAvatarSingleAuthorBehaviour>();
@@ -223,7 +230,7 @@ namespace AudienceSDK {
                 this.emojiAvatarPositionGenerateAlgorithm.GenerateAvatarPosition(ref relativePos);
 
                 // compute world coordinate to check overlap with other avatar.
-                var candidatePosition = this.transform.position + this.emojiAvatarsRoot.transform.rotation * relativePos;
+                var candidatePosition = this.emojiAvatarsRoot.transform.position + this.emojiAvatarsRoot.transform.rotation * relativePos;
                 if (!Physics.CheckSphere(candidatePosition, this._avatarColliderRadius)) {
                     avatarPos = candidatePosition;
                     return AudienceReturnCode.AudienceSDKOk;
@@ -275,9 +282,6 @@ namespace AudienceSDK {
         private void CreateAvatarsRoot() {
             this.emojiAvatarsRoot = new GameObject();
             this.emojiAvatarsRoot.name = "EmojiAvatarsRoot";
-            this.emojiAvatarsRoot.transform.SetParent(this.transform);
-            this.emojiAvatarsRoot.transform.localEulerAngles = Vector3.zero;
-            this.emojiAvatarsRoot.transform.localPosition = Vector3.zero;
 
             var rootBehaviour = this.emojiAvatarsRoot.AddComponent<EmojiAvatarsRootBehaviour>();
             rootBehaviour.OnEmojiAvatarsRootDestroy += this.OnEmojiAvatarsRootDestroy;
@@ -305,7 +309,7 @@ namespace AudienceSDK {
         }
 
         private void OnEmojiAvatarsRootDestroy() {
-            this.CreateAvatarsRoot();
+            this.emojiAvatarsRoot = this.gameObject;
             this.MoveAvatarsToNewAvatarsRoot();
         }
     }

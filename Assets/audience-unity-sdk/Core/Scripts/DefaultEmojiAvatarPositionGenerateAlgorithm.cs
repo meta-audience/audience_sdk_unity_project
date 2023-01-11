@@ -10,13 +10,13 @@ namespace AudienceSDK
     {
         private const string avatarAreaResourcesPath = "Audience/Avatar/";
         private const string avatarGenerateArea = "DefaultGenerateArea";
-        private List<Collider> _avatarGenerateColliders = new List<Collider>();
+        private List<BoxCollider> _avatarGenerateColliders = new List<BoxCollider>();
         private GameObject _generateArea = null;
 
         public DefaultEmojiAvatarPositionGenerateAlgorithm()
         {
             Debug.Log("DefaultEmojiAvatarPositionGenerateAlgorithm constructor.");
-            this._avatarGenerateColliders = new List<Collider>();
+            this._avatarGenerateColliders = new List<BoxCollider>();
         }
 
         ~DefaultEmojiAvatarPositionGenerateAlgorithm()
@@ -42,18 +42,17 @@ namespace AudienceSDK
                 return AudienceReturnCode.AudienceSDKNullPtr;
             }
 
-            var randomListIndex = UnityEngine.Random.Range(0, _avatarGenerateColliders.Count - 1);
+            var randomListIndex = UnityEngine.Random.Range(0, _avatarGenerateColliders.Count);
             var randomColliderInList = _avatarGenerateColliders[randomListIndex];
 
-            Vector3 extents = randomColliderInList.bounds.size / 2f;
-
+            Vector3 extents = randomColliderInList.size / 2f;
             Vector3 randomPoint = new Vector3(
                 UnityEngine.Random.Range(-extents.x, extents.x),
                 UnityEngine.Random.Range(-extents.y, extents.y),
                 UnityEngine.Random.Range(-extents.z, extents.z)
                 );
 
-            relativeAvatarPositon = randomPoint;
+            relativeAvatarPositon = randomColliderInList.transform.position + randomPoint;
             return AudienceReturnCode.AudienceSDKOk;
         }
 
@@ -69,8 +68,8 @@ namespace AudienceSDK
 
                     this._avatarGenerateColliders.Clear();
 
-                    var colliders = this._generateArea.GetComponentsInChildren<Collider>();
-                    foreach (Collider col in colliders)
+                    var colliders = this._generateArea.GetComponentsInChildren<BoxCollider>();
+                    foreach (BoxCollider col in colliders)
                     {
                         this._avatarGenerateColliders.Add(col);
                     }
