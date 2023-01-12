@@ -33,7 +33,7 @@ namespace AudienceSDK {
                 this.MoveAvatarsToNewAvatarsRoot();
             }
 
-            this.emojiAvatarsRoot.transform.SetParent(target);
+            this.emojiAvatarsRoot.transform.SetParent(target, false);
             this.emojiAvatarsRoot.transform.localEulerAngles = Vector3.zero;
             this.emojiAvatarsRoot.transform.localPosition = Vector3.zero;
             return AudienceReturnCode.AudienceSDKOk;
@@ -100,12 +100,13 @@ namespace AudienceSDK {
             this._avatarList = new LinkedList<EmojiAvatarBehaviourBase>();
             this._emojiAvatarPrefabList = new Dictionary<string, GameObject>();
             this.PreloadEmojiAvatar();
-        }
 
-        private void Start() {
             this.emojiAvatarsRoot = this.gameObject;
             this.emojiLookAtTarget = this.gameObject.transform;
             this.emojiAvatarPositionGenerateAlgorithm = new DefaultEmojiAvatarPositionGenerateAlgorithm();
+        }
+
+        private void Start() {
         }
 
         private void OnDestroy() {
@@ -170,7 +171,7 @@ namespace AudienceSDK {
             }
 
             var avatarPositon = Vector3.zero;
-            rc = this.GenerateAvatarPosition(ref avatarPositon);
+            rc = this.GenerateAvatarPosition(out avatarPositon);
             if (rc != AudienceReturnCode.AudienceSDKOk) {
                 return rc;
             }
@@ -221,13 +222,12 @@ namespace AudienceSDK {
             }
         }
 
-        private AudienceReturnCode GenerateAvatarPosition(ref Vector3 avatarPos) {
+        private AudienceReturnCode GenerateAvatarPosition(out Vector3 avatarPos) {
 
             for (int i = 0; i < this._avatarColliderRetryTimes; ++i) {
 
                 // use algorithm to get relative position
-                var relativePos = Vector3.zero;
-                this.emojiAvatarPositionGenerateAlgorithm.GenerateAvatarPosition(ref relativePos);
+                var relativePos = this.emojiAvatarPositionGenerateAlgorithm.GenerateAvatarPosition();
 
                 // compute world coordinate to check overlap with other avatar.
                 var candidatePosition = this.emojiAvatarsRoot.transform.position + this.emojiAvatarsRoot.transform.rotation * relativePos;
@@ -247,6 +247,7 @@ namespace AudienceSDK {
             }
 
             Debug.LogWarning("GenerateAvatarPosition fail, no position for new coming avatar.");
+            avatarPos = Vector3.zero;
             return AudienceReturnCode.AudienceSDKInternalError;
         }
 

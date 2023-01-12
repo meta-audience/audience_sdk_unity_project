@@ -4,6 +4,6 @@ namespace AudienceSDK
 {
     public interface EmojiAvatarPositionGenerateAlgorithmBase
     {
-        AudienceReturnCode GenerateAvatarPosition(ref Vector3 relativeAvatarPositon);
+        Vector3 GenerateAvatarPosition();
     }
 }

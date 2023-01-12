@@ -26,20 +26,18 @@ namespace AudienceSDK
             UnityEngine.Object.DestroyImmediate(this._generateArea);
         }
 
-        public AudienceReturnCode GenerateAvatarPosition(ref Vector3 relativeAvatarPositon) {
+        public Vector3 GenerateAvatarPosition() {
 
             var avatarArea = this.GetGenerateArea();
             if (avatarArea == null) {
-                relativeAvatarPositon = Vector3.zero;
                 Debug.LogError("Generate avatar position failed, area object isnull, return origin.");
-                return AudienceReturnCode.AudienceSDKNullPtr;
+                return Vector3.zero;
             }
 
             if (this._avatarGenerateColliders == null || this._avatarGenerateColliders.Count <= 0)
             {
-                relativeAvatarPositon = Vector3.zero;
                 Debug.LogError("Generate avatar position failed, area collider is empty, return origin.");
-                return AudienceReturnCode.AudienceSDKNullPtr;
+                return Vector3.zero;
             }
 
             var randomListIndex = UnityEngine.Random.Range(0, _avatarGenerateColliders.Count);
@@ -52,8 +50,7 @@ namespace AudienceSDK
                 UnityEngine.Random.Range(-extents.z, extents.z)
                 );
 
-            relativeAvatarPositon = randomColliderInList.transform.position + randomPoint;
-            return AudienceReturnCode.AudienceSDKOk;
+            return randomColliderInList.transform.position + randomColliderInList.transform.rotation * randomPoint;
         }
 
         private GameObject GetGenerateArea()
