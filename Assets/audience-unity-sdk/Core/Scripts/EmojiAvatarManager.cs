@@ -110,6 +110,12 @@ namespace AudienceSDK {
         }
 
         private void OnDestroy() {
+            if (this.emojiAvatarsRoot != null) {
+                var rootBehaviour = this.emojiAvatarsRoot.GetComponent<EmojiAvatarsRootBehaviour>();
+                if (rootBehaviour != null) {
+                    rootBehaviour.OnEmojiAvatarsRootDestroy -= this.OnEmojiAvatarsRootDestroy;
+                }
+            }
         }
 
         private AudienceReturnCode FindExistAvatars(List<ChatAuthor> targetAuthors, ref EmojiAvatarBehaviourBase emojiAvatar) {
