@@ -150,7 +150,9 @@ namespace AudienceSDK {
             GameObject go = new GameObject();
             T eBehaviour = go.AddComponent<T>();
             go.transform.SetParent(avatar.transform, false);
-            go.transform.SetParent(null);
+
+            // this.transform is don't destroy, emoji won't destroy when scene unloaded.
+            go.transform.SetParent(this.transform);
             return eBehaviour;
         }
 
