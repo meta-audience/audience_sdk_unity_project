@@ -45,7 +45,7 @@ namespace AudienceSDK {
             //    this._spawnerIdleTime = Audience.Context.CurrentUserConfig.EmojiLimitPerMessage;
             // }
             this.ResetLifeTime();
-            this.StartCoroutine(this.UpdateLifeTime());
+            Audience.Context.EmojiAvatarManager.StartCoroutine(this.UpdateLifeTime());
             return AudienceReturnCode.AudienceSDKOk;
         }
 

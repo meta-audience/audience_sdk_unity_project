@@ -34,14 +34,16 @@ namespace AudienceSDK {
             }
 
             this.emojiAvatarsRoot.transform.SetParent(target, false);
-            this.emojiAvatarsRoot.transform.localEulerAngles = Vector3.zero;
-            this.emojiAvatarsRoot.transform.localPosition = Vector3.zero;
             return AudienceReturnCode.AudienceSDKOk;
         }
 
         public AudienceReturnCode SetEmojiAvatarLookAtTarget(Transform target)
         {
-            this.emojiLookAtTarget = target;
+            if (this.emojiLookAtTarget == this.transform) {
+                this.CreateLookAtTarget();
+            }
+
+            this.emojiLookAtTarget.SetParent(target, false);
             foreach (EmojiAvatarBehaviourBase avatar in this._avatarList)
             {
                 avatar.transform.LookAt(this.emojiLookAtTarget);
@@ -102,7 +104,7 @@ namespace AudienceSDK {
             this.PreloadEmojiAvatar();
 
             this.emojiAvatarsRoot = this.gameObject;
-            this.emojiLookAtTarget = this.gameObject.transform;
+            this.emojiLookAtTarget = this.transform;
             this.emojiAvatarPositionGenerateAlgorithm = new DefaultEmojiAvatarPositionGenerateAlgorithm();
         }
 
@@ -114,6 +116,13 @@ namespace AudienceSDK {
                 var rootBehaviour = this.emojiAvatarsRoot.GetComponent<EmojiAvatarsRootBehaviour>();
                 if (rootBehaviour != null) {
                     rootBehaviour.OnEmojiAvatarsRootDestroy -= this.OnEmojiAvatarsRootDestroy;
+                }
+            }
+
+            if (this.emojiLookAtTarget != null) {
+                var lookAtTargetBehaviour = this.emojiLookAtTarget.GetComponent<EmojiAvatarsLookAtTargetBehavior>();
+                if (lookAtTargetBehaviour != null) {
+                    lookAtTargetBehaviour.OnEmojiAvatarsLookAtTargetDestroy -= this.OnEmojiAvatarsLookAtTargetDestroy;
                 }
             }
         }
@@ -287,25 +296,34 @@ namespace AudienceSDK {
         }
 
         private void CreateAvatarsRoot() {
-            this.emojiAvatarsRoot = new GameObject();
-            this.emojiAvatarsRoot.name = "EmojiAvatarsRoot";
+            this.emojiAvatarsRoot = new GameObject("EmojiAvatarsRoot");
 
             var rootBehaviour = this.emojiAvatarsRoot.AddComponent<EmojiAvatarsRootBehaviour>();
             rootBehaviour.OnEmojiAvatarsRootDestroy += this.OnEmojiAvatarsRootDestroy;
+        }
+
+        private void CreateLookAtTarget()
+        {
+            var lookAtTarget = new GameObject("EmojiAvatarsLookAtTarget");
+            this.emojiLookAtTarget = lookAtTarget.transform;
+
+            var lookAtTargetBehaviour = lookAtTarget.AddComponent<EmojiAvatarsLookAtTargetBehavior>();
+            lookAtTargetBehaviour.OnEmojiAvatarsLookAtTargetDestroy += this.OnEmojiAvatarsLookAtTargetDestroy;
         }
 
         private void MoveAvatarsToNewAvatarsRoot()
         {
             foreach (EmojiAvatarBehaviourBase avatar in this._avatarList)
             {
-                // save emoji avatar relative position and rotation.
-                var emojiAvatarRelativeRotation = avatar.transform.localEulerAngles;
-                var emojiAvatarRelativePosition = avatar.transform.localPosition;
+                avatar.transform.SetParent(this.emojiAvatarsRoot.transform, false);
+            }
+        }
 
-                // after change parent, keep original relative position and rotation.
-                avatar.transform.SetParent(this.emojiAvatarsRoot.transform);
-                avatar.transform.localEulerAngles = emojiAvatarRelativeRotation;
-                avatar.transform.localPosition = emojiAvatarRelativePosition;
+        private void AvatarsLookAtNewTarget()
+        {
+            foreach (EmojiAvatarBehaviourBase avatar in this._avatarList)
+            {
+                avatar.transform.LookAt(this.emojiLookAtTarget);
             }
         }
 
@@ -318,6 +336,12 @@ namespace AudienceSDK {
         private void OnEmojiAvatarsRootDestroy() {
             this.emojiAvatarsRoot = this.gameObject;
             this.MoveAvatarsToNewAvatarsRoot();
+        }
+
+        private void OnEmojiAvatarsLookAtTargetDestroy()
+        {
+            this.emojiLookAtTarget = this.transform;
+            this.AvatarsLookAtNewTarget();
         }
     }
 }

@@ -149,9 +149,7 @@ namespace AudienceSDK {
             where T : EmojiBehaviourBase {
             GameObject go = new GameObject();
             T eBehaviour = go.AddComponent<T>();
-            go.transform.SetParent(avatar.transform);
-            go.transform.localEulerAngles = Vector3.zero;
-            go.transform.localPosition = Vector3.zero;
+            go.transform.SetParent(avatar.transform, false);
             go.transform.SetParent(null);
             return eBehaviour;
         }
