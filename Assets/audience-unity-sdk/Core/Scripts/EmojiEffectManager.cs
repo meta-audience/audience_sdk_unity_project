@@ -17,6 +17,12 @@ namespace AudienceSDK {
         private List<EmojiInteractUnit> _interactList;
         private List<EmojiBehaviourBase> _emojiList;
         private bool _isEmojiProcessing = false;
+        private bool _isEmojiAttachEmojiSpawner = false;
+
+        public AudienceReturnCode SetIsEmojiAttachEmojiSpawner(bool value) {
+            this._isEmojiAttachEmojiSpawner = value;
+            return AudienceReturnCode.AudienceSDKOk;
+        }
 
         public AudienceReturnCode CreateEmoji(ChatAuthor author, EmojiMessage message) {
             EmojiAvatarBehaviourBase avatar = null;
@@ -151,8 +157,18 @@ namespace AudienceSDK {
             T eBehaviour = go.AddComponent<T>();
             go.transform.SetParent(avatar.transform, false);
 
-            // this.transform is don't destroy, emoji won't destroy when scene unloaded.
-            go.transform.SetParent(this.transform);
+            // this.transform or EmojiAvatarsRoot is don't destroy, emoji won't destroy when scene unloaded.
+            if (this._isEmojiAttachEmojiSpawner) {
+                if (Audience.Context.EmojiAvatarManager.EmojiAvatarsRoot != null) {
+                    go.transform.SetParent(Audience.Context.EmojiAvatarManager.EmojiAvatarsRoot.transform);
+                } else {
+                    Debug.LogWarning("EmojiAvatarsRoot should exist, check EmojiAvatarManager is inited.");
+                    go.transform.SetParent(this.transform);
+                }
+            } else {
+                go.transform.SetParent(this.transform);
+            }
+            
             return eBehaviour;
         }
 

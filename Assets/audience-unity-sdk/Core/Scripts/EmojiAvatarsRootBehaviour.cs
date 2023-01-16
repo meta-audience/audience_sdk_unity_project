@@ -5,12 +5,41 @@ namespace AudienceSDK
 {
     public class EmojiAvatarsRootBehaviour : MonoBehaviour
     {
-        public Action OnEmojiAvatarsRootDestroy { get; set; }
+        public Transform FollowTarget {
+            get 
+            {
+                return this._followTarget;
+            }
+            set
+            {
+                this._followTarget = value;
+                this.DockFollowTarget();
+            }
+        }
 
-        private void OnDestroy()
+        private Transform _followTarget = null;
+
+        private void Awake()
         {
-            // When destroy, notify listener move all avatars to other place.
-            this.OnEmojiAvatarsRootDestroy?.Invoke();
+            UnityEngine.Object.DontDestroyOnLoad(this);
+        }
+
+        private void Update()
+        {
+            this.DockFollowTarget();
+        }
+
+        private void DockFollowTarget() {
+            if (this._followTarget)
+            {
+                this.transform.eulerAngles = this._followTarget.eulerAngles;
+                this.transform.position = this._followTarget.position;
+            }
+            else
+            {
+                this.transform.eulerAngles = Vector3.zero;
+                this.transform.position = Vector3.zero;
+            }
         }
     }
 }
