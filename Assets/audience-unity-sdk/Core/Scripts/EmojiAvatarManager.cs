@@ -10,6 +10,10 @@ namespace AudienceSDK {
 
         public float AvatarTotalLifeTime { get; private set; } = 15.0f;
 
+        public GameObject EmojiAvatarsRoot { get { return this._emojiAvatarsRoot; } }
+
+        public GameObject EmojiAvatarsLookAtTarget { get { return this._emojiLookAtTarget; } }
+
         private const string avatarResourcesPath = "Audience/Avatar/";
         private const string avatarSingleKey = "single";
         private const string avatarSingleFileName = "Avatar_Single";
@@ -20,14 +24,35 @@ namespace AudienceSDK {
         private Dictionary<string, GameObject> _emojiAvatarPrefabList;
         private LinkedList<EmojiAvatarBehaviourBase> _avatarList;
 
-        private float _avatarZoneDistance = 1.5f;
-        private float _avatarZoneGroundClearance = 0.5f;
-        private float _avatarZoneBetween = 2f;
-        private float _avatarZoneHeight = 1.5f;
-        private float _avatarZoneWidth = 4f;
-        private float _avatarZoneThickness = 0.5f;
+        private GameObject _emojiAvatarsRoot = null;
+        private EmojiAvatarsRootBehaviour _rootBehaviour = null;
+        private GameObject _emojiLookAtTarget = null;
+        private EmojiAvatarsLookAtTargetBehavior _lookAtTargetBehaviour = null;
+        private EmojiAvatarPositionGenerateAlgorithmBase emojiAvatarPositionGenerateAlgorithm;
+
         private float _avatarColliderRadius = 0.3f;
         private int _avatarColliderRetryTimes = 10;
+
+        public AudienceReturnCode SetEmojiAvatarFollowTarget(Transform target) {
+            this._rootBehaviour.FollowTarget = target;
+            return AudienceReturnCode.AudienceSDKOk;
+        }
+
+        public AudienceReturnCode SetEmojiAvatarLookAtTarget(Transform target)
+        {
+            this._lookAtTargetBehaviour.LookAtTarget = target;
+            foreach (EmojiAvatarBehaviourBase avatar in this._avatarList)
+            {
+                avatar.transform.LookAt(this._emojiLookAtTarget.transform);
+            }
+
+            return AudienceReturnCode.AudienceSDKOk;
+        }
+
+        public AudienceReturnCode SetEmojiAvatarPositionGenerateAlgorithm(EmojiAvatarPositionGenerateAlgorithmBase algo) {
+            this.emojiAvatarPositionGenerateAlgorithm = algo;
+            return AudienceReturnCode.AudienceSDKOk;
+        }
 
         internal AudienceReturnCode GetAvatar(ChatAuthor author, ref EmojiAvatarBehaviourBase avatar) {
             var targetAuthors = new List<ChatAuthor>();
@@ -74,6 +99,16 @@ namespace AudienceSDK {
             this._avatarList = new LinkedList<EmojiAvatarBehaviourBase>();
             this._emojiAvatarPrefabList = new Dictionary<string, GameObject>();
             this.PreloadEmojiAvatar();
+
+            this._emojiAvatarsRoot = new GameObject("EmojiAvatarsRoot");
+            this._emojiAvatarsRoot.transform.SetParent(this.transform);
+            this._rootBehaviour = this._emojiAvatarsRoot.AddComponent<EmojiAvatarsRootBehaviour>();
+
+            this._emojiLookAtTarget = new GameObject("EmojiAvatarLookAtTarget");
+            this._emojiLookAtTarget.transform.SetParent(this.transform);
+            this._lookAtTargetBehaviour = this._emojiLookAtTarget.AddComponent<EmojiAvatarsLookAtTargetBehavior>();
+
+            this.emojiAvatarPositionGenerateAlgorithm = new DefaultEmojiAvatarPositionGenerateAlgorithm();
         }
 
         private void Start() {
@@ -123,19 +158,31 @@ namespace AudienceSDK {
         private AudienceReturnCode CreateAvatar(List<ChatAuthor> avatarAuthors, ref EmojiAvatarBehaviourBase avatar) {
             var rc = AudienceReturnCode.AudienceSDKOk;
 
-            var mainCamera = UnityEngine.Camera.main;
-            if (mainCamera == null) {
-                Debug.LogError("CreateAvatar fail, Camera.main not exist");
-                return AudienceReturnCode.AudienceSDKInternalError;
-            }
-
             if (this._emojiAvatarPrefabList == null || this._emojiAvatarPrefabList.Count <= 0) {
                 Debug.LogError("CreateAvatar fail, emojiAvatarPrefabList is empty");
                 return AudienceReturnCode.AudienceSDKNotInited;
             }
 
+            if (this._emojiAvatarsRoot == null)
+            {
+                Debug.LogError("_emojiAvatarsRoot is null, init incomplete.");
+                return AudienceReturnCode.AudienceSDKNotInited;
+            }
+
+            if (this._emojiLookAtTarget == null)
+            {
+                Debug.LogError("_emojiLookAtTarget is null, init incomplete.");
+                return AudienceReturnCode.AudienceSDKNotInited;
+            }
+
+            if (this.emojiAvatarPositionGenerateAlgorithm == null)
+            {
+                Debug.LogError("CreateAvatar fail, emojiAvatarPositionGenerateAlgorithm not assigned.");
+                return AudienceReturnCode.AudienceSDKNotInited;
+            }
+
             var avatarPositon = Vector3.zero;
-            rc = this.GenerateAvatarPosition(ref avatarPositon);
+            rc = this.GenerateAvatarPosition(out avatarPositon);
             if (rc != AudienceReturnCode.AudienceSDKOk) {
                 return rc;
             }
@@ -146,8 +193,9 @@ namespace AudienceSDK {
             } else if (avatarAuthors.Count == 1) {
                 if (this._emojiAvatarPrefabList.ContainsKey(avatarSingleKey) && this._emojiAvatarPrefabList[avatarSingleKey] != null) {
                     var avatarObject = Instantiate(this._emojiAvatarPrefabList[avatarSingleKey]);
+                    avatarObject.transform.SetParent(this._emojiAvatarsRoot.transform);
                     avatarObject.transform.position = avatarPositon;
-                    avatarObject.transform.LookAt(mainCamera.transform);
+                    avatarObject.transform.LookAt(this._emojiLookAtTarget.transform);
                     var avatarCollider = avatarObject.AddComponent<SphereCollider>();
                     avatarCollider.radius = this._avatarColliderRadius;
                     var avatarBehavior = avatarObject.AddComponent<EmojiAvatarSingleAuthorBehaviour>();
@@ -185,19 +233,19 @@ namespace AudienceSDK {
             }
         }
 
-        private AudienceReturnCode GenerateAvatarPosition(ref Vector3 avatarPos) {
+        private AudienceReturnCode GenerateAvatarPosition(out Vector3 avatarPos) {
 
-            // algo will be changed
+            var candidatePosition = Vector3.zero;
             for (int i = 0; i < this._avatarColliderRetryTimes; ++i) {
 
-                var zoneWidth = (this._avatarZoneWidth - this._avatarZoneBetween) / 2f;
-                var random_x = UnityEngine.Random.Range(-1 * zoneWidth, zoneWidth);
-                random_x = random_x >= 0 ? random_x + (this._avatarZoneBetween / 2f) : random_x - (this._avatarZoneBetween / 2f);
-                var random_y = UnityEngine.Random.Range(this._avatarZoneGroundClearance, this._avatarZoneGroundClearance + this._avatarZoneHeight);
-                var random_z = UnityEngine.Random.Range(this._avatarZoneDistance, this._avatarZoneDistance + this._avatarZoneThickness);
-                var detectPosition = new Vector3(random_x, random_y, random_z);
-                if (!Physics.CheckSphere(detectPosition, this._avatarColliderRadius)) {
-                    avatarPos = detectPosition;
+                // use algorithm to get relative position
+                var relativePos = this.emojiAvatarPositionGenerateAlgorithm.GenerateAvatarPosition();
+
+                // compute world coordinate to check overlap with other avatar.
+                candidatePosition = this._emojiAvatarsRoot.transform.position + 
+                    this._emojiAvatarsRoot.transform.rotation * relativePos;
+                if (!Physics.CheckSphere(candidatePosition, this._avatarColliderRadius)) {
+                    avatarPos = candidatePosition;
                     return AudienceReturnCode.AudienceSDKOk;
                 }
             }
@@ -212,7 +260,8 @@ namespace AudienceSDK {
             }
 
             Debug.LogWarning("GenerateAvatarPosition fail, no position for new coming avatar.");
-            return AudienceReturnCode.AudienceSDKInternalError;
+            avatarPos = candidatePosition;
+            return AudienceReturnCode.AudienceSDKOk;
         }
 
         private void PreloadEmojiAvatar() {
