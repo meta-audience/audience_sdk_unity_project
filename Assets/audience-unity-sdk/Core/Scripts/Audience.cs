@@ -58,7 +58,7 @@ namespace AudienceSDK {
             NativeMethods.RegisterPlatformConnectionChanged(PlatformConnectionStateChanged);
             NativeMethods.RegisterChatMuteEmojiChanged(ChatMuteEmojiChanged);
 
-            var contextObject = new GameObject();
+            var contextObject = new GameObject("Audience_Runtime");
             Context.SceneManager = contextObject.AddComponent<SceneManager>();
             Context.AudioManager = contextObject.AddComponent<AudioManager>();
             Context.BundleManager = contextObject.AddComponent<BundleManager>();

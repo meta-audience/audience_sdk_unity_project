@@ -101,9 +101,11 @@ namespace AudienceSDK {
             this.PreloadEmojiAvatar();
 
             this._emojiAvatarsRoot = new GameObject("EmojiAvatarsRoot");
+            this._emojiAvatarsRoot.transform.SetParent(this.transform);
             this._rootBehaviour = this._emojiAvatarsRoot.AddComponent<EmojiAvatarsRootBehaviour>();
 
             this._emojiLookAtTarget = new GameObject("EmojiAvatarLookAtTarget");
+            this._emojiLookAtTarget.transform.SetParent(this.transform);
             this._lookAtTargetBehaviour = this._emojiLookAtTarget.AddComponent<EmojiAvatarsLookAtTargetBehavior>();
 
             this.emojiAvatarPositionGenerateAlgorithm = new DefaultEmojiAvatarPositionGenerateAlgorithm();
