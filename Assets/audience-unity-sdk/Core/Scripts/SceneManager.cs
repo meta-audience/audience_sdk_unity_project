@@ -31,6 +31,8 @@ namespace AudienceSDK {
             Unloading = 3,
         }
 
+        public Action<SceneManagerState> CurrentSceneManagerStateChanged;
+
         public SceneManagerState CurrentSceneManagerState {
             get {
                 return this._sceneManagerState;
@@ -38,6 +40,7 @@ namespace AudienceSDK {
 
             private set {
                 this._sceneManagerState = value;
+                this.CurrentSceneManagerStateChanged?.Invoke(this._sceneManagerState);
             }
         }
 

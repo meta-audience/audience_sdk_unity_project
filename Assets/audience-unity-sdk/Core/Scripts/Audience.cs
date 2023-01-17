@@ -21,9 +21,27 @@ namespace AudienceSDK {
             }
         }
 
+        public static Action<bool> AudienceInitStateChanged;
+
+        public static bool AudienceInited
+        {
+            get
+            {
+                return _audienceInited;
+            }
+
+            private set
+            {
+                _audienceInited = value;
+                AudienceInitStateChanged?.Invoke(_audienceInited);
+            }
+        }
+
         public static Context Context => _context;
 
         internal static WeakReferenceTable _table => _context?._table;
+
+        private static bool _audienceInited = false;
 
         private static Context _context = null;
 
@@ -123,6 +141,14 @@ namespace AudienceSDK {
             }
 
             UserConfig.LoadUserConfig();
+            AudienceInited = true;
+        }
+
+        public static void Deinitialize()
+        {
+            AudienceInited = false;
+            AudienceSDK.Audience.Context.Stop();
+            NativeMethods.DeInit();
         }
 
         public static void Dispose() {
