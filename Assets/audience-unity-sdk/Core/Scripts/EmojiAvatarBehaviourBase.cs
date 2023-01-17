@@ -46,12 +46,17 @@ namespace AudienceSDK {
             // }
             this.ResetLifeTime();
             this.StartCoroutine(this.UpdateLifeTime());
+            this.StartCoroutine(this.UpdateDirection());
             return AudienceReturnCode.AudienceSDKOk;
         }
 
         private void Awake() {
-            UnityEngine.Object.DontDestroyOnLoad(this.gameObject);
             this._authors = new List<ChatAuthor>();
+        }
+
+        private void OnDestroy()
+        {
+            this.StopAllCoroutines();
         }
 
         private void ResetLifeTime() {
@@ -71,6 +76,19 @@ namespace AudienceSDK {
             }
 
             UnityEngine.Object.DestroyImmediate(this.gameObject);
+        }
+
+        private IEnumerator UpdateDirection() {
+            while (true)
+            {
+                if (Audience.Context.EmojiAvatarManager.EmojiAvatarsLookAtTarget == null)
+                {
+                    Debug.LogWarning("EmojiAvatarsLookAtTarget should exist, check EmojiAvatarManager is inited.");
+                    break;
+                }
+                this.transform.LookAt(Audience.Context.EmojiAvatarManager.EmojiAvatarsLookAtTarget.transform);
+                yield return null;
+            }
         }
     }
 }
