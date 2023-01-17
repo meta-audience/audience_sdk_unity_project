@@ -25,7 +25,7 @@ namespace AudienceSDK
             UnityEngine.Object.DontDestroyOnLoad(this);
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             this.DockLookAtTarget();
         }
@@ -34,12 +34,12 @@ namespace AudienceSDK
         {
             if (this._lookAtTarget)
             {
-                this.transform.eulerAngles = this._lookAtTarget.eulerAngles;
+                this.transform.rotation = this._lookAtTarget.rotation;
                 this.transform.position = this._lookAtTarget.position;
             }
             else
             {
-                this.transform.eulerAngles = Vector3.zero;
+                this.transform.rotation = Quaternion.identity;
                 this.transform.position = Vector3.zero;
             }
         }
