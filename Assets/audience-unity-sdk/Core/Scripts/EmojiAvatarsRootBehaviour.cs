@@ -24,7 +24,7 @@ namespace AudienceSDK
             UnityEngine.Object.DontDestroyOnLoad(this);
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             this.DockFollowTarget();
         }
@@ -32,12 +32,12 @@ namespace AudienceSDK
         private void DockFollowTarget() {
             if (this._followTarget)
             {
-                this.transform.eulerAngles = this._followTarget.eulerAngles;
+                this.transform.rotation = this._followTarget.rotation;
                 this.transform.position = this._followTarget.position;
             }
             else
             {
-                this.transform.eulerAngles = Vector3.zero;
+                this.transform.rotation = Quaternion.identity;
                 this.transform.position = Vector3.zero;
             }
         }

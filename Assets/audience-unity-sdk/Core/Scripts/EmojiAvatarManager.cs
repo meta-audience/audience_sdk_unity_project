@@ -235,13 +235,15 @@ namespace AudienceSDK {
 
         private AudienceReturnCode GenerateAvatarPosition(out Vector3 avatarPos) {
 
+            var candidatePosition = Vector3.zero;
             for (int i = 0; i < this._avatarColliderRetryTimes; ++i) {
 
                 // use algorithm to get relative position
                 var relativePos = this.emojiAvatarPositionGenerateAlgorithm.GenerateAvatarPosition();
 
                 // compute world coordinate to check overlap with other avatar.
-                var candidatePosition = this._emojiAvatarsRoot.transform.position + this._emojiAvatarsRoot.transform.rotation * relativePos;
+                candidatePosition = this._emojiAvatarsRoot.transform.position + 
+                    this._emojiAvatarsRoot.transform.rotation * relativePos;
                 if (!Physics.CheckSphere(candidatePosition, this._avatarColliderRadius)) {
                     avatarPos = candidatePosition;
                     return AudienceReturnCode.AudienceSDKOk;
@@ -258,8 +260,8 @@ namespace AudienceSDK {
             }
 
             Debug.LogWarning("GenerateAvatarPosition fail, no position for new coming avatar.");
-            avatarPos = Vector3.zero;
-            return AudienceReturnCode.AudienceSDKInternalError;
+            avatarPos = candidatePosition;
+            return AudienceReturnCode.AudienceSDKOk;
         }
 
         private void PreloadEmojiAvatar() {
