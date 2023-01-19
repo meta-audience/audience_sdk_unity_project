@@ -4,8 +4,11 @@ using UnityEngine;
 
 namespace AudienceSDK
 {
+    // if game developer want to move audience camera, you could extend CameraMoveAlgorithmBase,
+    // and call MoveCameras(rotation, positon) to change world coordinate of audience cameras.
     public abstract class CameraMoveAlgorithmBase : MonoBehaviour
     {
+        // audience camera is property, game developer can't set transform directly.
         private List<Transform> _cameraTransformList = null;
         private Quaternion _rootRotation = Quaternion.identity;
         private Vector3 _rootPosition = Vector3.zero;
@@ -49,6 +52,7 @@ namespace AudienceSDK
             Audience.AudienceInitStateChanged -= this.RegisterCameraDirectorCallback;
         }
 
+        // Listen audience is initialize or not. regeist listener to scenemanager.
         private void RegisterCameraDirectorCallback(bool audienceInit)
         {
             if (audienceInit)
@@ -66,6 +70,7 @@ namespace AudienceSDK
             }
         }
 
+        // Listen scene is loaded or not, and collect cameras or clear list.
         private void OnSceneManagerStateChanged(SceneManager.SceneManagerState state)
         {
             switch (state)
