@@ -4,8 +4,10 @@ using UnityEngine;
 
 namespace AudienceSDK
 {
-    // if game developer want to move audience camera, you could extend CameraMoveAlgorithmBase,
-    // and call MoveCameras(rotation, positon) to change world coordinate of audience cameras.
+    // if game developers want to move audience camera, you could extend CameraMoveAlgorithmBase,
+    // then calculate the world coordinates and set the information to the audience camera by
+    // calling MoveCameras(rotation, positon).
+    // You can refer to example : DefaultDockCameraAlgorithm.cs or DefaultFollowCameraAlgorithm.cs
     public abstract class CameraMoveAlgorithmBase : MonoBehaviour
     {
         // audience camera is property, game developer can't set transform directly.
