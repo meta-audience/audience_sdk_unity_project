@@ -7,6 +7,7 @@ namespace AudienceSDK
     // if game developers want to move audience camera, you could extend CameraMoveAlgorithmBase,
     // then calculate the world coordinates and set the information to the audience camera by
     // calling MoveCameras(rotation, positon).
+    // Game developers can do these calculations in Update() LateUpdate() or FixedUpdate() etc...
     // You can refer to example : DefaultDockCameraAlgorithm.cs or DefaultFollowCameraAlgorithm.cs
     public abstract class CameraMoveAlgorithmBase : MonoBehaviour
     {
