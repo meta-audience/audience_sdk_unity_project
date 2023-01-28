@@ -18,6 +18,14 @@ namespace AudienceSDK.Sample
             }
         }
 
+        private void OnEnable()
+        {
+            if (this._dockTarget)
+            {
+                this.MoveCameras(this._dockTarget.rotation, this._dockTarget.position);
+            }
+        }
+
         private void Update()
         {
             if (this._dockTarget)

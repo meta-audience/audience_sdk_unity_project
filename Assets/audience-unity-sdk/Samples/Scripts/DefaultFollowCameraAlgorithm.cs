@@ -30,8 +30,18 @@ namespace AudienceSDK.Sample
             }
         }
 
+        private void OnEnable()
+        {
+            if (this._followTarget)
+            {
+                this.MoveCameras(this._followTarget.rotation, this._followTarget.position);
+                this._lastRotation = this._followTarget.rotation;
+                this._lastPosition = this._followTarget.position;
+            }
+        }
+
         // Update is called once per frame
-        private void LateUpdate()
+        private void FixedUpdate()
         {
             if (this._followTarget) {
                 var destinationPos = this._followTarget.position + this._followTarget.rotation * this._relativePosition;

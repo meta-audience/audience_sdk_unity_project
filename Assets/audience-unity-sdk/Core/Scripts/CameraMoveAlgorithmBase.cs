@@ -22,12 +22,12 @@ namespace AudienceSDK
                 {
                     var localRotation = Quaternion.Inverse(this._rootRotation) * cameraTransform.rotation;
                     var localPosition = Quaternion.Inverse(this._rootRotation) * (cameraTransform.position - this._rootPosition);
-                    this._rootRotation = rotation;
-                    this._rootPosition = position;
-                    cameraTransform.rotation = this._rootRotation * localRotation;
-                    cameraTransform.position = this._rootPosition + this._rootRotation * localPosition;
+                    cameraTransform.rotation = rotation * localRotation;
+                    cameraTransform.position = position + rotation * localPosition;
                 }
             }
+            this._rootRotation = rotation;
+            this._rootPosition = position;
         }
 
         protected virtual void Awake()
@@ -53,6 +53,22 @@ namespace AudienceSDK
             }
 
             Audience.AudienceInitStateChanged -= this.RegisterCameraDirectorCallback;
+        }
+
+        private void OnDisable()
+        {
+            foreach (var cameraTransform in this._cameraTransformList)
+            {
+                if (cameraTransform)
+                {
+                    var localRotation = Quaternion.Inverse(this._rootRotation) * cameraTransform.rotation;
+                    var localPosition = Quaternion.Inverse(this._rootRotation) * (cameraTransform.position - this._rootPosition);
+                    cameraTransform.rotation = Quaternion.identity * localRotation;
+                    cameraTransform.position = Quaternion.identity * localPosition;
+                }
+            }
+            this._rootRotation = Quaternion.identity;
+            this._rootPosition = Vector3.zero;
         }
 
         // Listen audience is initialize or not. regeist listener to scenemanager.
