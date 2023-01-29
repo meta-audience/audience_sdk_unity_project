@@ -40,10 +40,10 @@ namespace AudienceSDK.Sample
             }
         }
 
-        // Update is called once per frame
         private void FixedUpdate()
         {
-            if (this._followTarget) {
+            if (this._followTarget)
+            {
                 var destinationPos = this._followTarget.position + this._followTarget.rotation * this._relativePosition;
                 var position = Vector3.Lerp(this._lastPosition, destinationPos, this._followSpeed);
                 var detinationRot = Quaternion.LookRotation(this._followTarget.forward);
