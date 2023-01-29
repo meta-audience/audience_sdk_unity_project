@@ -12,27 +12,21 @@ namespace AudienceSDK
     public abstract class CameraMoveAlgorithmBase : MonoBehaviour
     {
         // audience camera is property, game developer can't set transform directly.
-        private List<Transform> _cameraTransformList = null;
-        private Quaternion _rootRotation = Quaternion.identity;
-        private Vector3 _rootPosition = Vector3.zero;
+        private List<AudienceCameraBehaviourBase> _cameraBehaviourList = null;
 
         protected void MoveCameras(Quaternion rotation, Vector3 position) {
-            foreach (var cameraTransform in this._cameraTransformList) {
-                if (cameraTransform)
+            foreach (var cameraBehaviour in this._cameraBehaviourList) {
+                if (cameraBehaviour)
                 {
-                    var localRotation = Quaternion.Inverse(this._rootRotation) * cameraTransform.rotation;
-                    var localPosition = Quaternion.Inverse(this._rootRotation) * (cameraTransform.position - this._rootPosition);
-                    this._rootRotation = rotation;
-                    this._rootPosition = position;
-                    cameraTransform.rotation = this._rootRotation * localRotation;
-                    cameraTransform.position = this._rootPosition + this._rootRotation * localPosition;
+                    cameraBehaviour.transform.rotation = rotation * Quaternion.Euler(cameraBehaviour.SceneSettingEuler);
+                    cameraBehaviour.transform.position = position + rotation * cameraBehaviour.SceneSettingPosition;
                 }
             }
         }
 
         protected virtual void Awake()
         {
-            this._cameraTransformList = new List<Transform>();
+            this._cameraBehaviourList = new List<AudienceCameraBehaviourBase>();
         }
 
         protected virtual void Start()
@@ -68,7 +62,7 @@ namespace AudienceSDK
             }
             else
             {
-                this._cameraTransformList.Clear();
+                this._cameraBehaviourList.Clear();
                 Audience.Context.SceneManager.CurrentSceneManagerStateChanged -= this.OnSceneManagerStateChanged;
             }
         }
@@ -85,7 +79,7 @@ namespace AudienceSDK
                     }
                 case SceneManager.SceneManagerState.Unload:
                     {
-                        this._cameraTransformList.Clear();
+                        this._cameraBehaviourList.Clear();
                         break;
                     }
                 default:
@@ -96,10 +90,10 @@ namespace AudienceSDK
         // collect camera's transform.
         private void CollectCameras()
         {
-            var audienceCameras = Resources.FindObjectsOfTypeAll<AudienceCameraBehaviourBase>();
-            foreach (var audienceCamera in audienceCameras)
+            var audienceCameraBehaviours = Resources.FindObjectsOfTypeAll<AudienceCameraBehaviourBase>();
+            foreach (var audienceCameraBehaviour in audienceCameraBehaviours)
             {
-                this._cameraTransformList.Add(audienceCamera.transform);
+                this._cameraBehaviourList.Add(audienceCameraBehaviour);
             }
         }
 
