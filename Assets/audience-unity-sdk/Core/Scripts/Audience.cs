@@ -32,8 +32,11 @@ namespace AudienceSDK {
 
             private set
             {
-                _audienceInited = value;
-                AudienceInitStateChanged?.Invoke(_audienceInited);
+                if (_audienceInited != value)
+                {
+                    _audienceInited = value;
+                    AudienceInitStateChanged?.Invoke(_audienceInited);
+                }
             }
         }
 
