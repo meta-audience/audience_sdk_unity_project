@@ -14,12 +14,27 @@ namespace AudienceSDK
         // audience camera is property, game developer can't set transform directly.
         private List<AudienceCameraBehaviourBase> _cameraBehaviourList = null;
 
-        protected void MoveCameras(Quaternion rotation, Vector3 position) {
+        /// <summary>
+        /// Move cameras to specific world space rotation and position.
+        /// </summary>
+        /// <param name="rotation">target world space rotation.</param>
+        /// <param name="position">target world space position.</param>
+        /// <param name="allowSceneSettingsOffset">
+        /// Allows the camera to retain the scene setting offset(rotation and position) after it has been moved.</param>
+        protected void MoveCameras(Quaternion rotation, Vector3 position, bool allowSceneSettingsOffset = true) {
             foreach (var cameraBehaviour in this._cameraBehaviourList) {
                 if (cameraBehaviour)
                 {
-                    cameraBehaviour.transform.rotation = rotation * Quaternion.Euler(cameraBehaviour.SceneSettingEuler);
-                    cameraBehaviour.transform.position = position + rotation * cameraBehaviour.SceneSettingPosition;
+                    if (allowSceneSettingsOffset)
+                    {
+                        cameraBehaviour.transform.rotation = rotation * Quaternion.Euler(cameraBehaviour.SceneSettingEuler);
+                        cameraBehaviour.transform.position = position + rotation * cameraBehaviour.SceneSettingPosition;
+                    }
+                    else
+                    {
+                        cameraBehaviour.transform.rotation = rotation;
+                        cameraBehaviour.transform.position = position;
+                    }
                 }
             }
         }
@@ -33,24 +48,24 @@ namespace AudienceSDK
         {
             if (Audience.AudienceInited)
             {
-                this.RegisterCameraDirectorCallback(true);
+                this.OnAudienceInitStateChanged(true);
             }
 
-            Audience.AudienceInitStateChanged += this.RegisterCameraDirectorCallback;
+            Audience.AudienceInitStateChanged += this.OnAudienceInitStateChanged;
         }
 
         protected virtual void OnDestroy()
         {
             if (Audience.AudienceInited)
             {
-                this.RegisterCameraDirectorCallback(false);
+                this.OnAudienceInitStateChanged(false);
             }
 
-            Audience.AudienceInitStateChanged -= this.RegisterCameraDirectorCallback;
+            Audience.AudienceInitStateChanged -= this.OnAudienceInitStateChanged;
         }
 
-        // Listen audience is initialize or not. regeist listener to scenemanager.
-        private void RegisterCameraDirectorCallback(bool audienceInit)
+        // Listen audience is initialize or not. register callback to scenemanager.
+        private void OnAudienceInitStateChanged(bool audienceInit)
         {
             if (audienceInit)
             {
