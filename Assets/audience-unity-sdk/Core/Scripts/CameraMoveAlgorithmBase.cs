@@ -20,7 +20,7 @@ namespace AudienceSDK
         /// <param name="rotation">target world space rotation.</param>
         /// <param name="position">target world space position.</param>
         /// <param name="allowSceneSettingsOffset">
-        /// Allows the camera to retain the scene setting offset(rotation and position) after it has been moved.</param>
+        /// Move the camera to a specific position and rotation and let the camera retain the scene setting offset (rotation and position) on the audience Websiste after it has been moved.</param>
         protected void MoveCameras(Quaternion rotation, Vector3 position, bool allowSceneSettingsOffset = true) {
             foreach (var cameraBehaviour in this._cameraBehaviourList) {
                 if (cameraBehaviour)
