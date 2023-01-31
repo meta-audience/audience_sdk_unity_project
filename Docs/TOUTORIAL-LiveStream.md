@@ -48,17 +48,17 @@
 ****
 #### <a name="step6"> Step 6 (Unity): Load a scene 
 - Check your audio device and microphone is available
-    - If you have already have VR device, the audio and microphone should avilable by default
-    - It maybe cause some ***`error`*** if you alerady open an Unity scene, then plug the headphone or microphone, please restart the Unity
+    - If you have already had a VR device, the audio and microphone should avilable by default
+    - It may cause some ***`error`*** if you open an Unity scene, then plug the headphone or microphone, please restart the Unity
         - Please plug the headphone or microphone first and then start the Unity    
 - After choose a scene setting in dropdown list, click `Load` button
-    - If nothing happend check the `Console`, and check the error code and message
+    - If nothing happened, check the `Console`, and check the error code and message
 **** 
 #### <a name="step7"> Step 7 (Unity): Start your streaming
 - After `Console` show connect success message, click `Start` button
 - Wait for about 3 seconds, you will see a `Green Ball` in the scene, the streaming is started
     - The color of ball represent the status of streaming
-    - `Yellow` is waiting for streaming
+    - `Yellow` means waiting for streaming
     - `Gray` means no streaming
     - `Red` means some error occured, please check `Console` or `log`
 ****
