@@ -53,7 +53,6 @@
         - Please plug the headphone or microphone first and then start the Unity    
 - After choose a scene setting in dropdown list, click `Load` button
     - If nothing happend check the `Console`, and check the error code and message
-    - [Error code detail](https://adc.github.trendmicro.com/Consumer-TMXRLAB/audience_sdk_unity_project/wiki/Initialization-&-Deinitialization#error-code--message-3)
 **** 
 #### <a name="step7"> Step 7 (Unity): Start your streaming
 - After `Console` show connect success message, click `Start` button
@@ -65,3 +64,4 @@
 ****
 #### <a name="step8"> Step 8 (Web): Share your streaming
 - After streaming start, the URL will create in our [official website](https://www.meta-audience.com/en-us/accounts/userChannels/), you can share the URL to other device (Mobile / Occulus / Other PC)
+> If any error occur, please check the [Error code detail](https://adc.github.trendmicro.com/Consumer-TMXRLAB/audience_sdk_unity_project/wiki/Initialization-&-Deinitialization#error-code--message-3)
