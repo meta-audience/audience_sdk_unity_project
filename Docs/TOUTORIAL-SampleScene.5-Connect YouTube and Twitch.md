@@ -24,8 +24,7 @@
 <a name="step3"> Step 3 (Unity): Start the streaming
 - Check this [TUTORIAL](TOUTORIAL-SampleScene1-LiveStream.md) step 5~7 is already setup
 ****
-  
-<a name="step4"> Step 4: Verify your streaming chat is working, and send VR emoji!
+#### <a name="step4"> Step 4: Verify your streaming chat is working, and send VR emoji!
 - Sign into your audience account and make sure you've completed `Step 2` to authorize your YouTube or Twitch account
 - To verify your streaming chat is working, try typing something in the chat
 - Click the `VR EMOJI` button
@@ -33,3 +32,4 @@
 - Try sending emoji in your chat. The emoji (with username with avatar) should show in Beat Saber
 - **Try VR emoji** 
    - We offer some [`VR emoji`](https://www.meta-audience.com/en-us/download/). To use VR emoji, type the emoji command in the chat (e.g. #bigheart#)
+****
