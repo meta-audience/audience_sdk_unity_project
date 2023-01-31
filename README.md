@@ -40,8 +40,8 @@ There are 2 ways to install necessary packages
 # Usage
 
 Follow the document to setup your audience configuration
-* [How to develop your first live stream project](Docs/TUTORIAL_LIVESTREAM.md)
-* [How to send your first VR emoji](Docs/TUTORIAL_EMOJI.md)
+* [How to develop your first live stream project](Docs/TUTORIAL-LiveStream.md)
+* [How to send your first VR emoji](Docs/TUTORIAL-Emoji.md)
 
 # Limitations and known issues
 
