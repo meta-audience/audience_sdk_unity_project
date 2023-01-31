@@ -19,6 +19,7 @@
 
 ****
 <a name="step3"> Step 3 (Unity): Start the streaming on `Youtube/Twitch`
+- After login successfully, you ***`would not`*** to `LOAD Scene setting`
 - Youtube
   - ***Default is choose the first channel you created in Youtube***
   - Click `Connect Youtube` checkbox
