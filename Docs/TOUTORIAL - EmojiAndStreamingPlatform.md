@@ -40,4 +40,4 @@
   - The 2D/3D emoji (with username with avatar) that viewers send should show in your Unity scene
   - **Try 3D emoji** in Youtube/Twitch
     - We offer some [`3D emoji`](https://www.meta-audience.com/en-us/download/). To use 3D emoji, type the emoji command in the chat (Ex: #bigheart#)
-> If any error occur, please check the [Error code detail](https://adc.github.trendmicro.com/Consumer-TMXRLAB/audience_sdk_unity_project/wiki/Initialization-&-Deinitialization#error-code--message-3)
+
