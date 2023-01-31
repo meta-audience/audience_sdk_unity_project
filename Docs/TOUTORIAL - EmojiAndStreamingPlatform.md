@@ -2,7 +2,7 @@
 
 
 ****
-#### <a name="step1"> Step 1 (Web): Check this [TUTORIAL](TOUTORIAL-SampleScene1-LiveStream.md) step 1~4 is already setup
+#### <a name="step1"> Step 1 (Web): Check this [TUTORIAL](TOUTORIAL - LiveStream.md) step 1~4 is already setup
 ****
 #### <a name="step2"> Step 2 (Web): Authorize YouTube/Twitch channels
 - Click [`here`](https://www.meta-audience.com/en-us/accounts/chatSetting/) to connect your YouTube/Twitch channel
@@ -18,13 +18,12 @@
     - To connect a different Twitch account, first sign out of Twitch 
 
 ****
-<a name="step3"> Step 3 (Unity): Start the streaming
-- Check this [TUTORIAL](TOUTORIAL-SampleScene1-LiveStream.md) step 5~7 is already setup
+<a name="step3"> Step 3 (Unity): Start the streaming on `Youtube/Twitch`
 - Youtube
   - ***Default is choose the first channel you created in Youtube***
-  - Click `Youtube` button
+  - Click `Connect Youtube` checkbox
 - Twitch
-  - Click `Twitch` button
+  - Click `Connect Twitch` checkbox
 - You can go to the account that you binded in Step 2 to see the streaming
 
 ****
@@ -41,3 +40,4 @@
   - The 2D/3D emoji (with username with avatar) that viewers send should show in your Unity scene
   - **Try 3D emoji** in Youtube/Twitch
     - We offer some [`3D emoji`](https://www.meta-audience.com/en-us/download/). To use 3D emoji, type the emoji command in the chat (Ex: #bigheart#)
+> If any error occur, please check the [Error code detail](https://adc.github.trendmicro.com/Consumer-TMXRLAB/audience_sdk_unity_project/wiki/Initialization-&-Deinitialization#error-code--message-3)
