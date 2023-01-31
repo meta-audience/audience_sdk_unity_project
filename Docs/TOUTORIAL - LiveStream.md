@@ -39,7 +39,7 @@
 - Your scene settings will appear in the list after you `Log in` success in `Unity`
 **** 
 #### <a name="step5"> Step 5 (Unity): Choose a Sample scene in Unity Editor
-- Choose a scene in `Assets/Samples/Scenes`
+- Choose the scene in `Assets/Samples/Scenes/SampleScene.1-Start a stream`
 - Enter your Username(Email) and password
 - After login success, the scene setting UI panel should appear 
     - If scene setting UI panel doesnt appear, check your Email and password is correct
