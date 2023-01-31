@@ -77,7 +77,7 @@
     - The color of ball represent the status of streaming
     - `Yellow` is waiting ????
     - `Gray` means no streaming
-    - `Red` means some error occur, please check `Console` or `log`
+    - `Red` means some error occured, please check `Console` or `log`
 - After streaming start, the URL is in our [official website](https://www.meta-audience.com/en-us/accounts/userChannels/), you can share the URL to other device(Mobile / Occulus / Other PC)
 ****
 #### <a name="step9"> Step 9: Verify your audience/Youtube/Twitch streaming chat and Emoji is working
