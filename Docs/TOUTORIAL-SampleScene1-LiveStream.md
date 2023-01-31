@@ -53,7 +53,7 @@
         - Please plug the headphone or microphone first and then start the Unity    
 - After choose a scene setting in dropdown list, click `Load` button
     - If nothing happend check the `Console`, and check the error code and message
-    - [Error code detail](https://adc.github.trendmicro.com/Consumer-TMXRLAB/audience_sdk_unity_project/wiki/Initialization-&-Deinitialization)
+    - [Error code detail](https://adc.github.trendmicro.com/Consumer-TMXRLAB/audience_sdk_unity_project/wiki/Initialization-&-Deinitialization#error-code--message-3)
 **** 
 #### <a name="step7"> Step 7 (Unity): Start your streaming
 - After `Console` show connect success message, click `Start` button
