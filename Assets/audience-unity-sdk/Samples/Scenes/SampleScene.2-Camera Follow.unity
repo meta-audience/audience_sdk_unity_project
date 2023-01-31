@@ -190,19 +190,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '1. Start a stream.
-
-
-    2. Move the green capsule through W-A-S-D.
-
-
-    3.
-    We mounted a script in the "DefaultFollowCameraAlgorithm", this makes the streaming
-    cameras can slowly with the green capsule.
-
-
-    4. Watch your stream to see
-    how it behaves.'
+  m_Text: "1. Start streaming.\n\n2. Control the green capsule by W-A-S-D.\n\n3.
+    We mounted the script on \"DefaultFollowCameraAlgorithm\" so that the viewers\u2019
+    camera can follow the green capsule slowly.\n\n4. Watch your streaming to know
+    how it works."
 --- !u!222 &103346941
 CanvasRenderer:
   m_ObjectHideFlags: 0
