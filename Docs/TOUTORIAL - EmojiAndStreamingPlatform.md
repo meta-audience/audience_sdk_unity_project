@@ -2,7 +2,7 @@
 
 
 ****
-#### <a name="step1"> Step 1 (Web): Check this [TUTORIAL](TOUTORIAL - LiveStream.md) step 1~4 is already setup
+#### <a name="step1"> Step 1 (Web): Check this [TUTORIAL](TOUTORIAL-LiveStream.md) step 1~4 is already setup
 ****
 #### <a name="step2"> Step 2 (Web): Authorize YouTube/Twitch channels
 - Click [`here`](https://www.meta-audience.com/en-us/accounts/chatSetting/) to connect your YouTube/Twitch channel
