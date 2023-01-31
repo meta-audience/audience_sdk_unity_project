@@ -82,7 +82,6 @@
 ****
 #### <a name="step9"> Step 9: Verify your audience/Youtube/Twitch streaming chat and Emoji is working
 - Sign into your audience account and make sure you've completed `Step 2` to authorize your YouTube or Twitch account
-- 
 - You can send emoji from our [official website channel](https://www.meta-audience.com/en-us/accounts/userChannels/)/Youtube chat/Twitch chat
     - Our website channel view has chat panel, click it to send a 3D emoji
     - Youtube/Twitch chat will support 2D and 3D emoji
