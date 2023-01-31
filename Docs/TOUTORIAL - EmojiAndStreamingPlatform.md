@@ -22,7 +22,6 @@
 - Check this [TUTORIAL](TOUTORIAL-SampleScene1-LiveStream.md) step 5~7 is already setup
 - Youtube
   - ***Default is choose the first channel you created in Youtube***
-    - To see more detail, check our [api--wait for update]()
   - Click `Youtube` button
 - Twitch
   - Click `Twitch` button
