@@ -64,4 +64,4 @@
     - `Red` means some error occured, please check `Console` or `log`
 ****
 #### <a name="step8"> Step 8 (Web): Share your streaming
-- After streaming start, the URL will create in our [official website](https://www.meta-audience.com/en-us/accounts/userChannels/), you can share the URL to other device(Mobile / Occulus / Other PC)
+- After streaming start, the URL will create in our [official website](https://www.meta-audience.com/en-us/accounts/userChannels/), you can share the URL to other device (Mobile / Occulus / Other PC)
