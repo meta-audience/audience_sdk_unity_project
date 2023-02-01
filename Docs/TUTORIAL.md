@@ -5,9 +5,10 @@
 - [Add a scene and source camera](#step3)
 - [Add viewers](#step4)
 - [Save your settings](#step5)
-- [Sign into audience in Beat Saber](#step6)
-- [Verify your streaming chat is working](#step7)
-- [Start streaming](#step8)
+- [Choose a Sample scene in Unity Editor](#step6)
+- [Load a scene ](#step7)
+- [Start your streaming](#step8)
+- [Verify your audience/Youtube/Twitch streaming chat and Emoji is working](#step9)
 - [Share a URL](#step9)
 ****
 #### <a name="step1"> Step 1:  Sign in/Sign up on the audience website
@@ -49,37 +50,43 @@
 - (***Recommended***) Rename your `Viewer Name` to make it easier to distinguish different viewers joining a channel through a URL
 ****
 #### <a name="step5"> Step 5: Save your settings
-- Click `Save` to save your scene settings
-- Your scene settings will appear in the Beast Saber audience mod after you save
+- Click `Save` to save your scene settings on `official website`
+- Your scene settings will appear in the list after you `Log in` success in `Unity`
+
 ****
-#### <a name="step6"> Step 6: Sign into audience in Beat Saber
-- Verify your Beat Saber audience mod is intalled correctly
-    - If installed correctly, "audience" will appear in the mods panel
-    - Click `Sign in` and enter the email and password of your audience account
-****
-#### <a name="step7"> Step 7: Verify your streaming chat is working
-- Sign into your audience account and make sure you've completed `Step 2` to authorize your YouTube or Twitch account
-- To verify your streaming chat is working, try typing something in the chat
-- Click the `3D EMOJI` button
-- Toggle to your preferred streaming platform (YouTube or Twitch)
-- Try sending emoji in your chat. The emoji (with username with avatar) should show in Beat Saber
-- **Try 3D emoji** 
-   - We offer some [`3D emoji`](https://www.meta-audience.com/en-us/download/). To use 3D emoji, type the emoji command in the chat (Ex: #bigheart#)
-****
-#### <a name="step8"> Step 8: Start streaming
-- Make sure you have set at least one scene setting (see `Steps 4 and 5`)
-- Verify your streaming platform is streaming successfully
-- Click `VR 360 Live Stream` in Beat Saber
-- Your panel and scene settings appear
-- Select a scene
-- Click `LOAD`
-- Click `START`
-    - If you see an error message, try closing other applications and check your network configuration. For details see <br>[`Limitations - GPU Limitations`](https://github.com/meta-audience/BeatSaber_audience/blob/main/docs/LIMITATION.md#gpu-session-problem)
-- Click `SHARE`
-    - The audience share URL webpage will automatically open in your browser
+#### <a name="step6"> Step 6: Choose a Sample scene in Unity Editor
+- Choose a scene in `Assets/Samples/Scenes`
+- Enter your Username(Email) and password
+- After login success, the scene setting UI panel should appear 
+    - If scene setting UI panel doesnt appear, check your Email and password is correct
+    - If your dropdown list is empty, please click the `Refresh` button
+    - After click refresh button but still empty, please check your scene setting again  
 ****    
-#### <a name="step9"> Step 9: Share a URL
-- Click [`here`](https://www.meta-audience.com/en-us/accounts/userChannels/) to get your sharing URL (viewer names were setup in `Step 4`)
-- Viewers can use the URL to access the livestream in a desktop browser or mobile browser
+#### <a name="step7"> Step 7: Load a scene 
+- Check your audio device and microphone is available
+    - If you have already have VR device, the audio and microphone should avilable by default
+    - It maybe cause some ***`error`*** if you alerady open an Unity scene, then plug the headphone or microphone, please restart the Unity
+        - Please plug the headphone or microphone first and then start the Unity    
+- After choose a scene setting in dropdown list, click `Load` button
+    - If nothing happend check the `Console`, and check the error code and message
+    - Error code detail : [url need update] 
+****
+#### <a name="step8"> Step 8: Start your streaming
+- After `Console` show connect success message, click `Start` button
+- Wait for about 3 seconds, you will see a `Green Ball` in the scene, the streaming is started
+    - The color of ball represent the status of streaming
+    - `Yellow` is waiting ????
+    - `Gray` means no streaming
+    - `Red` means some error occured, please check `Console` or `log`
+- After streaming start, the URL is in our [official website](https://www.meta-audience.com/en-us/accounts/userChannels/), you can share the URL to other device(Mobile / Occulus / Other PC)
+****
+#### <a name="step9"> Step 9: Verify your audience/Youtube/Twitch streaming chat and Emoji is working
+- Sign into your audience account and make sure you've completed `Step 2` to authorize your YouTube or Twitch account
+- You can send emoji from our [official website channel](https://www.meta-audience.com/en-us/accounts/userChannels/)/Youtube chat/Twitch chat
+    - Our website channel view has chat panel, click it to send a 3D emoji
+    - Youtube/Twitch chat will support 2D and 3D emoji
+        - **Try 3D emoji** in Youtube/Twitch
+            - We offer some [`3D emoji`](https://www.meta-audience.com/en-us/download/). To use 3D emoji, type the emoji command in the chat (Ex: #bigheart#)
+- The emoji (with username with avatar) should show in your Unity scene
 ****
 

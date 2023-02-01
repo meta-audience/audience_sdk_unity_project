@@ -54,6 +54,15 @@ public class AudiencePanelView : MonoBehaviour
     [SerializeField]
     private Button stopStreamButton = null;
 
+    [SerializeField]
+    private GameObject chatroomBlock = null;
+
+    [SerializeField]
+    private Toggle connectTwitchToggle = null;
+
+    [SerializeField]
+    private Toggle connectYouTubeToggle = null;
+
     private List<NativeSceneSummaryData> CachedSceneList { get; set; }
 
     // UI function
@@ -77,6 +86,14 @@ public class AudiencePanelView : MonoBehaviour
 
     public void Logout()
     {
+        if (chatroomBlock)
+        {
+            this.DisconnectTwitch();
+            this.DisconnectYouTube();
+            this.connectTwitchToggle.SetIsOnWithoutNotify(false);
+            this.connectYouTubeToggle.SetIsOnWithoutNotify(false);
+        }
+
         Audience.Context.Logout();
     }
 
@@ -110,14 +127,30 @@ public class AudiencePanelView : MonoBehaviour
 
     public void StartStream()
     {
-        AudienceSDK.Audience.Context.StartSendCameraFrame();
+        Audience.Context.StartSendCameraFrame();
         Audience.Context.Start();
     }
 
     public void StopStream()
     {
         Audience.Context.Stop();
-        AudienceSDK.Audience.Context.StopSendCameraFrame();
+        Audience.Context.StopSendCameraFrame();
+    }
+
+    public void OnConnectTwitchToggleChanged()
+    {
+        if (this.connectTwitchToggle.isOn)
+            this.ConnectTwitch();
+        else
+            this.DisconnectTwitch();
+    }
+
+    public void OnConnectYouTubeToggleChanged()
+    {
+        if (this.connectYouTubeToggle.isOn)
+            this.ConnectYouTube();
+        else
+            this.DisconnectYouTube();
     }
 
     // UI Control
@@ -134,6 +167,13 @@ public class AudiencePanelView : MonoBehaviour
         this.streamBlock.SetActive(false);
         this.startStreamButton.interactable = false;
         this.stopStreamButton.interactable = false;
+
+        if (this.chatroomBlock)
+        {
+            this.chatroomBlock.SetActive(false);
+            this.connectTwitchToggle.interactable = false;
+            this.connectYouTubeToggle.interactable = false;
+        }
     }
 
     public void DisplayLoginCompletedView() {
@@ -149,6 +189,13 @@ public class AudiencePanelView : MonoBehaviour
         this.streamBlock.SetActive(false);
         this.startStreamButton.interactable = false;
         this.stopStreamButton.interactable = false;
+
+        if (this.chatroomBlock)
+        {
+            this.chatroomBlock.SetActive(true);
+            this.connectTwitchToggle.interactable = true;
+            this.connectYouTubeToggle.interactable = true;
+        }
     }
 
     public void DisplayLogoutCompletedView()
@@ -165,6 +212,13 @@ public class AudiencePanelView : MonoBehaviour
         this.streamBlock.SetActive(false);
         this.startStreamButton.interactable = false;
         this.stopStreamButton.interactable = false;
+
+        if (this.chatroomBlock)
+        {
+            this.chatroomBlock.SetActive(false);
+            this.connectTwitchToggle.interactable = false;
+            this.connectYouTubeToggle.interactable = false;
+        }
     }
 
     public void UpdateSceneList(List<NativeSceneSummaryData> sceneList) {
@@ -234,6 +288,52 @@ public class AudiencePanelView : MonoBehaviour
     private void Start()
     {
         
+    }
+
+    private void ConnectTwitch()
+    {
+        ChatChannelList channelList = null;
+        var rc = Audience.Context.GetChatChannel("twitch", out channelList);
+        if (rc != (int)AudienceReturnCode.AudienceSDKOk || channelList == null || channelList.channels.Count <= 0)
+        {
+            this.connectTwitchToggle.SetIsOnWithoutNotify(false);
+            return;
+        }
+
+        rc = Audience.Context.ConnectChatroom("twitch", channelList.channels[0].channel_id);
+        if (rc != (int)AudienceReturnCode.AudienceSDKOk)
+        {
+            this.connectTwitchToggle.SetIsOnWithoutNotify(false);
+            return;
+        }
+    }
+
+    private void DisconnectTwitch()
+    {
+        Audience.Context.DisconnectChatroom("twitch");
+    }
+
+    private void ConnectYouTube()
+    {
+        ChatChannelList channelList = null;
+        var rc = Audience.Context.GetChatChannel("youtube", out channelList);
+        if (rc != (int)AudienceReturnCode.AudienceSDKOk || channelList == null || channelList.channels.Count <= 0)
+        {
+            this.connectYouTubeToggle.SetIsOnWithoutNotify(false);
+            return;
+        }
+
+        rc = Audience.Context.ConnectChatroom("youtube", channelList.channels[0].channel_id);
+        if (rc != (int)AudienceReturnCode.AudienceSDKOk)
+        {
+            this.connectYouTubeToggle.SetIsOnWithoutNotify(false);
+            return;
+        }
+    }
+
+    private void DisconnectYouTube()
+    {
+        Audience.Context.DisconnectChatroom("youtube");
     }
 
 }
