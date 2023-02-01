@@ -40,7 +40,7 @@
 **** 
 #### <a name="step5"> Step 5 (Unity): Choose a Sample scene in Unity Editor
 - Choose the scene in `Assets/Samples/Scenes/SampleScene.1-Start a stream`
-- Enter your Username(Email) and password
+- Enter your username (Email) and password
 - After login success, the scene setting UI panel should appear 
     - If scene setting UI panel doesn't appear, check your Email and password is correct
     - If your dropdown list is empty, please click the `Refresh` button
@@ -56,12 +56,12 @@
 **** 
 #### <a name="step7"> Step 7 (Unity): Start your streaming
 - After `Console` show connect success message, click `Start` button
-- Wait for about 3 seconds, you will see a `Green Ball` in the scene, the streaming is started
+- Wait for about 3 seconds, you will see a `Green Light` in the scene, the streaming is started
     - The color of ball represent the status of streaming
     - `Yellow` means waiting for streaming
     - `Gray` means no streaming
     - `Red` means some error occured, please check `Console` or `log`
 ****
 #### <a name="step8"> Step 8 (Web): Share your streaming
-- After streaming start, the URL will create in our [official website](https://www.meta-audience.com/en-us/accounts/userChannels/), you can share the URL to other device (Mobile / Occulus / Other PC)
+- After streaming start, the URL will create in our [official website](https://www.meta-audience.com/en-us/accounts/userChannels/), you can share the URL to other device (Mobile / Oculus / Other PC)
 > If any error occur, please check the [Error code detail](https://adc.github.trendmicro.com/Consumer-TMXRLAB/audience_sdk_unity_project/wiki/Initialization-&-Deinitialization#error-code--message-3)
