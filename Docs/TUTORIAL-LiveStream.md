@@ -42,7 +42,7 @@
 - Choose the scene in `Assets/Samples/Scenes/SampleScene.1-Start a stream`
 - Enter your Username(Email) and password
 - After login success, the scene setting UI panel should appear 
-    - If scene setting UI panel doesnt appear, check your Email and password is correct
+    - If scene setting UI panel doesn't appear, check your Email and password is correct
     - If your dropdown list is empty, please click the `Refresh` button
     - After click refresh button but still empty, please check your scene setting again 
 ****
