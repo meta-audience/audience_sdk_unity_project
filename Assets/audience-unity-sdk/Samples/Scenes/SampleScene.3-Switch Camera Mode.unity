@@ -292,18 +292,18 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '1. Start a stream.
+  m_Text: '1. Start streaming.
 
 
-    2. Move the green capsule through W-A-S-D.
+    2. Control the green capsule by W-A-S-D.
 
 
     3.
-    When the green capsule entered the collider, it switched camera modes
+    When the green capsule entered the collider, the camera modes were switched.
 
 
     4.
-    Watch your stream to see how it behaves.'
+    Watch your streaming to know how it works.'
 --- !u!222 &103346941
 CanvasRenderer:
   m_ObjectHideFlags: 0

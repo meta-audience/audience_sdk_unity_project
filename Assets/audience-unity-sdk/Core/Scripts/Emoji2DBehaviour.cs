@@ -87,12 +87,14 @@ namespace AudienceSDK {
         }
 
         private void LoadEmojiModelTexture(Texture2D emojiTexture) {
-            this._emojiModel = Instantiate(new GameObject(), this.transform);
+            this._emojiModel = new GameObject("Emoji Model");
+            this._emojiModel.transform.SetParent(this.transform);
             this._emojiModel.transform.localEulerAngles = Vector3.zero;
             this._emojiModel.transform.localPosition = Vector3.zero;
             this._emojiModel.AddComponent<Animation>();
 
-            var emojiObj = Instantiate(new GameObject(), this._emojiModel.transform);
+            var emojiObj = new GameObject("Emoji Obj");
+            emojiObj.transform.SetParent(this._emojiModel.transform);
             emojiObj.transform.localEulerAngles = new Vector3(0, 180, 0);
             emojiObj.transform.localPosition = Vector3.zero;
             SpriteRenderer sr = emojiObj.AddComponent<SpriteRenderer>() as SpriteRenderer;
