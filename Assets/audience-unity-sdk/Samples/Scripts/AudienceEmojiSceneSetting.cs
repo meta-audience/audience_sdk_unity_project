@@ -77,8 +77,11 @@ namespace AudienceSDK.Sample
 
         private void OnValidate()
         {
-            this.FollowPlayer = this._followPlayer;
-            this.EmojiAttachEmojiSpawner = this._emojiAttachEmojiSpawner;
+            // OnValidate will run in runtime and editor time. add if isPlaying to constrain.
+            if (Application.isPlaying) {
+                this.FollowPlayer = this._followPlayer;
+                this.EmojiAttachEmojiSpawner = this._emojiAttachEmojiSpawner;
+            }
         }
     }
 }
