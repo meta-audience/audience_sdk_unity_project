@@ -26,7 +26,7 @@
 <a name="step3"> Step 3 (Unity): Start the streaming on `Youtube/Twitch`
 - Choose the scene in `Assets/Samples/Scenes/SampleScene.5-Connect YouTube and Twitch`
 - Enter your username (Email) and password to Login
-- `Load Scene setting` this step is for audience (our website) channel, if you only want to streaming on `Youtube/Twitch` you should ***`skip it`***
+- `Load scene setting` this step is for audience (our website) channel, if you only want to streaming on `Youtube/Twitch` you should ***`skip it`***
 - Youtube
   - ***Default is choose the first channel you created in Youtube***
   - Click `Connect Youtube` checkbox
