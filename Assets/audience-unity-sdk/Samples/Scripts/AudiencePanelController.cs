@@ -23,6 +23,7 @@ namespace AudienceSDK.Sample
 
         private void OnDestroy()
         {
+            this.DeInitPanelController();
             AudienceSDK.Audience.AudienceInitStateChanged -= this.OnAudienceInitStateChanged;
         }
 
