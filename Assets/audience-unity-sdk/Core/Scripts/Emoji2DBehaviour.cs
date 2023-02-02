@@ -163,9 +163,6 @@ namespace AudienceSDK {
             {
                 // audience_unity_sdk.dll won't support this, need #if DLL_BUILD
                 Material mat = new Material(Resources.Load<Material>("Audience/Emoji/2Demoji_origin"));
-                mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-                mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-                mat.SetInt("_ZWrite", 0);
                 _material = mat;
             }
 
