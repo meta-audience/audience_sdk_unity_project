@@ -16,7 +16,7 @@ Allows VR content creators to stream high-quality, immersive video experiences t
 Our unity project is tested with :  
 * Unity 2019.4.28f1 (LTS)
 * Unity 2021.3.15f1 (LTS)
-* Unity 2021.3.17f1 (LTS)  
+* Unity 2021.3.18f1 (LTS)  
   
 The minimum supported version is set to 2019.4.28   
 
