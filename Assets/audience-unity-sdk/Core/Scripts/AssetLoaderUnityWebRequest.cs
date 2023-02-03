@@ -100,6 +100,7 @@ namespace AudienceSDK {
                 svgWorkaround = true;
             }
 
+            /*
             UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
             yield return request.SendWebRequest();
 
@@ -117,6 +118,48 @@ namespace AudienceSDK {
                 data.IsGif = !svgWorkaround && this.IsGif(rawData);
                 data.RawData = rawData;
                 data.Finished = true;
+            }
+            */
+
+            UnityWebRequest request = UnityWebRequest.Get(url);
+            yield return request.SendWebRequest();
+
+            if (request.isNetworkError || request.isHttpError)
+            {
+                Debug.Log(request.error);
+                data.Result = AudienceReturnCode.AudienceSDKNetworkError;
+            }
+            else
+            {
+                byte[] rawData = request.downloadHandler.data;
+                if (!svgWorkaround && this.IsGif(rawData))
+                {
+                    Debug.LogWarning("Is GIF");
+                    data.Tex = null;
+                    data.Result = AudienceReturnCode.AudienceSDKOk;
+                    data.IsGif = true;
+                    data.RawData = rawData;
+                    data.Finished = true;
+                }
+                else
+                {
+                    Debug.LogWarning("Is 2D");
+                    request = UnityWebRequestTexture.GetTexture(url);
+                    yield return request.SendWebRequest();
+                    if (request.isNetworkError || request.isHttpError)
+                    {
+                        Debug.Log(request.error);
+                        data.Result = AudienceReturnCode.AudienceSDKNetworkError;
+                    }
+                    else
+                    {
+                        data.Tex = ((DownloadHandlerTexture)request.downloadHandler).texture;
+                        data.Result = AudienceReturnCode.AudienceSDKOk;
+                        data.IsGif = false;
+                        data.RawData = null;
+                        data.Finished = true;
+                    }
+                }
             }
         }
 
