@@ -100,27 +100,9 @@ namespace AudienceSDK {
                 svgWorkaround = true;
             }
 
-            /*
-            UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
-            yield return request.SendWebRequest();
-
-            byte[] rawData;
-
-            if (request.isNetworkError || request.isHttpError) {
-                Debug.Log(request.error);
-                data.Result = AudienceReturnCode.AudienceSDKNetworkError;
-            } else {
-                data.Tex = ((DownloadHandlerTexture)request.downloadHandler).texture;
-                data.Result = AudienceReturnCode.AudienceSDKOk;
-
-                rawData = request.downloadHandler.data;
-
-                data.IsGif = !svgWorkaround && this.IsGif(rawData);
-                data.RawData = rawData;
-                data.Finished = true;
-            }
-            */
-
+            // it's workaround, Unity 2021.3.17 can't use UnityWebRequestTexture.GetTexture to get gif directly,
+            // it will cause Unity crash. We use UnityWebRequest.Get get raw data then know is Gif or not.
+            // if not gif, we using 2nd UnityWebRequestTexture to get texture.
             UnityWebRequest request = UnityWebRequest.Get(url);
             yield return request.SendWebRequest();
 
