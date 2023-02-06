@@ -43,7 +43,7 @@
 - Enter your username (Email) and password
 - Once logged in, the scene setting panel will appear
     - If scene setting UI panel doesn't appear, check your Email and password are correct
-    - If your dropdown menu list is empty, please click the `Refresh` button
+    - If your dropdown menu is empty, please click the `Refresh` button
     - If it is still empty, please check your scene setting again 
 ****
 #### <a name="step6"> Step 6 (Unity): Load a scene 
