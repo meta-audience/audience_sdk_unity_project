@@ -7,7 +7,7 @@
 
 
 ****
-#### <a name="step1"> Step 1 (Web): Check [`Tutorial`](TOUTORIAL-LiveStream.md) step 1~4
+#### <a name="step1"> Step 1 (Web): Check [`Tutorial`](TUTORIAL-LiveStream.md) step 1~4
 ****
 #### <a name="step2"> Step 2 (Web): Authorize YouTube/Twitch channels
 - Click [`here`](https://www.meta-audience.com/en-us/accounts/chatSetting/) to connect your YouTube/Twitch channel
