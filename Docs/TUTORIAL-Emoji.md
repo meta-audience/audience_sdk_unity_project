@@ -1,13 +1,13 @@
 # How to send your first VR emoji
-- [Check Tutorial-LiveStream step 1~4 is already setup](#step1)
+- [Check TUTORIAL step 1~4](#step1)
 - [Authorize YouTube/Twitch channels](#step2)
-- [Start the streaming on `Youtube/Twitch`](#step3)
+- [Start the streaming on `YouTube/Twitch`](#step3)
 - [Verify your streaming Emoji is working](#step4)
 
 
 
 ****
-#### <a name="step1"> Step 1 (Web): Check this [TUTORIAL](TOUTORIAL-LiveStream.md) step 1~4 is already setup
+#### <a name="step1"> Step 1 (Web): Check [TUTORIAL](TOUTORIAL-LiveStream.md) step 1~4
 ****
 #### <a name="step2"> Step 2 (Web): Authorize YouTube/Twitch channels
 - Click [`here`](https://www.meta-audience.com/en-us/accounts/chatSetting/) to connect your YouTube/Twitch channel
@@ -19,33 +19,33 @@
 - To connect Twitch:
     - Click `Connect Twitch Account`
     - If you're already signed into Twitch, audience automatically authorizes the account
-    - If not signed in, the Twitch sign in window appears
+    - If your browser does not have a record of Twitch, the sign in window will pop out
     - To connect a different Twitch account, first sign out of Twitch 
 
 ****
-<a name="step3"> Step 3 (Unity): Start the streaming on `Youtube/Twitch`
+<a name="step3"> Step 3 (Unity): Start the streaming on `YouTube/Twitch`
 - Choose the scene in `Assets/Samples/Scenes/SampleScene.5-Connect YouTube and Twitch`
-- Enter your username (Email) and password to Login
-- `Load scene setting` this step is for audience (our website) channel, if you only want to streaming on `Youtube/Twitch` you should ***`skip it`***
-- Youtube
-  - ***Default is choose the first channel you created in Youtube***
-  - Click `Connect Youtube` checkbox
+- Enter your username (Email) and password to login 
+- `Load scene setting` this step is for audience (our website) streaming, in the case of streaming `only` on `YouTube/Twitch` , ***`skip this step`***
+- YouTube
+  - ***Default behavior is streaming on the first channel created in your YouTube account***
+  - Click `Connect YouTube` checkbox
 - Twitch
   - Click `Connect Twitch` checkbox
 - You can go to the account that you binded in Step 2 to see the streaming
 
 ****
 <a name="step4"> Step 4: Verify your streaming Emoji is working
-- Sign into your audience account and make sure you've completed Step 2 to authorize your YouTube or Twitch account
-- We support three platforms to streaming your games: `Youtube`, `Twitch` and our `official website channel`
+- Sign in to your audience account and make sure you've completed Step 2 to authorize your YouTube or Twitch account
+- We support live streaming on three platforms to streaming your games: `YouTube`, `Twitch` and our `official website channel`
 - audience (official website)
-  - The channel is in our  [official website](https://www.meta-audience.com/en-us/accounts/userChannels/), you can share the URL to other device(Mobile / Occulus / Other PC)
-  - Emoji pannel can send the 3D-emoji
-  - After viewers send the 3D-emoji, The 3D-emoji (with username with avatar) should show in your Unity scene
-- Youtube/Twitch
+  - The channel is in our  [official website](https://www.meta-audience.com/en-us/accounts/userChannels/), you can share the URL to other device(Mobile / Oculus / Other PC)
+  - Emoji panel can send the 3D-emoji
+  - As soon as viewers send emojis, the 3D emojis, along with avatar and username, will appear in your Unity scene
+- YouTube/Twitch
   - Support 2D and 3D emoji
-  - Auto catch the chat message with emoji
-  - The 2D/3D emoji (with username with avatar) that viewers send should show in your Unity scene
-  - **Try 3D emoji** in Youtube/Twitch
-    - We offer some [`3D emoji`](https://www.meta-audience.com/en-us/download/). To use 3D emoji, type the emoji command in the chat (Ex: #bigheart#)
+  - Emojis in chat messages are auto-detected
+  - As soon as viewers send emojis, the 2D/3D emojis, along with avatar and username, will appear in your Unity scene
+  - **Try 3D emoji** on YouTube/Twitch
+    - We have designed some [`3D emoji`](https://www.meta-audience.com/en-us/download/). Try entering the emoji command (e.g. #bigheart# ) in the chat to show our 3D emoji.
 
