@@ -13,7 +13,12 @@ Allows VR content creators to stream high-quality, immersive video experiences t
 
 # Compatibility
 
-Our unity project is tested with Unity 2019.4.28f1 and 2021.3.15f1. The minimum supported version is set to 2019.4.28   
+Our unity project is tested with :  
+* Unity 2019.4.28f1 (LTS)
+* Unity 2021.3.15f1 (LTS)
+* Unity 2021.3.18f1 (LTS)  
+  
+The minimum supported version is set to 2019.4.28   
 
 # Installation
 
@@ -40,8 +45,8 @@ There are 2 ways to install necessary packages
 # Usage
 
 Follow the document to setup your audience configuration
-* [How to develop your first live stream project](Docs/TUTORIAL_LIVESTREAM.md)
-* [How to send your first VR emoji](Docs/TUTORIAL_EMOJI.md)
+* [How to develop your first live stream project](Docs/TUTORIAL-LiveStream.md)
+* [How to send your first VR emoji](Docs/TUTORIAL-Emoji.md)
 
 # Limitations and known issues
 

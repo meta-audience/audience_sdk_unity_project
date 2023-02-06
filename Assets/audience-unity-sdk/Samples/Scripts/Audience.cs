@@ -7,28 +7,13 @@ namespace AudienceSDK.Sample
 {
     public class Audience : MonoBehaviour
     {
-        public Action<bool> onAudienceInitStateChanged;
-
         private static Audience instance = null;
-        private bool audienceInited = false;
-
         public static Audience Instance {
             get {
                 return instance;
             }
             private set {
                 instance = value;
-            }
-        }
-
-        public bool AudienceInited {
-            get {
-                return this.audienceInited;
-            }
-
-            private set {
-                this.audienceInited = value;
-                this.onAudienceInitStateChanged?.Invoke(this.audienceInited);
             }
         }
 
@@ -48,15 +33,12 @@ namespace AudienceSDK.Sample
             UnityEngine.Object.DontDestroyOnLoad(this.gameObject);
             CameraUtilities.PostCreateCamera = PostCreateCameraFunc;
             AudienceSDK.Audience.Initialize();
-            this.AudienceInited = true;
         }
 
         private void OnApplicationQuit()
         {
-            this.AudienceInited = false;
             Debug.Log("OnApplicationQuit()");
-            AudienceSDK.Audience.Context.Stop();
-            NativeMethods.DeInit();
+            AudienceSDK.Audience.Deinitialize();
         }
 
         private static void PostCreateCameraFunc(AudienceCameraInstance instance)

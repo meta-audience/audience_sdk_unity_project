@@ -14,22 +14,17 @@ namespace AudienceSDK.Sample
 
         private void Start()
         {
-            if (Audience.Instance == null) {
-                Debug.LogWarning("[AudienceControlPanel] Audience does not exist in this scene.");
-                return;
-            }
-
-            if (Audience.Instance.AudienceInited) {
+            if (AudienceSDK.Audience.AudienceInited) {
                 this.InitPanelController();
             }
 
-            Audience.Instance.onAudienceInitStateChanged += OnAudienceInitStateChanged;
+            AudienceSDK.Audience.AudienceInitStateChanged += this.OnAudienceInitStateChanged;
         }
 
         private void OnDestroy()
         {
-            if (Audience.Instance)
-                Audience.Instance.onAudienceInitStateChanged -= OnAudienceInitStateChanged;
+            this.DeInitPanelController();
+            AudienceSDK.Audience.AudienceInitStateChanged -= this.OnAudienceInitStateChanged;
         }
 
         private void InitPanelController() {
