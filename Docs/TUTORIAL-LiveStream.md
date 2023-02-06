@@ -4,9 +4,9 @@
 - [Add viewers](#step3)
 - [Save your settings](#step4)
 - [Choose a Sample scene in Unity Editor](#step5)
-- [Load a scene ](#step6)
+- [Load a scene](#step6)
 - [Start your streaming](#step7)
-- [Share a URL](#step8)
+- [Share your URL](#step8)
 
 ****
 #### <a name="step1"> Step 1 (Web): Sign in/Sign up on the audience website
@@ -32,36 +32,38 @@
 - (***Recommended***) Select **`SFU`** viewer type, which supports **multiple online viewers**
 - Link the viewer with a **`source camera`**
 - You can add up to **`3`** viewers
-- (***Recommended***) Rename your `Viewer Name` to make it easier to distinguish different viewers joining a channel through a URL
+- (***Recommended***) Rename your `Viewer Name` to making it easier to distinguish different viewers joining a channel through a URL
 ****  
  #### <a name="step4"> Step 4 (Web): Save your settings
 - Click `Save` to save your scene settings on `official website`
-- Your scene settings will appear in the list after you `Log in` success in `Unity`
+- Your scene settings will appear in the list after you `Log in` successfully in `Unity`
 **** 
 #### <a name="step5"> Step 5 (Unity): Choose a Sample scene in Unity Editor
-- Choose the scene in `Assets/Samples/Scenes/SampleScene.1-Start a stream`
+- Choose the scene in `Assets/Samples/Scenes/SampleScene.1-Start`
 - Enter your username (Email) and password
-- After login success, the scene setting UI panel should appear 
-    - If scene setting UI panel doesn't appear, check your Email and password is correct
-    - If your dropdown list is empty, please click the `Refresh` button
-    - After click refresh button but still empty, please check your scene setting again 
+- Once logged in, the scene setting panel will appear
+    - If scene setting UI panel doesn't appear, check your Email and password are correct
+    - If your dropdown menu list is empty, please click the `Refresh` button
+    - If it is still empty, please check your scene setting again 
 ****
 #### <a name="step6"> Step 6 (Unity): Load a scene 
-- Check your audio device and microphone is available
-    - If you have already had a VR device, the audio and microphone should avilable by default
-    - It may cause some ***`error`*** if you open an Unity scene, then plug the headphone or microphone, please restart the Unity
-        - Please plug the headphone or microphone first and then start the Unity    
-- After choose a scene setting in dropdown list, click `Load` button
+- Make sure your audio device and microphone are available
+    - If you have a VR device, audio and microphone are available by default
+    -Error may occur if plugging your audio device after starting Unity. In such cases, do the following:
+      - Close Unity
+      - Plug your audio device and microphone
+      - Start Unity  
+- After choose a scene setting in dropdown menu, click `Load` button
     - If nothing happened, check the `Console`, and check the error code and message
 **** 
 #### <a name="step7"> Step 7 (Unity): Start your streaming
-- After `Console` show connect success message, click `Start` button
-- Wait for about 3 seconds, you will see a `Green Light` in the scene, the streaming is started
-    - The color of ball represent the status of streaming
+- After `Console` show `connect success` message, click `Start` button
+- Approximately 3 seconds later, a `green light` will appears, indicating that the streaming has started
+    - The color of sphere represents the status of streaming
     - `Yellow` means waiting for streaming
     - `Gray` means no streaming
     - `Red` means some error occured, please check `Console` or `log`
 ****
 #### <a name="step8"> Step 8 (Web): Share your streaming
-- After streaming start, the URL will create in our [official website](https://www.meta-audience.com/en-us/accounts/userChannels/), you can share the URL to other device (Mobile / Oculus / Other PC)
-> If any error occur, please check the [Error code detail](https://adc.github.trendmicro.com/Consumer-TMXRLAB/audience_sdk_unity_project/wiki/Initialization-&-Deinitialization#error-code--message-3)
+- After streaming start,you can find a URL on our [official website channel list](https://www.meta-audience.com/en-us/accounts/userChannels/), you can share the URL to other device (Mobile / Oculus / Other PC)
+> If any error occurs, please check [Error code detail](https://adc.github.trendmicro.com/Consumer-TMXRLAB/audience_sdk_unity_project/wiki/Initialization-&-Deinitialization#error-code--message-3)
