@@ -66,4 +66,4 @@
 ****
 #### <a name="step8"> Step 8 (Web): Share your streaming
 - After streaming start,you can find a URL on our [official website channel list](https://www.meta-audience.com/en-us/accounts/userChannels/), you can share the URL to other device (Mobile / Oculus / Other PC)
-> If any error occurs, please check [Error code detail](https://adc.github.trendmicro.com/Consumer-TMXRLAB/audience_sdk_unity_project/wiki/Initialization-&-Deinitialization#error-code--message-3)
+> If any error occurs, please check [Error code detail](../../wiki/Initialization-&-Deinitialization#error-code--message-3)
