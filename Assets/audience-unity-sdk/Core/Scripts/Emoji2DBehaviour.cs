@@ -126,12 +126,14 @@ namespace AudienceSDK {
             var tex = this._gifData.TexList[0];
             this._index = 0;
 
-            this._emojiModel = Instantiate(new GameObject(), this.transform);
+            this._emojiModel = new GameObject("Emoji Model");
+            this._emojiModel.transform.SetParent(this.transform);
             this._emojiModel.transform.localEulerAngles = Vector3.zero;
             this._emojiModel.transform.localPosition = Vector3.zero;
             this._emojiModel.AddComponent<Animation>();
 
-            var emojiObj = Instantiate(new GameObject(), this._emojiModel.transform);
+            var emojiObj = new GameObject("Emoji Obj");
+            emojiObj.transform.SetParent(this._emojiModel.transform);
             emojiObj.transform.localEulerAngles = new Vector3(0, 180, 0);
             emojiObj.transform.localPosition = Vector3.zero;
             SpriteRenderer sr = emojiObj.AddComponent<SpriteRenderer>() as SpriteRenderer;
@@ -155,23 +157,12 @@ namespace AudienceSDK {
             sr.sharedMaterial = mat;
         }
 
-        private Material GetSharedMaterial() {
-            if (_material == null) {
-                var shader = Shader.Find("Particles/Standard Unlit");
-                Material mat = null;
-                if (shader != null) {
-                    mat = new Material(shader);
-                    mat.SetColor("_Color", new Color(1.0f, 1.0f, 1.0f, 1.0f));
-                    mat.SetFloat("_Mode", 3);
-                    mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-                    mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-                    mat.SetInt("_ZWrite", 0);
-                    mat.DisableKeyword("_ALPHATEST_ON");
-                    mat.EnableKeyword("_ALPHABLEND_ON");
-                    mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-                    mat.renderQueue = 3000;
-                }
-
+        private Material GetSharedMaterial()
+        {
+            if (_material == null)
+            {
+                // audience_unity_sdk.dll won't support this, need #if DLL_BUILD
+                Material mat = new Material(Resources.Load<Material>("Audience/Emoji/2Demoji_origin"));
                 _material = mat;
             }
 
