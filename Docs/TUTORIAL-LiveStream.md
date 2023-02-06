@@ -32,7 +32,7 @@
 - (***Recommended***) Select **`SFU`** viewer type, which supports **multiple online viewers**
 - Link the viewer with a **`source camera`**
 - You can add up to **`3`** viewers
-- (***Recommended***) Rename your `Viewer Name` to making it easier to distinguish different viewers joining a channel through a URL
+- (***Recommended***) Rename your `Viewer Name` making it easier to distinguish different viewers joining a channel through a URL
 ****  
  #### <a name="step4"> Step 4 (Web): Save your settings
 - Click `Save` to save your scene settings on `official website`
