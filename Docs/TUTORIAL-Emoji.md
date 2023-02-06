@@ -1,5 +1,5 @@
 # How to send your first VR emoji
-- [Check TUTORIAL step 1~4](#step1)
+- [Check `Tutorial` step 1~4](#step1)
 - [Authorize YouTube/Twitch channels](#step2)
 - [Start the streaming on `YouTube/Twitch`](#step3)
 - [Verify your streaming Emoji is working](#step4)
