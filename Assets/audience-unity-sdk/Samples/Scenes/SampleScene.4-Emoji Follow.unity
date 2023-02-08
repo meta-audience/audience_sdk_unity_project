@@ -190,19 +190,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '1. Start a stream.
-
-
-    2. Move the green capsule through W-A-S-D.
-
-
-    3.
-    We mounted the script on AudienceEmojiSceneSetting, through script set Emoji
-    with Emoji Spawner.
-
-
-    4. Watch your stream to see how emoji and emoji spawners
-    behave.'
+  m_Text: "1. Start a stream.\n\n2. Move the green capsule through W-A-S-D.\n\n3.
+    We mounted the script on \u201CAudienceEmojiSceneSetting\u201D, and it sets Emoji
+    and Emoji Spawner.\n\n4. Watch your stream to see how emoji and emoji spawners
+    behave."
 --- !u!222 &103346941
 CanvasRenderer:
   m_ObjectHideFlags: 0

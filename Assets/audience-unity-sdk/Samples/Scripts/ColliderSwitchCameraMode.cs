@@ -10,10 +10,10 @@ namespace AudienceSDK
         private CameraMoveAlgorithmBase _appliedAlgorithm;
 
         [SerializeField]
-        private GameObject[] _disableGameObjects;
+        private Collider[] _disableColliders;
 
         [SerializeField]
-        private GameObject[] _enableGameObjects;
+        private Collider[] _enableColliders;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -26,14 +26,14 @@ namespace AudienceSDK
                 this._appliedAlgorithm.enabled = true;
             }
 
-            foreach (var obj in this._disableGameObjects) 
+            foreach (var collider in this._disableColliders) 
             {
-                obj.SetActive(false);
+                collider.enabled = false;
             }
 
-            foreach (var obj in this._enableGameObjects)
+            foreach (var collider in this._enableColliders)
             {
-                obj.SetActive(true);
+                collider.enabled = true;
             }
         }
     }
