@@ -112,8 +112,17 @@
     <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\EmojiAvatarManager.cs">
       <Link>Scripts\EmojiAvatarManager.cs</Link>
     </Compile>
+	<Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\EmojiAvatarPositionGenerateAlgorithmBase.cs">
+      <Link>Scripts\EmojiAvatarPositionGenerateAlgorithmBase.cs</Link>
+    </Compile>
     <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\EmojiAvatarSingleAuthorBehaviour.cs">
       <Link>Scripts\EmojiAvatarSingleAuthorBehaviour.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\EmojiAvatarsLookAtTargetBehavior.cs">
+      <Link>Scripts\EmojiAvatarsLookAtTargetBehavior.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\EmojiAvatarsRootBehaviour.cs">
+      <Link>Scripts\EmojiAvatarsRootBehaviour.cs</Link>
     </Compile>
     <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\EmojiBehaviourBase.cs">
       <Link>Scripts\EmojiBehaviourBase.cs</Link>
