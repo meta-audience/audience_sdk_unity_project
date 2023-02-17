@@ -168,7 +168,7 @@ namespace AudienceSDK {
             } else {
                 go.transform.SetParent(this.transform);
             }
-            
+
             return eBehaviour;
         }
 

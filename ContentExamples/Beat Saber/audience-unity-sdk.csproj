@@ -85,6 +85,9 @@
     <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\CameraAvatar.cs">
       <Link>Scripts\CameraAvatar.cs</Link>
     </Compile>
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\CameraMoveAlgorithmBase.cs">
+      <Link>Scripts\CameraMoveAlgorithmBase.cs</Link>
+    </Compile>
     <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\Cipher.cs">
       <Link>Scripts\Cipher.cs</Link>
     </Compile>
@@ -93,6 +96,9 @@
     </Compile>
     <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\Context.cs">
       <Link>Scripts\Context.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\DefaultEmojiAvatarPositionGenerateAlgorithm.cs">
+      <Link>Scripts\DefaultEmojiAvatarPositionGenerateAlgorithm.cs</Link>
     </Compile>
     <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\DefaultEmojiBehaviour.cs">
       <Link>Scripts\DefaultEmojiBehaviour.cs</Link>
@@ -111,9 +117,6 @@
     </Compile>
     <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\EmojiAvatarManager.cs">
       <Link>Scripts\EmojiAvatarManager.cs</Link>
-    </Compile>
-	<Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\EmojiAvatarPositionGenerateAlgorithmBase.cs">
-      <Link>Scripts\EmojiAvatarPositionGenerateAlgorithmBase.cs</Link>
     </Compile>
     <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\EmojiAvatarSingleAuthorBehaviour.cs">
       <Link>Scripts\EmojiAvatarSingleAuthorBehaviour.cs</Link>
@@ -138,6 +141,9 @@
     </Compile>
     <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\IEmojiAuthorManager.cs">
       <Link>Scripts\IEmojiAuthorManager.cs</Link>
+    </Compile>
+	<Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\IEmojiAvatarPositionGenerateAlgorithmBase.cs">
+      <Link>Scripts\IEmojiAvatarPositionGenerateAlgorithmBase.cs</Link>
     </Compile>
     <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\IEmojiSentencesInAuthor.cs">
       <Link>Scripts\IEmojiSentencesInAuthor.cs</Link>

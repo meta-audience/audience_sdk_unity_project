@@ -6,7 +6,7 @@ namespace AudienceSDK
     // this algorithm is only suited for regular box collider as avatar area.
     // if developers want use unregular shape colliders as avatar area, create another algorithm
     // extend EmojiAvatarPositionGenerateAlgorithmBase to provide avatar positions.
-    public class DefaultEmojiAvatarPositionGenerateAlgorithm : EmojiAvatarPositionGenerateAlgorithmBase
+    public class DefaultEmojiAvatarPositionGenerateAlgorithm : IEmojiAvatarPositionGenerateAlgorithmBase
     {
         private const string avatarAreaResourcesPath = "Audience/Avatar/";
         private const string avatarGenerateArea = "DefaultGenerateArea";
@@ -40,17 +40,16 @@ namespace AudienceSDK
                 return Vector3.zero;
             }
 
-            var randomListIndex = UnityEngine.Random.Range(0, _avatarGenerateColliders.Count);
-            var randomColliderInList = _avatarGenerateColliders[randomListIndex];
+            var randomListIndex = UnityEngine.Random.Range(0, this._avatarGenerateColliders.Count);
+            var randomColliderInList = this._avatarGenerateColliders[randomListIndex];
 
             Vector3 extents = randomColliderInList.size / 2f;
             Vector3 randomPoint = new Vector3(
                 UnityEngine.Random.Range(-extents.x, extents.x),
                 UnityEngine.Random.Range(-extents.y, extents.y),
-                UnityEngine.Random.Range(-extents.z, extents.z)
-                );
+                UnityEngine.Random.Range(-extents.z, extents.z));
 
-            return randomColliderInList.transform.position + randomColliderInList.transform.rotation * randomPoint;
+            return randomColliderInList.transform.position + (randomColliderInList.transform.rotation * randomPoint);
         }
 
         private GameObject GetGenerateArea()
@@ -72,6 +71,7 @@ namespace AudienceSDK
                     }
                 }
             }
+
             return this._generateArea;
         }
     }
