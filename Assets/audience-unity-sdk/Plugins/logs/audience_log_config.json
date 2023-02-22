@@ -1,58 +1,67 @@
 {
-  "SINKS": {
-    "stdout_color_sink": {
-      "type": "stdout_color_sink_mt",
-      "level": "critical",
-      "pattern": "console_pattern"
+    "FLUSH_TIMER": {
+        "duration": 5
     },
-    "basic_file_sink": {
-      "type": "basic_file_sink_mt",
-      "filename": "./logs/logfile.log",
-      "truncate": true,
-      "level": "info",
-      "pattern": "general_pattern"
+    "LOGGERS": {
+        "default": {
+            "level": "info",
+            "sinks": [
+                "stdout_color_sink",
+                "basic_file_sink"
+            ],
+            "type": "sync"
+        },
+        "stats": {
+            "level": "info",
+            "sinks": [
+                "stdout_color_sink",
+                "stats_file_sink"
+            ],
+            "type": "sync"
+        },
+        "webrtc": {
+            "level": "info",
+            "sinks": [
+                "stdout_color_sink",
+                "webrtc_file_sink"
+            ],
+            "type": "sync"
+        }
     },
-    "webrtc_file_sink": {
-      "type": "basic_file_sink_mt",      
-      "filename": "./logs/audience_webrtc_logfile.log",
-      "truncate": true,
-      "level": "info",
-      "pattern": "general_pattern"
-     }, 
-    "stats_file_sink": {
-      "type": "basic_file_sink_mt",      
-      "filename": "./logs/audience_stats_logfile.log",
-      "truncate": true,
-      "level": "info",
-      "pattern": "general_pattern"
-     }    
-  },
-  "PATTERNS": {
-    "console_pattern": "[%C-%m-%d %H:%M:%S.%e]%^[%L]%$ %v",
-    "general_pattern": "[%C-%m-%d %H:%M:%S.%e]%^[%L][%n]%$ %v"
-  },
-  "LOGGERS": {
-    "default": {
-      "sinks": [ "stdout_color_sink", "basic_file_sink" ],
-      "level": "info",
-      "type": "sync"
+    "PATTERNS": {
+        "console_pattern": "[%C-%m-%d %H:%M:%S.%e]%^[%L]%$ %v",
+        "general_pattern": "[%C-%m-%d %H:%M:%S.%e]%^[%L][%n]%$ %v"
     },
-    "webrtc": {
-      "sinks": [ "stdout_color_sink", "webrtc_file_sink" ],
-      "level": "info",
-      "type": "sync"
+    "SINKS": {
+        "basic_file_sink": {
+            "filename": "D:\\BitBucket\\audience-sdk-unity-project\\audience_sdk_unity_project\\Assets\\audience-unity-sdk\\Plugins\\logs\\audience_logfile.log",
+            "level": "info",
+            "pattern": "general_pattern",
+            "truncate": true,
+            "type": "basic_file_sink_mt"
+        },
+        "stats_file_sink": {
+            "filename": "D:\\BitBucket\\audience-sdk-unity-project\\audience_sdk_unity_project\\Assets\\audience-unity-sdk\\Plugins\\logs\\audience_stats_logfile.log",
+            "level": "info",
+            "pattern": "general_pattern",
+            "truncate": true,
+            "type": "basic_file_sink_mt"
+        },
+        "stdout_color_sink": {
+            "level": "critical",
+            "pattern": "console_pattern",
+            "type": "stdout_color_sink_mt"
+        },
+        "webrtc_file_sink": {
+            "filename": "D:\\BitBucket\\audience-sdk-unity-project\\audience_sdk_unity_project\\Assets\\audience-unity-sdk\\Plugins\\logs\\audience_webrtc_logfile.log",
+            "level": "info",
+            "pattern": "general_pattern",
+            "truncate": true,
+            "type": "basic_file_sink_mt"
+        }
     },
-    "stats": {
-      "sinks": [ "stdout_color_sink", "stats_file_sink" ],
-      "level": "info",
-      "type": "sync"
-    }   
-  },
-  "THREAD_POOL": {
-    "thread_count": 2,
-    "queue_size": 8192
-  },
-  "FLUSH_TIMER": {
-    "duration": 5
-  }
+    "THREAD_POOL": {
+        "queue_size": 8192,
+        "thread_count": 2
+    }
 }

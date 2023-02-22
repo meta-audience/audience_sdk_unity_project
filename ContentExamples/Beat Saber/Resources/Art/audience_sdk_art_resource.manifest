@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1667836708
+CRC: 1295838643
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f6b9065af9422c34b43b64fdcc7d9e9d
+    Hash: 63100695f11a34f39cb333efe790e8cd
   TypeTreeHash:
     serializedVersion: 2
-    Hash: ee94fa674b32415c315a6f5018bb434e
+    Hash: a71084e625905e82f5f7aa87f9363419
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -25,18 +25,24 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 48
   Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
 - Class: 102
   Script: {instanceID: 0}
 - Class: 128
   Script: {instanceID: 0}
+- Class: 135
+  Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
+- Assets/audience-unity-sdk/Resources/Audience/CameraAvatar/camera_avatar_shape.mat
 - Assets/audience-unity-sdk/Resources/Audience/Avatar/viewer_cat.fbx
 - Assets/audience-unity-sdk/Resources/Audience/Emoji/EMOJI_04.prefab
 - Assets/audience-unity-sdk/Resources/Audience/Emoji/AU_emoji_05.fbx
 - Assets/audience-unity-sdk/Resources/Audience/Avatar/au_purple.mat
 - Assets/audience-unity-sdk/Resources/Audience/Emoji/emoji_green.mat
 - Assets/audience-unity-sdk/Resources/Audience/Emoji/emoji_red.mat
+- Assets/audience-unity-sdk/Resources/Audience/CameraAvatar/CameraAvatarPrefab.prefab
 - Assets/audience-unity-sdk/Resources/Audience/Emoji/emoji_tellow.mat
 - Assets/audience-unity-sdk/Resources/Audience/Emoji/emoji_05.png
 - Assets/audience-unity-sdk/Resources/Audience/Emoji/emoji_05.mat
@@ -51,8 +57,10 @@ Assets:
 - Assets/audience-unity-sdk/Resources/Audience/Avatar/Avatar_Single.prefab
 - Assets/audience-unity-sdk/Resources/Audience/Emoji/EMOJI_03.prefab
 - Assets/audience-unity-sdk/Resources/Audience/Emoji/EMOJI_02.prefab
+- Assets/audience-unity-sdk/Resources/Audience/CameraAvatar/camera_avatar_preview.mat
 - Assets/audience-unity-sdk/Resources/Audience/Avatar/au_white.mat
 - Assets/audience-unity-sdk/Resources/Audience/Emoji/AU_emoji_06.fbx
+- Assets/audience-unity-sdk/Resources/Audience/Emoji/2Demoji_origin.mat
 - Assets/audience-unity-sdk/Resources/Audience/Avatar/au_blue.mat
 - Assets/audience-unity-sdk/Resources/Audience/Emoji/EMOJI_05.prefab
 - Assets/audience-unity-sdk/Resources/Audience/Avatar/au_red.mat

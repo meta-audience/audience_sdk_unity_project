@@ -161,9 +161,18 @@ namespace AudienceSDK {
         {
             if (_material == null)
             {
+                /*
+                 * audience-unity-sdk.csproj would define DLL_BUILD
+                 * dll will load resources from embeded resources.
+                 * AudienceSDK-Assembly won't define DLL_BUILD
+                 * it will load resouces from Resources folder.
+                 */
+#if DLL_BUILD
                 // audience_unity_sdk.dll won't support this, need #if DLL_BUILD
                 Material mat = new Material(Resources.Load<Material>("Audience/Emoji/2Demoji_origin"));
                 _material = mat;
+#else
+#endif
             }
 
             return _material;

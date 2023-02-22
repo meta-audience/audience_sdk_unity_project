@@ -345,9 +345,11 @@ namespace AudienceSDK {
                     this._currentCultureResourceSet = null;
                 } else {
                     this._currentCultureResourceSet = new ResourceSet(stream);
+                    stream.Close();
                 }
             } else {
                 this._currentCultureResourceSet = new ResourceSet(stream);
+                stream.Close();
             }
 #else
             this._currentCultureResourceSet = null;
