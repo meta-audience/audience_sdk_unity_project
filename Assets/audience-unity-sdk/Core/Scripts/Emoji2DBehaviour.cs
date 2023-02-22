@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using AudienceSDK.mgGif;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -167,12 +169,18 @@ namespace AudienceSDK {
                  * AudienceSDK-Assembly won't define DLL_BUILD
                  * it will load resouces from Resources folder.
                  */
+                Material mat = null;
 #if DLL_BUILD
-                // audience_unity_sdk.dll won't support this, need #if DLL_BUILD
-                Material mat = new Material(Resources.Load<Material>("Audience/Emoji/2Demoji_origin"));
-                _material = mat;
+                var assembly = Assembly.GetExecutingAssembly();
+                Stream stream = assembly.GetManifestResourceStream("AudienceSDK.Resources.Art.audience_sdk_art_resource");
+                var audienceSDKBundle = AssetBundle.LoadFromStream(stream);
+                mat = new Material(audienceSDKBundle.LoadAsset<Material>("2Demoji_origin.mat"));
+                audienceSDKBundle.Unload(false);
+                stream.Close();
 #else
+                mat = new Material(Resources.Load<Material>("Audience/Emoji/2Demoji_origin"));
 #endif
+                _material = mat;
             }
 
             return _material;
