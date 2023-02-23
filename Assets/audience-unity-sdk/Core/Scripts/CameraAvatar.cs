@@ -107,6 +107,9 @@ namespace AudienceSDK {
                 return;
             }
 
+            // transfer texture to replaced matrial.
+            material.SetTexture("_MainTex", this._cameraAvatarPreviewMaterial.GetTexture("_MainTex"));
+
             this._cameraAvatarPreviewMaterial = material;
             this._cameraAvatarFrontPreviewGO.GetComponent<MeshRenderer>().material = this._cameraAvatarPreviewMaterial;
             this._cameraAvatarBackPreviewGO.GetComponent<MeshRenderer>().material = this._cameraAvatarPreviewMaterial;
