@@ -163,6 +163,14 @@ namespace AudienceSDK {
         {
             if (_material == null)
             {
+                if (UserConfig.ReplacedEmoji2DShader != null) {
+                    var emoji2DShader = Shader.Find(UserConfig.ReplacedEmoji2DShader);
+                    if (emoji2DShader != null) {
+                        _material = new Material(emoji2DShader);
+                        return _material;
+                    }
+                }
+
                 /*
                  * audience-unity-sdk.csproj would define DLL_BUILD
                  * dll will load resources from embeded resources.
@@ -181,6 +189,7 @@ namespace AudienceSDK {
                 mat = new Material(Resources.Load<Material>("Audience/Emoji/2Demoji_origin"));
 #endif
                 _material = mat;
+                return _material;
             }
 
             return _material;
