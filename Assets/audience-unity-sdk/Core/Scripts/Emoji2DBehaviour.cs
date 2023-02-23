@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using AudienceSDK.mgGif;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace AudienceSDK {
     public class Emoji2DBehaviour : EmojiBehaviourBase {
 
         private const float _spriteSize = 0.24f;
-        private static Material _material = null;
         private SpriteRenderer _renderer = null;
         private bool _isGif = false;
 
@@ -113,7 +109,7 @@ namespace AudienceSDK {
             }
 
             // Assign the material to sprite renderer
-            Material mat = this.GetSharedMaterial();
+            Material mat = Audience.Context.EmojiEffectManager.GetShared2DMaterial();
             sr.material = mat;
             sr.sharedMaterial = mat;
         }
@@ -154,45 +150,9 @@ namespace AudienceSDK {
             this._renderer = sr;
 
             // Assign the material to sprite renderer
-            Material mat = this.GetSharedMaterial();
+            Material mat = Audience.Context.EmojiEffectManager.GetShared2DMaterial();
             sr.material = mat;
             sr.sharedMaterial = mat;
-        }
-
-        private Material GetSharedMaterial()
-        {
-            if (_material == null)
-            {
-                if (UserConfig.ReplacedEmoji2DShader != null) {
-                    var emoji2DShader = Shader.Find(UserConfig.ReplacedEmoji2DShader);
-                    if (emoji2DShader != null) {
-                        _material = new Material(emoji2DShader);
-                        return _material;
-                    }
-                }
-
-                /*
-                 * audience-unity-sdk.csproj would define DLL_BUILD
-                 * dll will load resources from embeded resources.
-                 * AudienceSDK-Assembly won't define DLL_BUILD
-                 * it will load resouces from Resources folder.
-                 */
-                Material mat = null;
-#if DLL_BUILD
-                var assembly = Assembly.GetExecutingAssembly();
-                Stream stream = assembly.GetManifestResourceStream("AudienceSDK.Resources.Art.audience_sdk_art_resource");
-                var audienceSDKBundle = AssetBundle.LoadFromStream(stream);
-                mat = new Material(audienceSDKBundle.LoadAsset<Material>("2Demoji_origin.mat"));
-                audienceSDKBundle.Unload(false);
-                stream.Close();
-#else
-                mat = new Material(Resources.Load<Material>("Audience/Emoji/2Demoji_origin"));
-#endif
-                _material = mat;
-                return _material;
-            }
-
-            return _material;
         }
 
         private void Update() {
