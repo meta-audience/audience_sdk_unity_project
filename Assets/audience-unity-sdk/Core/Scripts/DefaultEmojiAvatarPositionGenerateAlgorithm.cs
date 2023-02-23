@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using UnityEngine;
 
 namespace AudienceSDK
@@ -56,7 +58,24 @@ namespace AudienceSDK
         {
             if (this._generateArea == null)
             {
-                var area = Resources.Load<GameObject>(avatarAreaResourcesPath + avatarGenerateArea);
+                /*
+                 * audience-unity-sdk.csproj would define DLL_BUILD
+                 * dll will load resources from embeded resources.
+                 * AudienceSDK-Assembly won't define DLL_BUILD
+                 * it will load resouces from Resources folder.
+                 */
+                // DefaultGenerateArea.prefab
+                GameObject area = null;
+#if DLL_BUILD
+                var assembly = Assembly.GetExecutingAssembly();
+                Stream stream = assembly.GetManifestResourceStream("AudienceSDK.Resources.Art.audience_sdk_art_resource");
+                var audienceSDKBundle = AssetBundle.LoadFromStream(stream);
+                area = audienceSDKBundle.LoadAsset<GameObject>("DefaultGenerateArea.prefab");
+                audienceSDKBundle.Unload(false);
+                stream.Close();
+#else
+                area = Resources.Load<GameObject>(avatarAreaResourcesPath + avatarGenerateArea);
+#endif
                 if (area != null)
                 {
                     this._generateArea = GameObject.Instantiate(area);
