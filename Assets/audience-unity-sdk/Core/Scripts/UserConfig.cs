@@ -13,6 +13,8 @@ namespace AudienceSDK {
 
         public static int CubemapSize { get; set; } = -1;
 
+        public static string ReplacedEmoji2DShader { get; set; } = null;
+
         public static string DefaultEmojiShader { get; set; } = "audience/emoji";
 
         public static int EmojiLimitPerMessage { get; set; } = 20;

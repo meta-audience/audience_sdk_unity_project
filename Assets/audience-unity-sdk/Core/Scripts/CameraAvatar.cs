@@ -78,6 +78,40 @@ namespace AudienceSDK {
             this._cameraAvatarShapeMaterial.SetColor("_Color", color);
         }
 
+        public void ReplaceCameraAvatarShapeMaterial(Material material) {
+            if (material == null) {
+                Debug.LogError("Input material is null.");
+                return;
+            }
+
+            if (this._cameraAvatarShapeGO == null) {
+                Debug.LogError("Camera Avatar Shape not init.");
+                return;
+            }
+
+            this._cameraAvatarShapeGO.GetComponent<MeshRenderer>().material = material;
+            this._cameraAvatarShapeMaterial = this._cameraAvatarShapeGO.GetComponent<MeshRenderer>().material;
+        }
+
+        public void ReplaceCameraAvatarPreviewMaterial(Material material)
+        {
+            if (material == null)
+            {
+                Debug.LogError("Input material is null.");
+                return;
+            }
+
+            if (this._cameraAvatarBackPreviewGO == null || this._cameraAvatarFrontPreviewGO == null)
+            {
+                Debug.LogError("Camera Avatar preview not init.");
+                return;
+            }
+
+            this._cameraAvatarPreviewMaterial = material;
+            this._cameraAvatarFrontPreviewGO.GetComponent<MeshRenderer>().material = this._cameraAvatarPreviewMaterial;
+            this._cameraAvatarBackPreviewGO.GetComponent<MeshRenderer>().material = this._cameraAvatarPreviewMaterial;
+        }
+
         public Transform GetCameraAvatarTransform() {
             if (this._cameraAvatarGO != null) {
 
