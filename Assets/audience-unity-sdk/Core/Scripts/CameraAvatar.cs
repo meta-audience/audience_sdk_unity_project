@@ -49,14 +49,14 @@ namespace AudienceSDK {
             }
         }
 
-        public void SwitchCameraAvatarShapeCollider(bool enable) {
+        public void SetCameraAvatarShapeColliderEnable() {
             if (this._cameraAvatarShapeGO == null) {
 
                 Debug.LogError("Camera Avatar Shape not init.");
                 return;
             }
 
-            this._cameraAvatarShapeGO.GetComponent<Collider>().enabled = enable;
+            this._cameraAvatarShapeGO.GetComponent<Collider>().enabled = true;
         }
 
         public void SetCameraAvatarPreviewTexture(Texture previewTexture) {
