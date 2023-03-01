@@ -13,11 +13,7 @@ namespace AudienceSDK {
 
         public static int CubemapSize { get; set; } = -1;
 
-        public static string DefaultCamAvatarShader { get; set; } = "audience/color";
-
         public static string DefaultEmojiShader { get; set; } = "audience/emoji";
-
-        public static string DefaultPreviewQuadShader { get; set; } = "Particles/Standard Unlit";
 
         public static int EmojiLimitPerMessage { get; set; } = 20;
 

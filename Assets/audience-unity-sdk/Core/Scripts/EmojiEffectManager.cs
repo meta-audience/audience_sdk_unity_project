@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using Newtonsoft.Json;
+using System.IO;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -18,10 +18,21 @@ namespace AudienceSDK {
         private List<EmojiBehaviourBase> _emojiList;
         private bool _isEmojiProcessing = false;
         private bool _isEmojiAttachEmojiSpawner = false;
+        private Material _shared2DMaterial = null;
 
         public AudienceReturnCode SetIsEmojiAttachEmojiSpawner(bool value) {
             this._isEmojiAttachEmojiSpawner = value;
             return AudienceReturnCode.AudienceSDKOk;
+        }
+
+        public void ReplaceEmojiShared2DMaterial(Material material) {
+            if (material == null)
+            {
+                Debug.LogError("Input material is null.");
+                return;
+            }
+
+            this._shared2DMaterial = material;
         }
 
         public AudienceReturnCode CreateEmoji(ChatAuthor author, EmojiMessage message) {
@@ -135,6 +146,32 @@ namespace AudienceSDK {
             }
         }
 
+        public Material GetShared2DMaterial() {
+            if (this._shared2DMaterial == null)
+            {
+                /*
+                 * audience-unity-sdk.csproj would define DLL_BUILD
+                 * dll will load resources from embeded resources.
+                 * AudienceSDK-Assembly won't define DLL_BUILD
+                 * it will load resouces from Resources folder.
+                 */
+                Material mat = null;
+#if DLL_BUILD
+                var assembly = Assembly.GetExecutingAssembly();
+                Stream stream = assembly.GetManifestResourceStream("AudienceSDK.Resources.Art.audience_sdk_art_resource");
+                var audienceSDKBundle = AssetBundle.LoadFromStream(stream);
+                mat = new Material(audienceSDKBundle.LoadAsset<Material>("2Demoji_origin.mat"));
+                audienceSDKBundle.Unload(false);
+                stream.Close();
+#else
+                mat = new Material(Resources.Load<Material>("Audience/Emoji/2Demoji_origin"));
+#endif
+                this._shared2DMaterial = mat;
+            }
+
+            return this._shared2DMaterial;
+        }
+
         private void Awake() {
             Debug.Log(XRSettings.stereoRenderingMode);
             UnityEngine.Object.DontDestroyOnLoad(this.gameObject);
@@ -168,7 +205,7 @@ namespace AudienceSDK {
             } else {
                 go.transform.SetParent(this.transform);
             }
-            
+
             return eBehaviour;
         }
 

@@ -10,9 +10,17 @@ namespace AudienceSDK {
 
         public float AvatarTotalLifeTime { get; private set; } = 15.0f;
 
-        public GameObject EmojiAvatarsRoot { get { return this._emojiAvatarsRoot; } }
+        public GameObject EmojiAvatarsRoot {
+            get {
+                return this._emojiAvatarsRoot;
+            }
+        }
 
-        public GameObject EmojiAvatarsLookAtTarget { get { return this._emojiLookAtTarget; } }
+        public GameObject EmojiAvatarsLookAtTarget {
+            get {
+                return this._emojiLookAtTarget;
+            }
+        }
 
         private const string avatarResourcesPath = "Audience/Avatar/";
         private const string avatarSingleKey = "single";
@@ -28,7 +36,7 @@ namespace AudienceSDK {
         private EmojiAvatarsRootBehaviour _rootBehaviour = null;
         private GameObject _emojiLookAtTarget = null;
         private EmojiAvatarsLookAtTargetBehavior _lookAtTargetBehaviour = null;
-        private EmojiAvatarPositionGenerateAlgorithmBase emojiAvatarPositionGenerateAlgorithm;
+        private IEmojiAvatarPositionGenerateAlgorithmBase emojiAvatarPositionGenerateAlgorithm;
 
         private float _avatarColliderRadius = 0.3f;
         private int _avatarColliderRetryTimes = 10;
@@ -49,7 +57,7 @@ namespace AudienceSDK {
             return AudienceReturnCode.AudienceSDKOk;
         }
 
-        public AudienceReturnCode SetEmojiAvatarPositionGenerateAlgorithm(EmojiAvatarPositionGenerateAlgorithmBase algo) {
+        public AudienceReturnCode SetEmojiAvatarPositionGenerateAlgorithm(IEmojiAvatarPositionGenerateAlgorithmBase algo) {
             this.emojiAvatarPositionGenerateAlgorithm = algo;
             return AudienceReturnCode.AudienceSDKOk;
         }
@@ -242,8 +250,8 @@ namespace AudienceSDK {
                 var relativePos = this.emojiAvatarPositionGenerateAlgorithm.GenerateAvatarPosition();
 
                 // compute world coordinate to check overlap with other avatar.
-                candidatePosition = this._emojiAvatarsRoot.transform.position + 
-                    this._emojiAvatarsRoot.transform.rotation * relativePos;
+                candidatePosition = this._emojiAvatarsRoot.transform.position +
+                    (this._emojiAvatarsRoot.transform.rotation * relativePos);
                 if (!Physics.CheckSphere(candidatePosition, this._avatarColliderRadius)) {
                     avatarPos = candidatePosition;
                     return AudienceReturnCode.AudienceSDKOk;

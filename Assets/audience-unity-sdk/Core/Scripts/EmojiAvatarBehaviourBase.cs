@@ -86,6 +86,7 @@ namespace AudienceSDK {
                     Debug.LogWarning("EmojiAvatarsLookAtTarget should exist, check EmojiAvatarManager is inited.");
                     break;
                 }
+
                 this.transform.LookAt(Audience.Context.EmojiAvatarManager.EmojiAvatarsLookAtTarget.transform);
                 yield return null;
             }

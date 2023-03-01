@@ -3,13 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using AudienceSDK.mgGif;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace AudienceSDK {
     public class Emoji2DBehaviour : EmojiBehaviourBase {
 
         private const float _spriteSize = 0.24f;
-        private static Material _material = null;
         private SpriteRenderer _renderer = null;
         private bool _isGif = false;
 
@@ -111,7 +109,7 @@ namespace AudienceSDK {
             }
 
             // Assign the material to sprite renderer
-            Material mat = this.GetSharedMaterial();
+            Material mat = Audience.Context.EmojiEffectManager.GetShared2DMaterial();
             sr.material = mat;
             sr.sharedMaterial = mat;
         }
@@ -152,21 +150,9 @@ namespace AudienceSDK {
             this._renderer = sr;
 
             // Assign the material to sprite renderer
-            Material mat = this.GetSharedMaterial();
+            Material mat = Audience.Context.EmojiEffectManager.GetShared2DMaterial();
             sr.material = mat;
             sr.sharedMaterial = mat;
-        }
-
-        private Material GetSharedMaterial()
-        {
-            if (_material == null)
-            {
-                // audience_unity_sdk.dll won't support this, need #if DLL_BUILD
-                Material mat = new Material(Resources.Load<Material>("Audience/Emoji/2Demoji_origin"));
-                _material = mat;
-            }
-
-            return _material;
         }
 
         private void Update() {

@@ -6,10 +6,11 @@ namespace AudienceSDK
     public class EmojiAvatarsRootBehaviour : MonoBehaviour
     {
         public Transform FollowTarget {
-            get 
+            get
             {
                 return this._followTarget;
             }
+
             set
             {
                 this._followTarget = value;
