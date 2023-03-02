@@ -69,12 +69,30 @@ namespace AudienceSDK
 #if DLL_BUILD
                 var assembly = Assembly.GetExecutingAssembly();
                 Stream stream = assembly.GetManifestResourceStream("AudienceSDK.Resources.Art.audience_sdk_art_resource");
+                if (stream == null) {
+                    Debug.LogError("Assembly get Manifest Resource Stream fail.");
+                    return null;
+                }
+
                 var audienceSDKBundle = AssetBundle.LoadFromStream(stream);
+                if (audienceSDKBundle == null) {
+                    Debug.LogError("Stream load asset bundle fail.");
+                    stream.Close();
+                    return null;
+                }
+
                 area = audienceSDKBundle.LoadAsset<GameObject>("DefaultGenerateArea.prefab");
+                if (area == null) {
+                    Debug.LogError("Load Generate Area resource fail.");
+                }
+
                 audienceSDKBundle.Unload(false);
                 stream.Close();
 #else
                 area = Resources.Load<GameObject>(avatarAreaResourcesPath + avatarGenerateArea);
+                if (area == null) {
+                    Debug.LogError("Load Generate Area resource fail.");
+                }
 #endif
                 if (area != null)
                 {
