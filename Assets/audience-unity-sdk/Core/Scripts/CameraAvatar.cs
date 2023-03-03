@@ -56,7 +56,14 @@ namespace AudienceSDK {
                 return;
             }
 
-            this._cameraAvatarShapeGO.GetComponent<Collider>().enabled = enable;
+            var shapeCollider = this._cameraAvatarShapeGO.GetComponent<Collider>();
+            if (shapeCollider == null)
+            {
+                Debug.LogError("Camera Avatar Shape collider get fail.");
+                return;
+            }
+
+            shapeCollider.enabled = enable;
         }
 
         public void SetCameraAvatarPreviewTexture(Texture previewTexture) {
@@ -89,8 +96,15 @@ namespace AudienceSDK {
                 return;
             }
 
-            this._cameraAvatarShapeGO.GetComponent<MeshRenderer>().material = material;
-            this._cameraAvatarShapeMaterial = this._cameraAvatarShapeGO.GetComponent<MeshRenderer>().material;
+            var shapeMeshRenderer = this._cameraAvatarShapeGO.GetComponent<MeshRenderer>();
+            if (shapeMeshRenderer == null)
+            {
+                Debug.LogError("Camera Avatar Shape mesh renderer get fail.");
+                return;
+            }
+
+            shapeMeshRenderer.material = material;
+            this._cameraAvatarShapeMaterial = shapeMeshRenderer.material;
         }
 
         public void ReplaceCameraAvatarPreviewMaterial(Material material)
@@ -107,12 +121,20 @@ namespace AudienceSDK {
                 return;
             }
 
+            var frontPreviewMeshRenderer = this._cameraAvatarFrontPreviewGO.GetComponent<MeshRenderer>();
+            var backPreviewMeshRenderer = this._cameraAvatarBackPreviewGO.GetComponent<MeshRenderer>();
+            if (frontPreviewMeshRenderer == null || backPreviewMeshRenderer == null)
+            {
+                Debug.LogError("Camera Avatar preview mesh renderer get fail.");
+                return;
+            }
+
             // transfer texture to replaced matrial.
             material.SetTexture("_MainTex", this._cameraAvatarPreviewMaterial.GetTexture("_MainTex"));
 
             this._cameraAvatarPreviewMaterial = material;
-            this._cameraAvatarFrontPreviewGO.GetComponent<MeshRenderer>().material = this._cameraAvatarPreviewMaterial;
-            this._cameraAvatarBackPreviewGO.GetComponent<MeshRenderer>().material = this._cameraAvatarPreviewMaterial;
+            frontPreviewMeshRenderer.material = this._cameraAvatarPreviewMaterial;
+            backPreviewMeshRenderer.material = this._cameraAvatarPreviewMaterial;
         }
 
         public Transform GetCameraAvatarTransform() {
@@ -155,16 +177,32 @@ namespace AudienceSDK {
 #if DLL_BUILD
             var assembly = Assembly.GetExecutingAssembly();
             Stream stream = assembly.GetManifestResourceStream("AudienceSDK.Resources.Art.audience_sdk_art_resource");
+            if (stream == null) {
+                Debug.LogError("Assembly get Manifest Resource Stream fail.");
+                return;
+            }
+
             var audienceSDKBundle = AssetBundle.LoadFromStream(stream);
+            if (audienceSDKBundle == null) {
+                Debug.LogError("Stream load asset bundle fail.");
+                stream.Close();
+                return;
+            }
 
             this._cameraAvatarPrefab = audienceSDKBundle.LoadAsset<GameObject>("CameraAvatarPrefab.prefab");
             this._cameraAvatarPreviewMaterial = new Material(audienceSDKBundle.LoadAsset<Material>("camera_avatar_preview.mat"));
+            if (this._cameraAvatarPrefab == null || this._cameraAvatarPreviewMaterial == null) {
+                Debug.LogError("Load camera avatar resource fail.");
+            }
 
             audienceSDKBundle.Unload(false);
             stream.Close();
 #else
             this._cameraAvatarPrefab = Resources.Load<GameObject>("Audience/CameraAvatar/CameraAvatarPrefab");
             this._cameraAvatarPreviewMaterial = new Material(Resources.Load<Material>("Audience/CameraAvatar/camera_avatar_preview"));
+            if (this._cameraAvatarPrefab == null || this._cameraAvatarPreviewMaterial == null) {
+                Debug.LogError("Load camera avatar resource fail.");
+            }
 #endif
         }
 
@@ -183,13 +221,19 @@ namespace AudienceSDK {
                 case CaptureType._3D_180:
                 case CaptureType._2D_360:
                 case CaptureType._2D_180:
-                    this._cameraAvatarShapeGO = this._cameraAvatarGO.transform.Find("Shapes/Sphere").gameObject;
+                    this._cameraAvatarShapeGO = this._cameraAvatarGO.transform.Find("Shapes/Sphere")?.gameObject;
                     break;
                 case CaptureType._3D_Flat:
                 case CaptureType._2D_Flat:
                 default:
-                    this._cameraAvatarShapeGO = this._cameraAvatarGO.transform.Find("Shapes/Cube").gameObject;
+                    this._cameraAvatarShapeGO = this._cameraAvatarGO.transform.Find("Shapes/Cube")?.gameObject;
                     break;
+            }
+
+            if (this._cameraAvatarShapeGO == null) {
+                Debug.LogError("Find camera avatar shape null.");
+                DestroyImmediate(this._cameraAvatarGO);
+                return;
             }
 
             this._cameraAvatarShapeGO.SetActive(true);
@@ -209,11 +253,22 @@ namespace AudienceSDK {
                 return;
             }
 
-            this._cameraAvatarFrontPreviewGO = this._cameraAvatarGO.transform.Find("Previews/Front").gameObject;
-            this._cameraAvatarFrontPreviewGO.GetComponent<MeshRenderer>().material = this._cameraAvatarPreviewMaterial;
+            this._cameraAvatarFrontPreviewGO = this._cameraAvatarGO.transform.Find("Previews/Front")?.gameObject;
+            this._cameraAvatarBackPreviewGO = this._cameraAvatarGO.transform.Find("Previews/Back")?.gameObject;
+            if (this._cameraAvatarBackPreviewGO == null || this._cameraAvatarFrontPreviewGO == null) {
+                Debug.LogError("Camera Avatar preview not init.");
+                return;
+            }
 
-            this._cameraAvatarBackPreviewGO = this._cameraAvatarGO.transform.Find("Previews/Back").gameObject;
-            this._cameraAvatarBackPreviewGO.GetComponent<MeshRenderer>().material = this._cameraAvatarPreviewMaterial;
+            var frontPreviewMeshRenderer = this._cameraAvatarFrontPreviewGO.GetComponent<MeshRenderer>();
+            var backPreviewMeshRenderer = this._cameraAvatarBackPreviewGO.GetComponent<MeshRenderer>();
+            if (frontPreviewMeshRenderer == null || backPreviewMeshRenderer == null) {
+                Debug.LogError("Camera Avatar preview mesh renderer get fail.");
+                return;
+            }
+
+            frontPreviewMeshRenderer.material = this._cameraAvatarPreviewMaterial;
+            backPreviewMeshRenderer.material = this._cameraAvatarPreviewMaterial;
 
             this.SetAvatarPreviewSize((float)camera.texture_width / (float)camera.texture_height);
         }

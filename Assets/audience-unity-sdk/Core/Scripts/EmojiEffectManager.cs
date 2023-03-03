@@ -159,12 +159,37 @@ namespace AudienceSDK {
 #if DLL_BUILD
                 var assembly = Assembly.GetExecutingAssembly();
                 Stream stream = assembly.GetManifestResourceStream("AudienceSDK.Resources.Art.audience_sdk_art_resource");
+                if (stream == null) {
+                    Debug.LogError("Assembly get Manifest Resource Stream fail.");
+                    return null;
+                }
+
                 var audienceSDKBundle = AssetBundle.LoadFromStream(stream);
-                mat = new Material(audienceSDKBundle.LoadAsset<Material>("2Demoji_origin.mat"));
+                if (audienceSDKBundle == null) {
+                    Debug.LogError("Stream load asset bundle fail.");
+                    stream.Close();
+                    return null;
+                }
+
+                var resourceMaterial = audienceSDKBundle.LoadAsset<Material>("2Demoji_origin.mat");
+                if (resourceMaterial == null) {
+                    Debug.LogError("Load meterial resource fail.");
+                    audienceSDKBundle.Unload(false);
+                    stream.Close();
+                    return null;
+                }
+
+                mat = new Material(resourceMaterial);
                 audienceSDKBundle.Unload(false);
                 stream.Close();
 #else
-                mat = new Material(Resources.Load<Material>("Audience/Emoji/2Demoji_origin"));
+                var resourceMaterial = Resources.Load<Material>("Audience/Emoji/2Demoji_origin");
+                if (resourceMaterial == null) {
+                    Debug.LogError("Load meterial resource fail.");
+                    return null;
+                }
+
+                mat = new Material(resourceMaterial);
 #endif
                 this._shared2DMaterial = mat;
             }
