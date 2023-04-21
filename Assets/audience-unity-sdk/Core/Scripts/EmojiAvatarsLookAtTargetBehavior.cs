@@ -11,6 +11,7 @@ namespace AudienceSDK
             {
                 return this._lookAtTarget;
             }
+
             set
             {
                 this._lookAtTarget = value;

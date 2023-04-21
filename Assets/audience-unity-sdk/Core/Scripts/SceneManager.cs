@@ -31,7 +31,7 @@ namespace AudienceSDK {
             Unloading = 3,
         }
 
-        public Action<SceneManagerState> CurrentSceneManagerStateChanged;
+        public Action<SceneManagerState> CurrentSceneManagerStateChanged { get; set; } = null;
 
         public SceneManagerState CurrentSceneManagerState {
             get {

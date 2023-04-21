@@ -1,65 +1,74 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using System.Reflection;
+using UnityEngine;
 
 namespace AudienceSDK {
     public class CameraAvatar : MonoBehaviour {
         private const float _cameraAvatarPreviewSize = 0.15f;
 
-        private GameObject _cameraAvatarGO;
-        private GameObject _cameraAvatarFrontPreviewGO;
-        private GameObject _cameraAvatarBackPreviewGO;
-        private Material _cameraAvatarMaterial;
-        private Material _cameraAvatarPreviewMaterial;
+        private GameObject _cameraAvatarGO = null;
+        private GameObject _cameraAvatarShapeGO = null;
+        private GameObject _cameraAvatarFrontPreviewGO = null;
+        private GameObject _cameraAvatarBackPreviewGO = null;
+
+        private Material _cameraAvatarShapeMaterial = null;
+        private Material _cameraAvatarPreviewMaterial = null;
+
+        private GameObject _cameraAvatarPrefab = null;
 
         public void InitCameraAvatar(Camera camera) {
-            this.InitCameraAvatarMaterial();
-            switch ((CaptureType)camera.capture_type) {
-                case CaptureType._3D_360:
-                case CaptureType._3D_180:
-                case CaptureType._2D_360:
-                case CaptureType._2D_180:
-                    this.SetAvatarPrimitive(PrimitiveType.Sphere);
-                    break;
-                case CaptureType._3D_Flat:
-                case CaptureType._2D_Flat:
-                default:
-                    this.SetAvatarPrimitive(PrimitiveType.Cube);
-                    break;
-            }
-
+            this.LoadCameraAvatarResources();
+            this.InitCameraAvatarShape(camera);
             this.InitCameraAvatarPreview(camera);
         }
 
         public void DeinitCameraAvatar() {
             if (this._cameraAvatarGO != null) {
-
                 UnityEngine.Object.Destroy(this._cameraAvatarGO);
             }
 
-            if (this._cameraAvatarFrontPreviewGO != null) {
+            if (this._cameraAvatarShapeGO != null)
+            {
+                UnityEngine.Object.Destroy(this._cameraAvatarShapeGO);
+            }
 
+            if (this._cameraAvatarFrontPreviewGO != null) {
                 UnityEngine.Object.Destroy(this._cameraAvatarFrontPreviewGO);
             }
 
             if (this._cameraAvatarBackPreviewGO != null) {
-
                 UnityEngine.Object.Destroy(this._cameraAvatarBackPreviewGO);
             }
 
-            if (this._cameraAvatarMaterial != null) {
-
-                UnityEngine.Object.Destroy(this._cameraAvatarMaterial);
+            if (this._cameraAvatarShapeMaterial != null) {
+                UnityEngine.Object.Destroy(this._cameraAvatarShapeMaterial);
             }
 
             if (this._cameraAvatarPreviewMaterial != null) {
-
                 UnityEngine.Object.Destroy(this._cameraAvatarPreviewMaterial);
             }
         }
 
+        public void SetCameraAvatarShapeColliderEnable(bool enable) {
+            if (this._cameraAvatarShapeGO == null) {
+
+                Debug.LogError("Camera Avatar Shape not init.");
+                return;
+            }
+
+            var shapeCollider = this._cameraAvatarShapeGO.GetComponent<Collider>();
+            if (shapeCollider == null)
+            {
+                Debug.LogError("Camera Avatar Shape collider get fail.");
+                return;
+            }
+
+            shapeCollider.enabled = enable;
+        }
+
         public void SetCameraAvatarPreviewTexture(Texture previewTexture) {
             if (this._cameraAvatarPreviewMaterial == null) {
-
-                Debug.LogError("Camera Avatar Preview Material not init.");
+                Debug.LogError("Camera Avatar preview material load failed.");
                 return;
             }
 
@@ -67,13 +76,65 @@ namespace AudienceSDK {
         }
 
         public void SetCameraAvatarMaterialColor(Color color) {
-            if (this._cameraAvatarGO == null || this._cameraAvatarGO.GetComponent<MeshRenderer>() == null || this._cameraAvatarGO.GetComponent<MeshRenderer>().material == null) {
-
-                Debug.LogError("Camera Avatar Material not init.");
+            if (this._cameraAvatarShapeMaterial == null)
+            {
+                Debug.LogError("Camera Avatar Shape Material not init.");
                 return;
             }
 
-            this._cameraAvatarGO.GetComponent<MeshRenderer>().material.SetColor("_Color", color);
+            this._cameraAvatarShapeMaterial.SetColor("_Color", color);
+        }
+
+        public void ReplaceCameraAvatarShapeMaterial(Material material) {
+            if (material == null) {
+                Debug.LogError("Input material is null.");
+                return;
+            }
+
+            if (this._cameraAvatarShapeGO == null) {
+                Debug.LogError("Camera Avatar Shape not init.");
+                return;
+            }
+
+            var shapeMeshRenderer = this._cameraAvatarShapeGO.GetComponent<MeshRenderer>();
+            if (shapeMeshRenderer == null)
+            {
+                Debug.LogError("Camera Avatar Shape mesh renderer get fail.");
+                return;
+            }
+
+            shapeMeshRenderer.material = material;
+            this._cameraAvatarShapeMaterial = shapeMeshRenderer.material;
+        }
+
+        public void ReplaceCameraAvatarPreviewMaterial(Material material)
+        {
+            if (material == null)
+            {
+                Debug.LogError("Input material is null.");
+                return;
+            }
+
+            if (this._cameraAvatarBackPreviewGO == null || this._cameraAvatarFrontPreviewGO == null)
+            {
+                Debug.LogError("Camera Avatar preview not init.");
+                return;
+            }
+
+            var frontPreviewMeshRenderer = this._cameraAvatarFrontPreviewGO.GetComponent<MeshRenderer>();
+            var backPreviewMeshRenderer = this._cameraAvatarBackPreviewGO.GetComponent<MeshRenderer>();
+            if (frontPreviewMeshRenderer == null || backPreviewMeshRenderer == null)
+            {
+                Debug.LogError("Camera Avatar preview mesh renderer get fail.");
+                return;
+            }
+
+            // transfer texture to replaced matrial.
+            material.SetTexture("_MainTex", this._cameraAvatarPreviewMaterial.GetTexture("_MainTex"));
+
+            this._cameraAvatarPreviewMaterial = material;
+            frontPreviewMeshRenderer.material = this._cameraAvatarPreviewMaterial;
+            backPreviewMeshRenderer.material = this._cameraAvatarPreviewMaterial;
         }
 
         public Transform GetCameraAvatarTransform() {
@@ -83,37 +144,6 @@ namespace AudienceSDK {
             }
 
             return null;
-        }
-
-        internal void SetAvatarPrimitive(PrimitiveType avatarPrimitiveTypeType) {
-            if (this._cameraAvatarGO != null) {
-
-                UnityEngine.Object.DestroyImmediate(this._cameraAvatarGO);
-            }
-
-            var avatarSize = Vector3.one;
-            switch (avatarPrimitiveTypeType) {
-                case PrimitiveType.Cube:
-                    avatarSize = new Vector3(0.15f, 0.15f, 0.22f);
-                    break;
-                case PrimitiveType.Sphere:
-                    avatarSize = new Vector3(0.15f, 0.15f, 0.15f);
-                    break;
-                default:
-                    Debug.LogWarning("Unsupported PrimitiveType");
-                    break;
-            }
-
-            this._cameraAvatarGO = GameObject.CreatePrimitive(avatarPrimitiveTypeType);
-            this._cameraAvatarGO.name = "CameraAvatar";
-            UnityEngine.Object.DontDestroyOnLoad(this._cameraAvatarGO);
-            this._cameraAvatarGO.SetActive(true);
-            var avatarTransform = this._cameraAvatarGO.transform;
-            avatarTransform.parent = this.transform;
-            avatarTransform.localScale = avatarSize;
-            avatarTransform.localPosition = Vector3.zero;
-            avatarTransform.localRotation = Quaternion.identity;
-            avatarTransform.GetComponent<MeshRenderer>().material = this._cameraAvatarMaterial;
         }
 
         internal void SetAvatarPreviewSize(float ratio) {
@@ -137,52 +167,110 @@ namespace AudienceSDK {
         private void Awake() {
         }
 
-        private void InitCameraAvatarPreview(Camera camera) {
-            if (this._cameraAvatarPreviewMaterial == null) {
-                var shader = Shader.Find(UserConfig.DefaultPreviewQuadShader);
-                if (shader != null) {
-
-                    this._cameraAvatarPreviewMaterial = new Material(shader);
-                } else {
-                    shader = Shader.Find("Standard");
-                    this._cameraAvatarPreviewMaterial = new Material(shader);
-                }
+        private void LoadCameraAvatarResources() {
+            /*
+             * audience-unity-sdk.csproj would define DLL_BUILD
+             * dll will load resources from embeded resources.
+             * AudienceSDK-Assembly won't define DLL_BUILD
+             * it will load resouces from Resources folder.
+             */
+#if DLL_BUILD
+            var assembly = Assembly.GetExecutingAssembly();
+            Stream stream = assembly.GetManifestResourceStream("AudienceSDK.Resources.Art.audience_sdk_art_resource");
+            if (stream == null) {
+                Debug.LogError("Assembly get Manifest Resource Stream fail.");
+                return;
             }
 
-            this._cameraAvatarFrontPreviewGO = GameObject.CreatePrimitive(PrimitiveType.Quad);
-            UnityEngine.Object.DontDestroyOnLoad(this._cameraAvatarFrontPreviewGO);
-            UnityEngine.Object.DestroyImmediate(this._cameraAvatarFrontPreviewGO.GetComponent<Collider>());
-            this._cameraAvatarFrontPreviewGO.GetComponent<MeshRenderer>().material = this._cameraAvatarPreviewMaterial;
-            this._cameraAvatarFrontPreviewGO.transform.parent = this.transform;
+            var audienceSDKBundle = AssetBundle.LoadFromStream(stream);
+            if (audienceSDKBundle == null) {
+                Debug.LogError("Stream load asset bundle fail.");
+                stream.Close();
+                return;
+            }
 
-            this._cameraAvatarBackPreviewGO = GameObject.CreatePrimitive(PrimitiveType.Quad);
-            UnityEngine.Object.DontDestroyOnLoad(this._cameraAvatarBackPreviewGO);
-            UnityEngine.Object.DestroyImmediate(this._cameraAvatarBackPreviewGO.GetComponent<Collider>());
-            this._cameraAvatarBackPreviewGO.GetComponent<MeshRenderer>().material = this._cameraAvatarPreviewMaterial;
-            this._cameraAvatarBackPreviewGO.transform.parent = this.transform;
+            this._cameraAvatarPrefab = audienceSDKBundle.LoadAsset<GameObject>("CameraAvatarPrefab.prefab");
+            this._cameraAvatarPreviewMaterial = new Material(audienceSDKBundle.LoadAsset<Material>("camera_avatar_preview.mat"));
+            if (this._cameraAvatarPrefab == null || this._cameraAvatarPreviewMaterial == null) {
+                Debug.LogError("Load camera avatar resource fail.");
+            }
 
-            this.SetAvatarPreviewSize((float)camera.texture_width / (float)camera.texture_height);
+            audienceSDKBundle.Unload(false);
+            stream.Close();
+#else
+            this._cameraAvatarPrefab = Resources.Load<GameObject>("Audience/CameraAvatar/CameraAvatarPrefab");
+            this._cameraAvatarPreviewMaterial = new Material(Resources.Load<Material>("Audience/CameraAvatar/camera_avatar_preview"));
+            if (this._cameraAvatarPrefab == null || this._cameraAvatarPreviewMaterial == null) {
+                Debug.LogError("Load camera avatar resource fail.");
+            }
+#endif
         }
 
-        private void InitCameraAvatarMaterial() {
-            var shader = Shader.Find(UserConfig.DefaultCamAvatarShader);
-            if (shader != null) {
-
-                this._cameraAvatarMaterial = new Material(shader);
-                this._cameraAvatarMaterial.SetColor("_Color", new Color(0.5f, 0.5f, 0.5f, 1.0f));
-                this._cameraAvatarMaterial.SetFloat("_Mode", 1);
-                this._cameraAvatarMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-                this._cameraAvatarMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-                this._cameraAvatarMaterial.SetInt("_ZWrite", 0);
-                this._cameraAvatarMaterial.DisableKeyword("_ALPHATEST_ON");
-                this._cameraAvatarMaterial.EnableKeyword("_ALPHABLEND_ON");
-                this._cameraAvatarMaterial.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-                this._cameraAvatarMaterial.renderQueue = 3000;
-            } else {
-                shader = Shader.Find("Standard");
-                this._cameraAvatarMaterial = new Material(shader);
-                this._cameraAvatarMaterial.SetColor("_Color", new Color(0.5f, 0.5f, 0.5f, 1.0f));
+        private void InitCameraAvatarShape(Camera camera) {
+            if (this._cameraAvatarPrefab == null)
+            {
+                Debug.LogError("Camera Avatar prefab load failed.");
+                return;
             }
+
+            this._cameraAvatarGO = GameObject.Instantiate(this._cameraAvatarPrefab);
+            this._cameraAvatarGO.transform.SetParent(this.transform, false);
+            switch ((CaptureType)camera.capture_type)
+            {
+                case CaptureType._3D_360:
+                case CaptureType._3D_180:
+                case CaptureType._2D_360:
+                case CaptureType._2D_180:
+                    this._cameraAvatarShapeGO = this._cameraAvatarGO.transform.Find("Shapes/Sphere")?.gameObject;
+                    break;
+                case CaptureType._3D_Flat:
+                case CaptureType._2D_Flat:
+                default:
+                    this._cameraAvatarShapeGO = this._cameraAvatarGO.transform.Find("Shapes/Cube")?.gameObject;
+                    break;
+            }
+
+            if (this._cameraAvatarShapeGO == null) {
+                Debug.LogError("Find camera avatar shape null.");
+                DestroyImmediate(this._cameraAvatarGO);
+                return;
+            }
+
+            this._cameraAvatarShapeGO.SetActive(true);
+            this._cameraAvatarShapeMaterial = this._cameraAvatarShapeGO.GetComponent<MeshRenderer>().material;
+        }
+
+        private void InitCameraAvatarPreview(Camera camera) {
+            if (this._cameraAvatarGO == null)
+            {
+                Debug.LogError("Camera Avatar not init.");
+                return;
+            }
+
+            if (this._cameraAvatarPreviewMaterial == null)
+            {
+                Debug.LogError("Camera Avatar preview material load failed.");
+                return;
+            }
+
+            this._cameraAvatarFrontPreviewGO = this._cameraAvatarGO.transform.Find("Previews/Front")?.gameObject;
+            this._cameraAvatarBackPreviewGO = this._cameraAvatarGO.transform.Find("Previews/Back")?.gameObject;
+            if (this._cameraAvatarBackPreviewGO == null || this._cameraAvatarFrontPreviewGO == null) {
+                Debug.LogError("Camera Avatar preview not init.");
+                return;
+            }
+
+            var frontPreviewMeshRenderer = this._cameraAvatarFrontPreviewGO.GetComponent<MeshRenderer>();
+            var backPreviewMeshRenderer = this._cameraAvatarBackPreviewGO.GetComponent<MeshRenderer>();
+            if (frontPreviewMeshRenderer == null || backPreviewMeshRenderer == null) {
+                Debug.LogError("Camera Avatar preview mesh renderer get fail.");
+                return;
+            }
+
+            frontPreviewMeshRenderer.material = this._cameraAvatarPreviewMaterial;
+            backPreviewMeshRenderer.material = this._cameraAvatarPreviewMaterial;
+
+            this.SetAvatarPreviewSize((float)camera.texture_width / (float)camera.texture_height);
         }
     }
 }

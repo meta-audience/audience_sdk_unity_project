@@ -28,7 +28,7 @@ namespace AudienceSDK
                     if (allowSceneSettingsOffset)
                     {
                         cameraBehaviour.transform.rotation = rotation * Quaternion.Euler(cameraBehaviour.SceneSettingEuler);
-                        cameraBehaviour.transform.position = position + rotation * cameraBehaviour.SceneSettingPosition;
+                        cameraBehaviour.transform.position = position + (rotation * cameraBehaviour.SceneSettingPosition);
                     }
                     else
                     {
@@ -92,11 +92,13 @@ namespace AudienceSDK
                         this.CollectCameras();
                         break;
                     }
+
                 case SceneManager.SceneManagerState.Unload:
                     {
                         this._cameraBehaviourList.Clear();
                         break;
                     }
+
                 default:
                     break;
             }
@@ -111,6 +113,5 @@ namespace AudienceSDK
                 this._cameraBehaviourList.Add(audienceCameraBehaviour);
             }
         }
-
     }
 }

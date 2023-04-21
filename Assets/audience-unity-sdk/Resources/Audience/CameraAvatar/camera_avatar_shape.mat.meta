@@ -1,7 +1,8 @@
 fileFormatVersion: 2
-guid: 23d30515489923944817bf7fb2066ca7
-PrefabImporter:
+guid: b5b699004812ddc45a140cdd2b618105
+NativeFormatImporter:
   externalObjects: {}
+  mainObjectFileID: 2100000
   userData: 
   assetBundleName: audience_sdk_art_resource
   assetBundleVariant: 

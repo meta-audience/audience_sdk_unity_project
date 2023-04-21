@@ -2,7 +2,7 @@
 
 namespace AudienceSDK
 {
-    public interface EmojiAvatarPositionGenerateAlgorithmBase
+    public interface IEmojiAvatarPositionGenerateAlgorithmBase
     {
         Vector3 GenerateAvatarPosition();
     }

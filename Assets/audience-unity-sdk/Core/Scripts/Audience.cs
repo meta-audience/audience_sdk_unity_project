@@ -21,7 +21,7 @@ namespace AudienceSDK {
             }
         }
 
-        public static Action<bool> AudienceInitStateChanged;
+        public static Action<bool> AudienceInitStateChanged { get; set; } = null;
 
         public static bool AudienceInited
         {
