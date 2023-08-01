@@ -25,17 +25,11 @@ namespace AudienceSDK {
             UnityWebRequest request = UnityWebRequestAssetBundle.GetAssetBundle(url);
             yield return request.SendWebRequest();
 
-            /*
-            * audience-unity-sdk.csproj would define DLL_BUILD
-            * using UnityEngine.UnityWebRequestModule from BeatSaber.
-            * AudienceSDK-Assembly won't define DLL_BUILD
-            * using UnityEngine.UnityWebRequestModule from Unity 2019.4.28
-            */
-#if DLL_BUILD
+#if UNITY_2019_4 || UNITY_2020_1
+            if (request.isNetworkError || request.isHttpError)
+#else
             if (request.result == UnityWebRequest.Result.ConnectionError ||
                 request.result == UnityWebRequest.Result.ProtocolError)
-#else
-            if (request.isNetworkError || request.isHttpError)
 #endif
             {
                 Debug.Log(request.error);
@@ -59,17 +53,11 @@ namespace AudienceSDK {
             UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
             yield return request.SendWebRequest();
 
-            /*
-            * audience-unity-sdk.csproj would define DLL_BUILD
-            * using UnityEngine.UnityWebRequestModule from BeatSaber.
-            * AudienceSDK-Assembly won't define DLL_BUILD
-            * using UnityEngine.UnityWebRequestModule from Unity 2019.4.28
-            */
-#if DLL_BUILD
+#if UNITY_2019_4 || UNITY_2020_1
+            if (request.isNetworkError || request.isHttpError)
+#else
             if (request.result == UnityWebRequest.Result.ConnectionError ||
                 request.result == UnityWebRequest.Result.ProtocolError)
-#else
-            if (request.isNetworkError || request.isHttpError)
 #endif
             {
                 Debug.Log(request.error);
@@ -88,17 +76,11 @@ namespace AudienceSDK {
 
             byte[] rawData;
 
-            /*
-            * audience-unity-sdk.csproj would define DLL_BUILD
-            * using UnityEngine.UnityWebRequestModule from BeatSaber.
-            * AudienceSDK-Assembly won't define DLL_BUILD
-            * using UnityEngine.UnityWebRequestModule from Unity 2019.4.28
-            */
-#if DLL_BUILD
+#if UNITY_2019_4 || UNITY_2020_1
+            if (request.isNetworkError || request.isHttpError)
+#else
             if (request.result == UnityWebRequest.Result.ConnectionError ||
                 request.result == UnityWebRequest.Result.ProtocolError)
-#else
-            if (request.isNetworkError || request.isHttpError)
 #endif
             {
                 Debug.Log(request.error);
@@ -141,17 +123,12 @@ namespace AudienceSDK {
             // if not gif, we using 2nd UnityWebRequestTexture to get texture.
             UnityWebRequest request = UnityWebRequest.Get(url);
             yield return request.SendWebRequest();
-            /*
-            * audience-unity-sdk.csproj would define DLL_BUILD
-            * using UnityEngine.UnityWebRequestModule from BeatSaber.
-            * AudienceSDK-Assembly won't define DLL_BUILD
-            * using UnityEngine.UnityWebRequestModule from Unity 2019.4.28
-            */
-#if DLL_BUILD
+
+#if UNITY_2019_4 || UNITY_2020_1
+            if (request.isNetworkError || request.isHttpError)
+#else
             if (request.result == UnityWebRequest.Result.ConnectionError ||
                 request.result == UnityWebRequest.Result.ProtocolError)
-#else
-            if (request.isNetworkError || request.isHttpError)
 #endif
             {
                 Debug.Log(request.error);
@@ -174,17 +151,12 @@ namespace AudienceSDK {
                     Debug.LogWarning("Is 2D");
                     request = UnityWebRequestTexture.GetTexture(url);
                     yield return request.SendWebRequest();
-                    /*
-                    * audience-unity-sdk.csproj would define DLL_BUILD
-                    * using UnityEngine.UnityWebRequestModule from BeatSaber.
-                    * AudienceSDK-Assembly won't define DLL_BUILD
-                    * using UnityEngine.UnityWebRequestModule from Unity 2019.4.28
-                    */
-#if DLL_BUILD
+
+#if UNITY_2019_4 || UNITY_2020_1
+                    if (request.isNetworkError || request.isHttpError)
+#else
                     if (request.result == UnityWebRequest.Result.ConnectionError ||
                         request.result == UnityWebRequest.Result.ProtocolError)
-#else
-                    if (request.isNetworkError || request.isHttpError)
 #endif
                     {
                         Debug.Log(request.error);
