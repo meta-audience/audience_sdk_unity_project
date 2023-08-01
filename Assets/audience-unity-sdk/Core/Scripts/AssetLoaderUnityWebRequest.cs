@@ -70,7 +70,7 @@ namespace AudienceSDK {
                 request.result == UnityWebRequest.Result.ProtocolError)
 #else
             if (request.isNetworkError || request.isHttpError)
-#endif 
+#endif
             {
                 Debug.Log(request.error);
                 data.Result = AudienceReturnCode.AudienceSDKNetworkError;
@@ -99,7 +99,7 @@ namespace AudienceSDK {
                 request.result == UnityWebRequest.Result.ProtocolError)
 #else
             if (request.isNetworkError || request.isHttpError)
-#endif 
+#endif
             {
                 Debug.Log(request.error);
                 data.Result = AudienceReturnCode.AudienceSDKNetworkError;
