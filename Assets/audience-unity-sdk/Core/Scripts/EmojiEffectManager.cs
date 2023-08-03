@@ -198,7 +198,6 @@ namespace AudienceSDK {
         }
 
         private void Awake() {
-            Debug.Log(XRSettings.stereoRenderingMode);
             UnityEngine.Object.DontDestroyOnLoad(this.gameObject);
             this._interactList = new List<EmojiInteractUnit>();
             this._emojiList = new List<EmojiBehaviourBase>();
