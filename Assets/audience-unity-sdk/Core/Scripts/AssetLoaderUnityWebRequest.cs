@@ -25,7 +25,13 @@ namespace AudienceSDK {
             UnityWebRequest request = UnityWebRequestAssetBundle.GetAssetBundle(url);
             yield return request.SendWebRequest();
 
-            if (request.isNetworkError || request.isHttpError) {
+#if UNITY_2019_4 || UNITY_2020_1
+            if (request.isNetworkError || request.isHttpError)
+#else
+            if (request.result == UnityWebRequest.Result.ConnectionError ||
+                request.result == UnityWebRequest.Result.ProtocolError)
+#endif
+            {
                 Debug.Log(request.error);
                 data.Result = AudienceReturnCode.AudienceSDKNetworkError;
             } else {
@@ -47,7 +53,13 @@ namespace AudienceSDK {
             UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
             yield return request.SendWebRequest();
 
-            if (request.isNetworkError || request.isHttpError) {
+#if UNITY_2019_4 || UNITY_2020_1
+            if (request.isNetworkError || request.isHttpError)
+#else
+            if (request.result == UnityWebRequest.Result.ConnectionError ||
+                request.result == UnityWebRequest.Result.ProtocolError)
+#endif
+            {
                 Debug.Log(request.error);
                 data.Result = AudienceReturnCode.AudienceSDKNetworkError;
             } else {
@@ -64,7 +76,13 @@ namespace AudienceSDK {
 
             byte[] rawData;
 
-            if (request.isNetworkError || request.isHttpError) {
+#if UNITY_2019_4 || UNITY_2020_1
+            if (request.isNetworkError || request.isHttpError)
+#else
+            if (request.result == UnityWebRequest.Result.ConnectionError ||
+                request.result == UnityWebRequest.Result.ProtocolError)
+#endif
+            {
                 Debug.Log(request.error);
                 data.Result = AudienceReturnCode.AudienceSDKNetworkError;
             } else {
@@ -106,7 +124,12 @@ namespace AudienceSDK {
             UnityWebRequest request = UnityWebRequest.Get(url);
             yield return request.SendWebRequest();
 
+#if UNITY_2019_4 || UNITY_2020_1
             if (request.isNetworkError || request.isHttpError)
+#else
+            if (request.result == UnityWebRequest.Result.ConnectionError ||
+                request.result == UnityWebRequest.Result.ProtocolError)
+#endif
             {
                 Debug.Log(request.error);
                 data.Result = AudienceReturnCode.AudienceSDKNetworkError;
@@ -128,7 +151,13 @@ namespace AudienceSDK {
                     Debug.LogWarning("Is 2D");
                     request = UnityWebRequestTexture.GetTexture(url);
                     yield return request.SendWebRequest();
+
+#if UNITY_2019_4 || UNITY_2020_1
                     if (request.isNetworkError || request.isHttpError)
+#else
+                    if (request.result == UnityWebRequest.Result.ConnectionError ||
+                        request.result == UnityWebRequest.Result.ProtocolError)
+#endif
                     {
                         Debug.Log(request.error);
                         data.Result = AudienceReturnCode.AudienceSDKNetworkError;

@@ -15,7 +15,7 @@ namespace AudienceSDK.UnitTest {
 {
    'chat_id':'8395035a-374b-4272-998e-602c29a8f2af',
     'author':{
-        'platform':'Youtube',
+        'platform':'youtube',
         'name':'Ian_Luo',
         'user_id':'120353655',
         'is_mod':false,
@@ -41,7 +41,7 @@ namespace AudienceSDK.UnitTest {
 
             var author = chatSchema.author;
             Assert.NotNull(author);
-            Assert.AreEqual(author.platform, "Youtube");
+            Assert.AreEqual(author.platform, "youtube");
             Assert.AreEqual(author.name, "Ian_Luo");
             Assert.AreEqual(author.user_id, "120353655");
             Assert.AreEqual(author.is_mod, false);
@@ -63,7 +63,7 @@ namespace AudienceSDK.UnitTest {
 {
     'chat_id':'8395035a-374b-4272-998e-602c29a8f2af',
     'author':{
-        'platform':'Twitch',
+        'platform':'twitch',
         'name':'tl_tsai',
         'user_id':'120353655',
         'is_mod':false,
@@ -93,7 +93,7 @@ namespace AudienceSDK.UnitTest {
 
             var author = chatSchema.author;
             Assert.NotNull(author);
-            Assert.AreEqual(author.platform, "Twitch");
+            Assert.AreEqual(author.platform, "twitch");
             Assert.AreEqual(author.name, "tl_tsai");
             Assert.AreEqual(author.user_id, "120353655");
             Assert.AreEqual(author.is_mod, false);
