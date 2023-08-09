@@ -30,9 +30,9 @@ namespace AudienceSDK {
             var platform = this.transform.Find("Platform");
             var nicknameText = this.transform.Find("Nickname").GetComponent<TextMesh>();
 
-            if (this._authors[0].platform == "Youtube") {
+            if (this._authors[0].platform == "youtube") {
                 platform.Find("youtube_logo").gameObject.SetActive(true);
-            } else if (this._authors[0].platform == "Twitch") {
+            } else if (this._authors[0].platform == "twitch") {
                 platform.Find("twitch_logo").gameObject.SetActive(true);
             }
 
