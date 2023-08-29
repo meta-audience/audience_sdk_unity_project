@@ -560,6 +560,8 @@ namespace AudienceSDK {
 
         public string url { get; set; }
 
+        public string generation_method { get; set; }
+
         public List<EmojiRawObject> asset_list { get; set; }
 
         public EmojiAnimation animation { get; set; }
@@ -611,18 +613,21 @@ namespace AudienceSDK {
 
         public string name { get; set; }
 
-        public string user_id { get; set; }
+        public string client_id { get; set; }
+
+        public int user_id { get; set; }
 
         public bool is_mod { get; set; }
 
-        public bool is_sub { get; set; }
+        [JsonProperty("class")]
+        public string author_class { get; set; }
 
-        public string badges { get; set; }
+        public string profile_picture_url { get; set; }
     }
 
     [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Reviewed.")]
     public class ChatData {
-        public string chat_id { get; set; }
+        public string chat_group_id { get; set; }
 
         public ChatAuthor author { get; set; }
 
