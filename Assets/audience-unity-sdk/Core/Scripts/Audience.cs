@@ -619,6 +619,8 @@ namespace AudienceSDK {
 
         public bool is_mod { get; set; }
 
+        // The name of this key is actually 'class'.
+        // Since 'class' is a keyword of C# language, this property help parser to identify it.
         [JsonProperty("class")]
         public string author_class { get; set; }
 
