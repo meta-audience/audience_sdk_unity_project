@@ -37,7 +37,7 @@ namespace AudienceSDK {
                 return AudienceReturnCode.AudienceInvalidParams;
             }
 
-            if (author.platform == null || author.user_id == null) {
+            if (author.platform == null || author.client_id == null) {
                 Debug.LogWarning("AddEmojiSentence failed, author is not complete.");
                 return AudienceReturnCode.AudienceInvalidParams;
             }
@@ -48,7 +48,7 @@ namespace AudienceSDK {
             }
 
             var authorIndex = this._emojiAuthorList.FindIndex(x =>
-            (x.GetAuthor().platform == author.platform && x.GetAuthor().user_id == author.user_id));
+            (x.GetAuthor().platform == author.platform && x.GetAuthor().client_id == author.client_id));
 
             // Find in list, AddEmojiSentence directly; not in list, call factory create the add to list.
             if (authorIndex != -1) {
