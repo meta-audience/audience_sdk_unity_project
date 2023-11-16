@@ -148,7 +148,7 @@ namespace AudienceSDK {
                 }
 
                 foreach (ChatAuthor targetAuthor in targetAuthors) {
-                    var matchedAuthor = avatarAuthors.Find(x => x.platform == targetAuthor.platform && x.user_id == targetAuthor.user_id);
+                    var matchedAuthor = avatarAuthors.Find(x => x.platform == targetAuthor.platform && x.client_id == targetAuthor.client_id);
                     if (matchedAuthor != null) {
                         avatarAuthors.Remove(matchedAuthor);
                     }
