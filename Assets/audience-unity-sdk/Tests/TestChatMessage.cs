@@ -13,14 +13,15 @@ namespace AudienceSDK.UnitTest {
         public void TestChatSchemaFields1() {
             string testChatMessage = @"
 {
-   'chat_id':'8395035a-374b-4272-998e-602c29a8f2af',
+   'chat_group_id':'8395035a-374b-4272-998e-602c29a8f2af',
     'author':{
         'platform':'Youtube',
         'name':'Ian_Luo',
-        'user_id':'120353655',
+        'client_id':'test_id',
+        'user_id':120353655,
         'is_mod':false,
-        'is_sub':false,
-        'badges':null
+        'class':'visitor',
+        'profile_picture_url':'https://url'
     },
     'orginal_text':'LUL',
     'message':[
@@ -36,17 +37,18 @@ namespace AudienceSDK.UnitTest {
             // Check all fields
             var chatSchema = JsonConvert.DeserializeObject<ChatData>(testChatMessage);
             Assert.NotNull(chatSchema);
-            Assert.AreEqual(chatSchema.chat_id, "8395035a-374b-4272-998e-602c29a8f2af");
+            Assert.AreEqual(chatSchema.chat_group_id, "8395035a-374b-4272-998e-602c29a8f2af");
             Assert.AreEqual(chatSchema.utc_timestamp, "1656761183069");
 
             var author = chatSchema.author;
             Assert.NotNull(author);
             Assert.AreEqual(author.platform, "Youtube");
             Assert.AreEqual(author.name, "Ian_Luo");
-            Assert.AreEqual(author.user_id, "120353655");
+            Assert.AreEqual(author.client_id, "test_id");
+            Assert.AreEqual(author.user_id, 120353655);
             Assert.AreEqual(author.is_mod, false);
-            Assert.AreEqual(author.is_sub, false);
-            Assert.IsNull(author.badges);
+            Assert.AreEqual(author.author_class, "visitor");
+            Assert.AreEqual(author.profile_picture_url, "https://url");
 
             var message = chatSchema.message;
             Assert.NotNull(message);
@@ -61,14 +63,15 @@ namespace AudienceSDK.UnitTest {
         public void TestChatSchemaFields2() {
             string testChatMessage = @"
 {
-    'chat_id':'8395035a-374b-4272-998e-602c29a8f2af',
+    'chat_group_id':'8395035a-374b-4272-998e-602c29a8f2af',
     'author':{
         'platform':'Twitch',
         'name':'tl_tsai',
-        'user_id':'120353655',
+        'client_id':'test_id',
+        'user_id':120353655,
         'is_mod':false,
-        'is_sub':false,
-        'badges':null
+        'class':'visitor',
+        'profile_picture_url':'https://url'
     },
     'orginal_text':'#jonny#',
     'message':[
@@ -88,17 +91,17 @@ namespace AudienceSDK.UnitTest {
             // Check all fields
             var chatSchema = JsonConvert.DeserializeObject<ChatData>(testChatMessage);
             Assert.NotNull(chatSchema);
-            Assert.AreEqual(chatSchema.chat_id, "8395035a-374b-4272-998e-602c29a8f2af");
+            Assert.AreEqual(chatSchema.chat_group_id, "8395035a-374b-4272-998e-602c29a8f2af");
             Assert.AreEqual(chatSchema.utc_timestamp, "1656761187532");
 
             var author = chatSchema.author;
             Assert.NotNull(author);
             Assert.AreEqual(author.platform, "Twitch");
             Assert.AreEqual(author.name, "tl_tsai");
-            Assert.AreEqual(author.user_id, "120353655");
+            Assert.AreEqual(author.user_id, 120353655);
             Assert.AreEqual(author.is_mod, false);
-            Assert.AreEqual(author.is_sub, false);
-            Assert.IsNull(author.badges);
+            Assert.AreEqual(author.author_class, "visitor");
+            Assert.AreEqual(author.profile_picture_url, "https://url");
 
             var message = chatSchema.message;
             Assert.NotNull(message);

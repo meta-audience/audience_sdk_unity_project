@@ -49,7 +49,7 @@ namespace AudienceSDK.UnitTest {
         public void AddEmojiSentenceButEmojiQueueInSentenceIsEmptyReturnInvalidParams() {
 
             var author = new ChatAuthor();
-            author.user_id = "-1";
+            author.client_id = "-1";
             author.platform = "Twitch";
 
             var sentence = new Queue<EmojiMessage>();
@@ -63,7 +63,7 @@ namespace AudienceSDK.UnitTest {
         public void AddEmojiSentenceButStateIsMutedReturnInvalidState() {
 
             var author = new ChatAuthor();
-            author.user_id = "-1";
+            author.client_id = "-1";
             author.platform = "Twitch";
 
             var sentence = new Queue<EmojiMessage>();
@@ -80,7 +80,7 @@ namespace AudienceSDK.UnitTest {
 
             // Arrange
             var fakeReturnAuthor = new ChatAuthor();
-            fakeReturnAuthor.user_id = "-1";
+            fakeReturnAuthor.client_id = "-1";
             fakeReturnAuthor.platform = "Twitch";
 
             var mockEmojiSentencesInAuthor = new Mock<IEmojiSentencesInAuthor>();
@@ -93,7 +93,7 @@ namespace AudienceSDK.UnitTest {
 
             for (int i = 0; i < 500; i++) {
                 var author = new ChatAuthor();
-                author.user_id = i.ToString();
+                author.client_id = i.ToString();
                 author.platform = "Twitch";
 
                 var sentence = new Queue<EmojiMessage>();
@@ -102,7 +102,7 @@ namespace AudienceSDK.UnitTest {
             }
 
             var author501 = new ChatAuthor();
-            author501.user_id = "501";
+            author501.client_id = "501";
             author501.platform = "Twitch";
 
             var sentence501 = new Queue<EmojiMessage>();
@@ -119,7 +119,7 @@ namespace AudienceSDK.UnitTest {
         public void AddEmojiSentenceReturnOK() {
 
             var author = new ChatAuthor();
-            author.user_id = "5566";
+            author.client_id = "5566";
             author.platform = "Twitch";
 
             var sentence = new Queue<EmojiMessage>();
@@ -151,7 +151,7 @@ namespace AudienceSDK.UnitTest {
             // Arrange
             Dictionary<ChatAuthor, EmojiMessage> playList;
             var author = new ChatAuthor();
-            author.user_id = "5566";
+            author.client_id = "5566";
             author.platform = "Twitch";
             var mockEmojiSentencesInAuthor = new Mock<IEmojiSentencesInAuthor>();
 

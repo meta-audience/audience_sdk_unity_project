@@ -8,10 +8,11 @@
     <OutputType>Library</OutputType>
     <RootNamespace>AudienceSDK</RootNamespace>
     <AssemblyName>audience_unity</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -142,7 +143,7 @@
     <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\IEmojiAuthorManager.cs">
       <Link>Scripts\IEmojiAuthorManager.cs</Link>
     </Compile>
-	<Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\IEmojiAvatarPositionGenerateAlgorithmBase.cs">
+    <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\IEmojiAvatarPositionGenerateAlgorithmBase.cs">
       <Link>Scripts\IEmojiAvatarPositionGenerateAlgorithmBase.cs</Link>
     </Compile>
     <Compile Include="..\..\Assets\audience-unity-sdk\Core\Scripts\IEmojiSentencesInAuthor.cs">

@@ -1,0 +1,165 @@
+# gitlab runner with 16.0
+# executor : shell 
+# use cmd
+default:
+  tags:
+    - unity-sdk-cicd
+    - windows11
+    - gitlab
+
+.set_build_path: &set_build_path |
+  chcp 65001
+  FOR /F "tokens=*" %%i IN ('git rev-parse --short HEAD') DO SET GIT_COMMIT_SHORT_ID=%%i
+  SET BUILD_VERSION=0.%SPRINT_NUMBER%.%GIT_COMMIT_SHORT_ID%
+  SET BUILD_PATH=D:/Build/0.%SPRINT_NUMBER%.%GIT_COMMIT_SHORT_ID%/%UNITY_VERSION%
+  echo "Build Version: %BUILD_VERSION%"
+  echo "Build Path: %BUILD_PATH%"
+
+
+stages:
+  - prepare
+  - build
+  - publish
+  - clean
+  - notify
+
+
+variables:
+  SPRINT_NUMBER:
+    value: "1"
+    description: "The sprint number use for recognize the version number"
+  UNITY_VERSION:
+    value: "2019.4.28f1"  # Deploy to staging by default
+    description: "Choose a version that you want to build"
+  CICD_UNITY_EDITOR_PATH: 
+    value: "C:/Program Files/Unity/Hub/Editor/2019.4.28f1/Editor/Unity.exe" # Deploy to staging by default
+    description: "Change the version that you want to build"
+  MSBuild_PATH:
+    value: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/MSBuild.exe" 
+    description: "MSBuild path"
+
+
+  BUILD_TARGET_PLATFORM: "StandaloneWindows64"  # Default build target, can be overridden in GitLab UI
+  SCENES: "Assets/audience-unity-sdk/Samples/Scenes/SampleScene.1-Start streaming.unity"  # Default scenes, can be overridden in GitLab UI
+  PACKAGE_SRC_PATH: ""
+  PACKAGE_DES_PATH: ""
+  PACKAGE_OPTIOIN: "Recurse"
+  UPLOAD_BLOB_PATH: ""
+  RUNNER_FOLDER: "D:/workspace/sprint1-audience-unity-cicd-poc/github_runner"
+
+check_version:
+  stage: prepare
+  script:
+    - echo "Determining Build Version..."
+    - FOR /F "tokens=*" %%i IN ('git rev-parse --short HEAD') DO SET GIT_COMMIT_SHORT_ID=%%i
+    - SET BUILD_VERSION=0.%SPRINT_NUMBER%.%GIT_COMMIT_SHORT_ID%
+    - echo "Build Version:" %BUILD_VERSION%
+    
+check_azure_cli:
+  stage: prepare
+  script:
+    - echo Checking for Azure CLI installation...
+    - az --version || (echo "Azure CLI not installed" && exit /b 1)
+          
+check_unity_version:
+  stage: prepare
+  script:
+    - echo Checking Unity Editor at "%CICD_UNITY_EDITOR_PATH%"
+    - if not exist "%CICD_UNITY_EDITOR_PATH%" (echo Unity Editor not found at the specified path && exit /b 1)
+
+build_unity_project:
+  stage: build
+  script:
+    - *set_build_path
+    - echo "Starting Unity Build..."
+    - '"%CICD_UNITY_EDITOR_PATH%" -batchmode -nographics -silent-crashes -logFile "D:/Build/logs/%CI_PROJECT_NAME%_%BUILD_VERSION%.log" -executeMethod Unity_CICD.UnityCommonBuildScript.BuildProject -buildTarget %BUILD_TARGET_PLATFORM% -scenes %SCENES% -buildPath %BUILD_PATH%'
+  artifacts:
+    paths:
+      - "D:/Build/logs/%CI_PROJECT_NAME%_%BUILD_VERSION%_build.log"
+  needs: ["check_unity_version"]
+
+
+build_unity_sdk_dll:
+  stage: build
+  script:
+    - *set_build_path
+    - echo "Start Unity dll ..."
+    - dir
+    - cd ContentExamples/Beat Saber
+    - '"%MSBuild_PATH%" audience-unity-sdk.sln /p:Configuratiion=Release /p:Platform=x64'
+    - tar -a -c -f "D:/Build/%CI_PROJECT_NAME%_%CI_PIPELINE_IID%.zip" %BUILD_PATH%
+  artifacts: 
+    paths:
+      - "D:/Build/logs/%CI_PROJECT_NAME%_%BUILD_VERSION%_dll.log"
+  needs: ["check_unity_version"]
+
+
+package_unity_sdk:
+  stage: build
+  script:
+    - *set_build_path
+    - echo "Starting Package Unity SDK..."
+    - '"%CICD_UNITY_EDITOR_PATH%" -batchmode -nographics -silent-crashes -logFile "D:/Build/logs/%CI_PROJECT_NAME%_package_%BUILD_VERSION%.log" -executeMethod Unity_CICD.UnityPackageExporter.ExportPackage -packageExportPath %BUILD_PATH%'
+  artifacts:
+    paths:
+      - "D:/Build/logs/%CI_PROJECT_NAME%_package_%BUILD_VERSION%.log"
+      - "D:/Build/%CI_PROJECT_NAME%_package_%BUILD_VERSION%.unitypackage"
+  needs: ["check_unity_version"]
+    
+
+upload_package_to_blob:
+  stage: publish
+  script:
+    - *set_build_path
+    - echo "Loading environment variables from .env file..."
+    - cd %RUNNER_FOLDER%
+    - FOR /F "tokens=*" %%i IN ('type .env') DO SET %%i
+    - echo "Uploading Unity package to Azure Blob Storage..."
+    - >
+      az storage blob upload 
+      --account-name %AZURE_ACCOUNT_NAME% 
+      --container-name %CONTAINER_NAME% 
+      --name %CI_PROJECT_NAME%/%BUILD_VERSION%_%CI_PIPELINE_IID%/%CI_PROJECT_NAME%.unitypackage 
+      --file "D:/Build/%CI_PROJECT_NAME%.unitypackage" 
+      --account-key %AZURE_ACCOUNT_KEY%
+  needs: 
+    - "package_unity_sdk"
+
+upload_build_to_blob:
+  stage: publish
+  script:
+    - *set_build_path
+    - echo "zip build..."
+    - tar -a -c -f "D:/Build/%CI_PROJECT_NAME%_%CI_PIPELINE_IID%.zip" %BUILD_PATH%
+    - echo "Loading environment variables from .env file..."
+    - cd %RUNNER_FOLDER%
+    - FOR /F "tokens=*" %%i IN ('type .env') DO SET %%i
+    - echo "Uploading Unity package to Azure Blob Storage..."
+    - echo "the zipped D:/Build/%CI_PROJECT_NAME%_%CI_PIPELINE_IID%.zip"
+    - > 
+      az storage blob upload 
+      --account-name %AZURE_ACCOUNT_NAME% 
+      --container-name %CONTAINER_NAME% 
+      --name %CI_PROJECT_NAME%/%BUILD_VERSION%_%CI_PIPELINE_IID%/%CI_PROJECT_NAME%_%CI_PIPELINE_IID%.zip 
+      --file "D:/Build/%CI_PROJECT_NAME%_%CI_PIPELINE_IID%.zip" 
+      --account-key %AZURE_ACCOUNT_KEY%
+   
+  needs: 
+    - "build_unity_project"
+
+
+slack_notify_for_publish_on_failure:
+  stage: notify
+  script:
+    - *set_build_path
+    - echo "Cleaning up build artifacts..."
+    - rd /s /q "D:\Build\%CI_PROJECT_NAME%_%BUILD_VERSION%"
+    - if exist "D:\Build\%CI_PROJECT_NAME%_%BUILD_VERSION%" (echo Failed to delete build folder && exit /b 1)
+
+slack_notify_for_publish_on_success:
+  stage: notify
+  script:
+    - *set_build_path
+    - echo "Cleaning up build artifacts..."
+    - rd /s /q "D:\Build\%CI_PROJECT_NAME%_%BUILD_VERSION%"
+    - if exist "D:\Build\%CI_PROJECT_NAME%_%BUILD_VERSION%" (echo Failed to delete build folder && exit /b 1)
