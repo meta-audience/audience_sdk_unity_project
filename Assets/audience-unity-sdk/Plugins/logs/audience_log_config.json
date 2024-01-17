@@ -4,7 +4,7 @@
     },
     "LOGGERS": {
         "default": {
-            "level": "info",
+            "level": "debug",
             "sinks": [
                 "stdout_color_sink",
                 "basic_file_sink"
@@ -12,7 +12,7 @@
             "type": "sync"
         },
         "stats": {
-            "level": "info",
+            "level": "debug",
             "sinks": [
                 "stdout_color_sink",
                 "stats_file_sink"
@@ -34,14 +34,14 @@
     },
     "SINKS": {
         "basic_file_sink": {
-            "filename": "D:\\BitBucket\\audience-sdk-unity-project\\audience_sdk_unity_project\\Assets\\audience-unity-sdk\\Plugins\\logs\\audience_logfile.log",
-            "level": "info",
+            "filename": "D:\\unity_project\\debug_unity_Sdk\\audience-sdk-unity-project\\Assets\\audience-unity-sdk\\Plugins\\logs\\audience_logfile.log",
+            "level": "debug",
             "pattern": "general_pattern",
             "truncate": true,
             "type": "basic_file_sink_mt"
         },
         "stats_file_sink": {
-            "filename": "D:\\BitBucket\\audience-sdk-unity-project\\audience_sdk_unity_project\\Assets\\audience-unity-sdk\\Plugins\\logs\\audience_stats_logfile.log",
+            "filename": "D:\\unity_project\\debug_unity_Sdk\\audience-sdk-unity-project\\Assets\\audience-unity-sdk\\Plugins\\logs\\audience_stats_logfile.log",
             "level": "info",
             "pattern": "general_pattern",
             "truncate": true,
@@ -53,7 +53,7 @@
             "type": "stdout_color_sink_mt"
         },
         "webrtc_file_sink": {
-            "filename": "D:\\BitBucket\\audience-sdk-unity-project\\audience_sdk_unity_project\\Assets\\audience-unity-sdk\\Plugins\\logs\\audience_webrtc_logfile.log",
+            "filename": "D:\\unity_project\\debug_unity_Sdk\\audience-sdk-unity-project\\Assets\\audience-unity-sdk\\Plugins\\logs\\audience_webrtc_logfile.log",
             "level": "info",
             "pattern": "general_pattern",
             "truncate": true,
