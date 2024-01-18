@@ -337,3 +337,7 @@ Assembly-CSharp-Editor.csproj
 AudienceSDK-Assembly.csproj
 Tests.csproj
 audience_sdk_unity_project.sln
+
+# Only keep Content Example sln
+*.sln
+!./ContentExample/Beat Saber/*.sln
