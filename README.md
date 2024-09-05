@@ -24,7 +24,7 @@ The minimum supported version is set to 2019.4.28
 
 Our unity project is a template for you to try our features, so just clone it into your local and have fun!
 Or you can **Export** package, then import in your own project. The steps are as follows:
-1. Open your unity project.
+1. Open our unity project, `sdk-unity-project`.
 2. Select `Asset\audience-unity-sdk` folder.
 3. Open `Assets > Export Packages...`.
 4. Uncheck `include dependencies` and exclude `Asset\audience-unity-sdk\Tests` folder.
