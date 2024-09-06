@@ -37,12 +37,14 @@ Our Unity project is a template designed to showcase our SDK's features. You can
 To use the SDK, you need to install the necessary dependencies via the Unity Package Manager (UPM). Here's how to install the required `Newtonsoft.Json` package:
 
 ### Installing Newtonsoft.Json
-1. In your Unity project, open the Package Manager by going to Window > Package Manager.
-2. In the Package Manager window, click the "+" button in the top-left corner and select "Add package by name...".
-3. In the dialog box, enter the following: `com.unity.nuget.newtonsoft-json`
-4. Please select a version higher than `2.0.2` and click "Add" to install the package.
+1. In your Unity project, open the Package Manager by going to `Window > Package Manager`.
+2. In the Package Manager window, click the **+** button in the top-left corner and select **Add package by name...**.
+3. In the dialog box, enter the following: 
+    * Name: `com.unity.nuget.newtonsoft-json`
+    * Version (optional): `2.0.2` or higher
+4. Click "Add" to install the package.
 
-By following these steps, you ensure the SDK's dependencies are properly installed in your project without manual edits to the manifest.json file.
+By following these steps, you ensure the SDK's dependencies are properly installed in your project without manual edits to the `manifest.json` file.
 
 # Usage
 
