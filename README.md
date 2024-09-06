@@ -44,8 +44,6 @@ To use the SDK, you need to install the necessary dependencies via the Unity Pac
     * Version (optional): `2.0.2` or higher
 4. Click "Add" to install the package.
 
-By following these steps, you ensure the SDK's dependencies are properly installed in your project without manual edits to the `manifest.json` file.
-
 # Usage
 
 Follow the document to setup your audience configuration
